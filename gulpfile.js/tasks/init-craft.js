@@ -1,22 +1,28 @@
-const gulp = require('gulp')
-const log = require('fancy-log')
-const colors = require('ansi-colors')
-const mergeStream = require('merge-stream')
-const projectPath = require('../lib/projectPath')
+const gulp = require("gulp");
+const log = require("fancy-log");
+const colors = require("ansi-colors");
+const mergeStream = require("merge-stream");
+const projectPath = require("../lib/projectPath");
 
-gulp.task('init-craft', function() {
-  const configStream = gulp.src(['extras/craft/**/*', '!**/ASSETS-README.md'])
-    .pipe(gulp.dest(projectPath()))
+gulp.task("init-craft", function() {
+  const configStream = gulp
+    .src(["extras/craft/**/*", "!**/ASSETS-README.md"])
+    .pipe(gulp.dest(projectPath()));
 
-  const srcStream = gulp.src(['src/**/*', 'src/**/.gitkeep', '!src/html{,/**}', '!src/static{,/**}'])
-    .pipe(gulp.dest(projectPath(PATH_CONFIG.src)))
+  const srcStream = gulp
+    .src([
+      "src/**/*",
+      "src/**/.gitkeep",
+      "!src/html{,/**}",
+      "!src/static{,/**}"
+    ])
+    .pipe(gulp.dest(projectPath(PATH_CONFIG.src)));
 
-
-  log(colors.green('Added gulpRev plugin to craft/plugins/gulprev!'))
-  log(colors.green('Created config/path-config.json'))
-  log(colors.green('Created config/task-config.js'))
+  log(colors.green("Added gulpRev plugin to craft/plugins/gulprev!"));
+  log(colors.green("Created config/path-config.json"));
+  log(colors.green("Created config/task-config.js"));
   log(
-colors.green(`Blendid is configured for Craft!
+    colors.green(`Blendid is configured for Craft!
 
 Next Steps
 ==========
@@ -35,7 +41,8 @@ Next Steps
 4) Start Compiling!
 
    yarn run blendid
-`))
+`)
+  );
 
-  return mergeStream(configStream, srcStream)
-})
+  return mergeStream(configStream, srcStream);
+});

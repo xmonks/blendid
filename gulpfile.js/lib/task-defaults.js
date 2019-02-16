@@ -1,34 +1,34 @@
-const os          = require('os')
-const path        = require('path')
-const projectPath = require('./projectPath')
-const pkg         = require(projectPath('package.json'))
+const os = require("os");
+const path = require("path");
+const projectPath = require("./projectPath");
+const pkg = require(projectPath("package.json"));
 
 module.exports = {
   javascripts: {
-    extensions: ['js', 'jsx'],
+    extensions: ["js", "jsx"],
     hot: {
       reload: true,
       noInfo: false,
       quiet: true,
       react: false
     },
-    devtool: 'eval-cheap-module-source-map',
+    devtool: "eval-cheap-module-source-map",
     babelLoader: {
       // "test" is derived from TASK_CONFIG.javascripts.extensions
       // "options" is derived from TASK_CONFIG.javascripts.babel
-      loader: 'babel-loader',
+      loader: "babel-loader",
       exclude: /node_modules/
     },
     babel: {
-      presets: [["es2015", { "modules": false }], 'stage-1']
+      presets: [["es2015", { modules: false }], "stage-1"]
     },
     development: {},
     production: {
       devtool: false,
       uglifyJsPlugin: {},
       definePlugin: {
-        'process.env': {
-          'NODE_ENV': JSON.stringify('production')
+        "process.env": {
+          NODE_ENV: JSON.stringify("production")
         }
       }
     }
@@ -36,9 +36,7 @@ module.exports = {
 
   stylesheets: {
     sass: {
-      includePaths: [
-        "./node_modules"
-      ]
+      includePaths: ["./node_modules"]
     },
     extensions: ["sass", "scss", "css"]
   },
@@ -91,5 +89,4 @@ module.exports = {
       postbuild: null
     }
   }
-}
-
+};
