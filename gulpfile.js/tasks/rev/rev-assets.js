@@ -19,5 +19,5 @@ gulp.task("rev-assets", function() {
         merge: true
       })
     )
-    .pipe(gulp.dest(""));
+    //.pipe(gulp.dest(""));
 });

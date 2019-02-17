@@ -54,6 +54,6 @@ const watchTask = function() {
   });
 };
 
-gulp.task("watch", ["browserSync"], watchTask);
+gulp.task("watch", gulp.series("browserSync", watchTask));
 
 module.exports = watchTask;

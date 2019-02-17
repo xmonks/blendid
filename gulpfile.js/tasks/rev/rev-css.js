@@ -16,5 +16,5 @@ gulp.task("rev-css", function() {
         merge: true
       })
     )
-    .pipe(gulp.dest(""));
+    //.pipe(gulp.dest(""));
 });

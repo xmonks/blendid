@@ -14,10 +14,7 @@ const staticTask = function() {
   );
 
   const paths = {
-    src: [
-      path.join(srcPath, "**/*"),
-      projectPath("!" + PATH_CONFIG.src, PATH_CONFIG.static.src, "README.md")
-    ],
+    src: path.join(srcPath, "**/*"),
     dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.static.dest)
   };
 

@@ -8,7 +8,8 @@ const cleanTask = function(cb) {
       ? TASK_CONFIG.clean.patterns
       : projectPath(PATH_CONFIG.dest);
 
-  return del(patterns, { force: true });
+  del(patterns, { force: true });
+  cb();
 };
 
 gulp.task("clean", cleanTask);
