@@ -1,6 +1,6 @@
 const gulp = require("gulp");
 const rev = require("gulp-rev");
-const revNapkin = require("gulp-rev-napkin");
+const revdel = require("gulp-rev-delete-original");
 const projectPath = require("../../lib/projectPath");
 
 // 3) Rev and compress CSS and JS files (this is done after assets, so that if a
@@ -10,7 +10,7 @@ gulp.task("rev-css", function() {
     .src(projectPath(PATH_CONFIG.dest, "**/*.css"))
     .pipe(rev())
     .pipe(gulp.dest(PATH_CONFIG.dest))
-    .pipe(revNapkin({ verbose: false, force: true }))
+    .pipe(revdel())
     .pipe(
       rev.manifest(projectPath(PATH_CONFIG.dest, "rev-manifest.json"), {
         merge: true

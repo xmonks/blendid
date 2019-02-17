@@ -5,8 +5,8 @@ const projectPath = require("../lib/projectPath");
 const merge = require("merge-stream");
 
 gulp.task("init", function() {
-  const defaultStream = gulp
-    .src(["extras/default/**/*", "extras/default/**/.*"])
+  const rootStream = gulp
+    .src("root/*")
     .pipe(gulp.dest(projectPath()));
 
   const configStream = gulp
@@ -23,9 +23,9 @@ gulp.task("init", function() {
 To start the dev server:
 `),
     colors.magenta(`
-yarn run blendid
+yarn blendid
 `)
   );
 
-  return merge(defaultStream, configStream, srcStream);
+  return merge(rootStream, configStream, srcStream);
 });

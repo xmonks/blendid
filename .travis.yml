@@ -1,9 +1,10 @@
 language: node_js
 env: TRAVIS_CI=true
 node_js:
-  - "6.11.1"
-  - "7.2.0"
-  - "8.0.0"
+  - 6
+  - 8
+  - 10
+  - 11
 before_script:
   # http://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-GUI-(e.g.-a-Web-browser)
   - export DISPLAY=:99.0
