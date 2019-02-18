@@ -43,7 +43,7 @@ const noop = cb => {
   cb();
 };
 
-gulp.task("production", function() {
+gulp.task("build", function() {
   global.production = true;
 
   // Build to a temporary directory, then move compiled files as a last step
