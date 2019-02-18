@@ -43,7 +43,7 @@ const noop = cb => {
   cb();
 };
 
-gulp.task("build", function() {
+gulp.task("build", function(done) {
   global.production = true;
 
   // Build to a temporary directory, then move compiled files as a last step
@@ -61,7 +61,7 @@ gulp.task("build", function() {
   const staticFiles = TASK_CONFIG.static ? "static" : noop;
   const { prebuild, postbuild } = TASK_CONFIG.additionalTasks.production;
 
-  const serie = gulp.series(
+  const runTasks = gulp.series(
     prebuild || noop,
     tasks.assetTasks || noop,
     tasks.codeTasks || noop,
@@ -71,15 +71,16 @@ gulp.task("build", function() {
     postbuild || noop,
     "replaceFiles"
   );
-  return serie();
+  runTasks();
+  done();
 });
 
-gulp.task("default", function() {
+gulp.task("default", function(done) {
   const tasks = getEnabledTasks("watch");
   const staticFiles = TASK_CONFIG.static ? "static" : noop;
   const { prebuild, postbuild } = TASK_CONFIG.additionalTasks.development;
 
-  const serie = gulp.series(
+  const runTasks = gulp.series(
     "clean",
     prebuild || noop,
     tasks.assetTasks || noop,
@@ -88,5 +89,6 @@ gulp.task("default", function() {
     postbuild || noop,
     "watch"
   );
-  return serie();
+  runTasks();
+  done();
 });

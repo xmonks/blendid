@@ -54,7 +54,8 @@ const htmlTask = function() {
     .pipe(nunjucksRender(TASK_CONFIG.html.nunjucksRender))
     .on("error", handleErrors)
     .pipe(gulpif(global.production, htmlmin(TASK_CONFIG.html.htmlmin)))
-    .pipe(gulp.dest(paths.dest));
+    .pipe(gulp.dest(paths.dest))
+    .on("error", handleErrors);
 };
 
 const { alternateTask = () => htmlTask } = TASK_CONFIG.html;
