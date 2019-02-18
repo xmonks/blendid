@@ -9,12 +9,12 @@ gulp.task("rev-css", function() {
   return gulp
     .src(projectPath(PATH_CONFIG.dest, "**/*.css"))
     .pipe(rev())
-    .pipe(gulp.dest(PATH_CONFIG.dest))
+    .pipe(gulp.dest(projectPath(PATH_CONFIG.dest)))
     .pipe(revdel())
     .pipe(
       rev.manifest(projectPath(PATH_CONFIG.dest, "rev-manifest.json"), {
         merge: true
       })
     )
-    //.pipe(gulp.dest(""));
+    .pipe(gulp.dest("."));
 });

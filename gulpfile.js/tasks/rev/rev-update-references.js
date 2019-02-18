@@ -9,5 +9,5 @@ gulp.task("rev-update-references", function() {
   return gulp
     .src(projectPath(PATH_CONFIG.dest, "**/**.{css,js}"))
     .pipe(revReplace({ manifest: manifest }))
-    .pipe(gulp.dest(PATH_CONFIG.dest));
+    .pipe(gulp.dest(projectPath(PATH_CONFIG.dest)));
 });
