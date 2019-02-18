@@ -1,9 +1,9 @@
-const gulp = require("gulp");
-const watch = require("gulp-watch");
+const { task, series, watch } = require("gulp");
 const path = require("path");
+const browserSync = require("browser-sync");
 const projectPath = require("../lib/projectPath");
 
-const watchTask = function(cb) {
+const watchTask = function(done) {
   const watchableTasks = [
     "fonts",
     "iconFont",
@@ -32,13 +32,6 @@ const watchTask = function(cb) {
   watchableTasks.forEach(function(taskName) {
     const taskConfig = TASK_CONFIG[taskName];
     const taskPath = getTaskPathFor(taskName);
-    let watchConfig = {};
-    if (
-      TASK_CONFIG.watch !== undefined &&
-      TASK_CONFIG.watch.gulpWatch !== undefined
-    ) {
-      watchConfig = TASK_CONFIG.watch.gulpWatch;
-    }
 
     if (taskConfig) {
       const srcPath = projectPath(PATH_CONFIG.src, taskPath.src);
@@ -47,13 +40,12 @@ const watchTask = function(cb) {
         (taskConfig.extensions
           ? ".{" + taskConfig.extensions.join(",") + "}"
           : "");
-      watch(path.join(srcPath, globPattern), watchConfig, function() {
-        require("./" + taskName)();
-      });
+      watch(path.join(srcPath, globPattern), series(taskName));
     }
-    cb();
   });
+  watch(projectPath(PATH_CONFIG.dest, "**/*")).on("change", browserSync.reload);
+  done();
 };
 
-gulp.task("watch", gulp.series("browserSync", watchTask));
+task("watch", series("browserSync", watchTask));
 module.exports = watchTask;

@@ -39,11 +39,11 @@ require("./tasks/rev");
 const init = TASK_CONFIG.additionalTasks.initialize || function() {};
 init(gulp, PATH_CONFIG, TASK_CONFIG);
 
-const noop = function prebuild(cb) {
+const noop = cb => {
   cb();
 };
 
-const productionTask = function() {
+gulp.task("production", function() {
   global.production = true;
 
   // Build to a temporary directory, then move compiled files as a last step
@@ -61,7 +61,7 @@ const productionTask = function() {
   const staticFiles = TASK_CONFIG.static ? "static" : noop;
   const { prebuild, postbuild } = TASK_CONFIG.additionalTasks.production;
 
-  return gulp.series(
+  const serie = gulp.series(
     prebuild || noop,
     tasks.assetTasks || noop,
     tasks.codeTasks || noop,
@@ -71,14 +71,15 @@ const productionTask = function() {
     postbuild || noop,
     "replaceFiles"
   );
-};
+  return serie();
+});
 
-function defaultTask() {
+gulp.task("default", function() {
   const tasks = getEnabledTasks("watch");
   const staticFiles = TASK_CONFIG.static ? "static" : noop;
   const { prebuild, postbuild } = TASK_CONFIG.additionalTasks.development;
 
-  return gulp.series(
+  const serie = gulp.series(
     "clean",
     prebuild || noop,
     tasks.assetTasks || noop,
@@ -87,6 +88,5 @@ function defaultTask() {
     postbuild || noop,
     "watch"
   );
-}
-exports.default = defaultTask();
-exports.build = productionTask();
+  return serie();
+});

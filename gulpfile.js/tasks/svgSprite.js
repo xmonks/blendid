@@ -1,6 +1,5 @@
 if (!TASK_CONFIG.svgSprite) return;
 
-const browserSync = require("browser-sync");
 const gulp = require("gulp");
 const svgstore = require("gulp-svgstore");
 const projectPath = require("../lib/projectPath");
@@ -14,8 +13,7 @@ const svgSpriteTask = function() {
   return gulp
     .src(settings.src)
     .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore))
-    .pipe(gulp.dest(settings.dest))
-    .pipe(browserSync.stream());
+    .pipe(gulp.dest(settings.dest));
 };
 
 const { alternateTask = () => svgSpriteTask } = TASK_CONFIG.svgSprite;

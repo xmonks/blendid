@@ -2,7 +2,6 @@ if (!TASK_CONFIG.stylesheets) return;
 
 const gulp = require("gulp");
 const gulpif = require("gulp-if");
-const browserSync = require("browser-sync");
 const postcss = require("gulp-postcss");
 const sass = require("gulp-sass");
 const sourcemaps = require("gulp-sourcemaps");
@@ -44,8 +43,7 @@ const sassTask = function() {
     .on("error", handleErrors)
     .pipe(postcss(plugins))
     .pipe(gulpif(!global.production, sourcemaps.write()))
-    .pipe(gulp.dest(paths.dest))
-    .pipe(browserSync.stream());
+    .pipe(gulp.dest(paths.dest));
 };
 
 const { alternateTask = () => sassTask } = TASK_CONFIG.stylesheets;

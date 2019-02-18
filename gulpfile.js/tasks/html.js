@@ -1,14 +1,13 @@
 if (!TASK_CONFIG.html) return;
 
-const browserSync = require("browser-sync");
-const data = require("gulp-data");
+const fs = require("fs");
 const gulp = require("gulp");
+const data = require("gulp-data");
 const gulpif = require("gulp-if");
-const handleErrors = require("../lib/handleErrors");
-const projectPath = require("../lib/projectPath");
 const htmlmin = require("gulp-htmlmin");
 const nunjucksRender = require("gulp-nunjucks-render");
-const fs = require("fs");
+const handleErrors = require("../lib/handleErrors");
+const projectPath = require("../lib/projectPath");
 
 const htmlTask = function() {
   const exclude =
@@ -55,8 +54,7 @@ const htmlTask = function() {
     .pipe(nunjucksRender(TASK_CONFIG.html.nunjucksRender))
     .on("error", handleErrors)
     .pipe(gulpif(global.production, htmlmin(TASK_CONFIG.html.htmlmin)))
-    .pipe(gulp.dest(paths.dest))
-    .pipe(browserSync.stream());
+    .pipe(gulp.dest(paths.dest));
 };
 
 const { alternateTask = () => htmlTask } = TASK_CONFIG.html;
