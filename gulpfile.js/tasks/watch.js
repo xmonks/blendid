@@ -3,7 +3,7 @@ const watch = require("gulp-watch");
 const path = require("path");
 const projectPath = require("../lib/projectPath");
 
-const watchTask = function() {
+const watchTask = function(cb) {
   const watchableTasks = [
     "fonts",
     "iconFont",
@@ -51,9 +51,9 @@ const watchTask = function() {
         require("./" + taskName)();
       });
     }
+    cb();
   });
 };
 
 gulp.task("watch", gulp.series("browserSync", watchTask));
-
 module.exports = watchTask;
