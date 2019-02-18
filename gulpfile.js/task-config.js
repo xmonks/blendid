@@ -4,7 +4,6 @@ module.exports = {
   fonts: true,
   static: true,
   svgSprite: true,
-  ghPages: true,
   stylesheets: true,
 
   javascripts: {
