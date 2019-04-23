@@ -72,7 +72,7 @@ gulp.task("build", function(done) {
     staticFiles,
     postbuild || noop,
     "replaceFiles",
-    workboxBuild,
+    workboxBuild
   );
   runTasks();
   done();
