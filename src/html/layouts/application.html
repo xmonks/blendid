@@ -6,6 +6,16 @@
     <title>{% block title %}{{ title }}{% endblock %}</title>
     <link rel="stylesheet" href="stylesheets/app.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="/manifest.json">
+    <script>
+      // Check that service workers are registered
+      if ('serviceWorker' in navigator) {
+          // Use the window load event to keep the page load performant
+          window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/service-worker.prod.js');
+          });
+      }
+    </script>
     {% include "shared/app-icons.html" %}
     {% block head %}{% endblock %}
   </head>

@@ -34,6 +34,7 @@ require("./tasks/svgSprite");
 require("./tasks/watch");
 require("./tasks/webpackProduction");
 require("./tasks/rev");
+require("./tasks/workboxBuild");
 
 // Initialize any additional user-provided tasks
 const init = TASK_CONFIG.additionalTasks.initialize || function() {};
@@ -59,6 +60,7 @@ gulp.task("build", function(done) {
   const tasks = getEnabledTasks("production");
   const rev = TASK_CONFIG.production.rev ? "rev" : noop;
   const staticFiles = TASK_CONFIG.static ? "static" : noop;
+  const workboxBuild = TASK_CONFIG.workboxBuild ? "workboxBuild" : noop;
   const { prebuild, postbuild } = TASK_CONFIG.additionalTasks.production;
 
   const runTasks = gulp.series(
@@ -69,7 +71,8 @@ gulp.task("build", function(done) {
     "size-report",
     staticFiles,
     postbuild || noop,
-    "replaceFiles"
+    "replaceFiles",
+    workboxBuild,
   );
   runTasks();
   done();
@@ -78,6 +81,7 @@ gulp.task("build", function(done) {
 gulp.task("default", function(done) {
   const tasks = getEnabledTasks("watch");
   const staticFiles = TASK_CONFIG.static ? "static" : noop;
+  const workboxBuild = TASK_CONFIG.workboxBuild ? "workboxBuild" : noop;
   const { prebuild, postbuild } = TASK_CONFIG.additionalTasks.development;
 
   const runTasks = gulp.series(
@@ -87,6 +91,7 @@ gulp.task("default", function(done) {
     tasks.codeTasks || noop,
     staticFiles,
     postbuild || noop,
+    workboxBuild,
     "watch"
   );
   runTasks();
