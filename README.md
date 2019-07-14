@@ -1,6 +1,6 @@
 # ![Blendid](https://raw.githubusercontent.com/topmonks/blendid/master/blendid-logo.png)
 
-[![Build Status](https://travis-ci.org/topmonks/blendid.svg?branch=master)](https://travis-ci.org/topmonks/blendid)
+[![Build Status](https://travis-ci.com/topmonks/blendid.svg?branch=master)](https://travis-ci.com/topmonks/blendid)
 
 **Blendid** is a delicious stand-alone blend of tasks and build tools that form a full-featured modern asset pipeline. It can be used as-is as a static site builder, or can be configured and integrated into your own development environment and site or app structure.
 
