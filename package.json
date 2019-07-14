@@ -18,9 +18,7 @@
   },
   "scripts": {
     "start": "gulp",
-    "gulp": "gulp",
     "build": "gulp build",
-    "gh-pages": "gulp gh-pages",
     "dev:test": "mocha ./gulpfile.js/**/*.test.js"
   },
   "dependencies": {
