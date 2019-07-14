@@ -1,11 +1,8 @@
 language: node_js
-dist: xenial
-services:
-  - xvfb
 node_js:
   - 10
   - 11
-  - 12
+cache: yarn
 script:
   - yarn run dev:test
   - yarn run build
