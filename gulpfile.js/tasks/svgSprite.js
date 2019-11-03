@@ -1,6 +1,8 @@
 if (!TASK_CONFIG.svgSprite) return;
 
 const gulp = require("gulp");
+const path = require("path");
+const svgmin = require("gulp-svgmin");
 const svgstore = require("gulp-svgstore");
 const projectPath = require("../lib/projectPath");
 
@@ -12,6 +14,18 @@ const svgSpriteTask = function() {
 
   return gulp
     .src(settings.src)
+    .pipe(
+      svgmin(({ relative }) => ({
+        plugins: [
+          {
+            cleanupIDs: {
+              prefix: `${path.basename(relative, path.extname(relative))}-`,
+              minify: true
+            }
+          }
+        ]
+      }))
+    )
     .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore))
     .pipe(gulp.dest(settings.dest));
 };

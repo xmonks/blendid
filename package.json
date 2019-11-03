@@ -47,6 +47,7 @@
     "gulp-sass": "^4.0.2",
     "gulp-sizereport": "1.2.1",
     "gulp-sourcemaps": "2.6.5",
+    "gulp-svgmin": "^2.2.0",
     "gulp-svgstore": "7.0.1",
     "lodash": "^4.17.15",
     "merge-stream": "2.0.0",
