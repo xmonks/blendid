@@ -16,13 +16,7 @@ module.exports = {
     swDest: './public/service-worker.prod.js',
   },
 
-  javascripts: {
-    entry: {
-      // files paths are relative to
-      // javascripts.dest in path-config.json
-      app: ["./app.js"]
-    }
-  },
+  javascripts: false,
 
   browserSync: {
     server: {

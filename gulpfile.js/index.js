@@ -32,7 +32,6 @@ require("./tasks/static");
 require("./tasks/stylesheets");
 require("./tasks/svgSprite");
 require("./tasks/watch");
-require("./tasks/webpackProduction");
 require("./tasks/rev");
 require("./tasks/workboxBuild");
 

@@ -4,35 +4,7 @@ const projectPath = require("./projectPath");
 const pkg = require(projectPath("package.json"));
 
 module.exports = {
-  javascripts: {
-    extensions: ["js", "jsx"],
-    hot: {
-      reload: true,
-      noInfo: false,
-      quiet: true,
-      react: false
-    },
-    devtool: "eval-cheap-module-source-map",
-    babelLoader: {
-      // "test" is derived from TASK_CONFIG.javascripts.extensions
-      // "options" is derived from TASK_CONFIG.javascripts.babel
-      loader: "babel-loader",
-      exclude: /node_modules/
-    },
-    babel: {
-      presets: [["env", { modules: false }], "stage-1"]
-    },
-    development: {},
-    production: {
-      devtool: false,
-      uglifyJsPlugin: {},
-      definePlugin: {
-        "process.env": {
-          NODE_ENV: JSON.stringify("production")
-        }
-      }
-    }
-  },
+  javascripts: {},
 
   stylesheets: {
     sass: {

@@ -8,9 +8,6 @@ const codeTasks = ["html", "stylesheets", "javascripts"];
 module.exports = function(env) {
   function matchFilter(task) {
     if (TASK_CONFIG[task]) {
-      if (task === "javascripts") {
-        task = env === "production" ? "webpack:production" : false;
-      }
       return task;
     }
   }

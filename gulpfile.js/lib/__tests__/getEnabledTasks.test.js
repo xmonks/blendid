@@ -58,14 +58,14 @@ describe("getEnabledTasks", function() {
 
       it("returns all except javascripts when none disabled", function() {
         const tasks = getEnabledTasks(ENV);
-        assert.deepEqual(tasks.codeTasks, ["html", "stylesheets"]);
+        assert.deepEqual(tasks.codeTasks, ["html", "stylesheets", "javascripts"]);
       });
 
       it("returns only enabled except javascripts task when some disabled", function() {
         TASK_CONFIG["stylesheets"] = false;
 
         const tasks = getEnabledTasks(ENV);
-        assert.deepEqual(tasks.codeTasks, ["html"]);
+        assert.deepEqual(tasks.codeTasks, ["html", "javascripts"]);
       });
 
       it("returns false when all disabled", function() {
@@ -136,7 +136,7 @@ describe("getEnabledTasks", function() {
         assert.deepEqual(tasks.codeTasks, [
           "html",
           "stylesheets",
-          "webpack:production"
+          "javascripts"
         ]);
       });
 
@@ -144,7 +144,7 @@ describe("getEnabledTasks", function() {
         TASK_CONFIG["stylesheets"] = false;
 
         const tasks = getEnabledTasks(ENV);
-        assert.deepEqual(tasks.codeTasks, ["html", "webpack:production"]);
+        assert.deepEqual(tasks.codeTasks, ["html", "javascripts"]);
       });
 
       it("still correctly disable javascripts task when disabled", function() {
