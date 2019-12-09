@@ -9,6 +9,14 @@ const nunjucksRender = require("gulp-nunjucks-render");
 const handleErrors = require("../lib/handleErrors");
 const projectPath = require("../lib/projectPath");
 
+const dataFile = (pathConfig, name) =>
+  projectPath(pathConfig.src, `${pathConfig.data.src}/${name}.json`);
+const jsonData = pathConfig => name =>
+  fs.promises
+    .readFile(dataFile(pathConfig, name), "utf8")
+    .then(f => JSON.parse(f))
+    .catch(() => {});
+
 const htmlTask = function() {
   const exclude =
     "!" +
@@ -30,7 +38,18 @@ const htmlTask = function() {
     dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.html.dest)
   };
 
+  const collectionsDataFunction =
+    PATH_CONFIG.data &&
+    TASK_CONFIG.html.collections &&
+    (() => {
+      const cols = TASK_CONFIG.html.collections;
+      return Promise.all(cols.map(jsonData(PATH_CONFIG))).then(xs =>
+        cols.reduce((acc, x, i) => Object.assign(acc, { [x]: xs[i] }), {})
+      );
+    });
+
   const dataFunction =
+    collectionsDataFunction ||
     TASK_CONFIG.html.dataFunction ||
     function(file) {
       const dataPath = projectPath(
@@ -38,7 +57,7 @@ const htmlTask = function() {
         PATH_CONFIG.html.src,
         TASK_CONFIG.html.dataFile
       );
-      return JSON.parse(fs.readFileSync(dataPath, "utf8"));
+      return fs.promises.readFile(dataPath, "utf-8").then(x => JSON.parse(x));
     };
 
   const nunjucksRenderPath = [
