@@ -5,7 +5,6 @@ module.exports = {
 
   stylesheets: {
     postcss: {
-      syntax: "postcss-scss",
       parser: scssParser
     },
     extensions: ["sass", "scss", "css"]
