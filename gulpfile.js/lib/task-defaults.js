@@ -8,7 +8,7 @@ module.exports = {
 
   stylesheets: {
     postcss: {
-      parser: "postcss-scss",
+      syntax: "postcss-scss",
     },
     extensions: ["sass", "scss", "css"]
   },
