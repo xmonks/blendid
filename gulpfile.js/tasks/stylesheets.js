@@ -3,6 +3,7 @@ if (!TASK_CONFIG.stylesheets) return;
 const gulp = require("gulp");
 const gulpif = require("gulp-if");
 const postcss = require("gulp-postcss");
+const rename = require("gulp-rename");
 const sourcemaps = require("gulp-sourcemaps");
 const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
@@ -54,6 +55,7 @@ const postcssTask = function() {
     .src(paths.src)
     .pipe(gulpif(!global.production, sourcemaps.init()))
     .pipe(postcss(plugins, TASK_CONFIG.stylesheets.postcss))
+    .pipe(rename({ extname: ".css" }))
     .pipe(gulpif(!global.production, sourcemaps.write()))
     .pipe(gulp.dest(paths.dest));
 };
