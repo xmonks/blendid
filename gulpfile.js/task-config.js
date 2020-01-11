@@ -1,3 +1,5 @@
+const pathConfig = require("./path-config.json");
+
 module.exports = {
   html: true,
   images: true,
@@ -5,25 +7,20 @@ module.exports = {
   static: true,
   svgSprite: true,
   stylesheets: true,
-
-  workboxBuild: {
-    globDirectory: './public',
-    globPatterns: [
-      '**\/*.{html,json,js,css}'
-    ],
-    // Create service-worker.js source file and define `swSrc` to use `injectManifest` method
-    // swSrc: './src/service-worker.js',
-    swDest: './public/service-worker.prod.js',
-  },
-
   javascripts: false,
 
   browserSync: {
     server: {
-      // should match `dest` in
-      // path-config.json
-      baseDir: "public"
+      baseDir: pathConfig.dest
     }
+  },
+
+  workboxBuild: {
+    globDirectory: pathConfig.dest,
+    globPatterns: ["**/*.{html,json,js,css,png,jpg,gif,svg}"],
+    // Create service-worker.js source file and define `swSrc` to use `injectManifest` method
+    // swSrc: `${pathConfig.src}/sw.js`,
+    swDest: `${pathConfig.dest}/sw.prod.js`
   },
 
   production: {

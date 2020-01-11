@@ -3,14 +3,14 @@ if (!TASK_CONFIG.stylesheets) return;
 const gulp = require("gulp");
 const gulpif = require("gulp-if");
 const postcss = require("gulp-postcss");
-const sass = require("gulp-sass");
 const sourcemaps = require("gulp-sourcemaps");
 const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
-const handleErrors = require("../lib/handleErrors");
+const easyImport = require("postcss-easy-import");
+const sass = require("postcss-node-sass");
 const projectPath = require("../lib/projectPath");
 
-const sassTask = function() {
+const postcssTask = function() {
   const paths = {
     src: projectPath(
       PATH_CONFIG.src,
@@ -20,18 +20,32 @@ const sassTask = function() {
     dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.stylesheets.dest)
   };
 
-  if (
-    TASK_CONFIG.stylesheets.sass &&
-    TASK_CONFIG.stylesheets.sass.includePaths
-  ) {
-    TASK_CONFIG.stylesheets.sass.includePaths = TASK_CONFIG.stylesheets.sass.includePaths.map(
-      function(includePath) {
-        return projectPath(includePath);
-      }
-    );
+  if (TASK_CONFIG.stylesheets.sass) {
+    if (TASK_CONFIG.stylesheets.sass.includePaths) {
+      TASK_CONFIG.stylesheets.sass.includePaths = TASK_CONFIG.stylesheets.sass.includePaths.map(
+        includePath => projectPath(includePath)
+      );
+    }
   }
 
-  const plugins = [autoprefixer(TASK_CONFIG.stylesheets.autoprefixer)];
+  const plugins = [
+    easyImport({
+      prefix: "_",
+      extensions: Array.from(
+        TASK_CONFIG.stylesheets.extensions || [],
+        x => `.${x}`
+      )
+    }),
+    sass(TASK_CONFIG.stylesheets.sass),
+    autoprefixer(TASK_CONFIG.stylesheets.autoprefixer)
+  ];
+  if (
+    TASK_CONFIG.stylesheets.postcss &&
+    TASK_CONFIG.stylesheets.postcss.plugins
+  ) {
+    plugins.concat(TASK_CONFIG.stylesheets.postcss.plugins);
+    delete TASK_CONFIG.stylesheets.postcss.plugins;
+  }
   if (global.production) {
     plugins.push(cssnano(TASK_CONFIG.stylesheets.cssnano));
   }
@@ -39,14 +53,12 @@ const sassTask = function() {
   return gulp
     .src(paths.src)
     .pipe(gulpif(!global.production, sourcemaps.init()))
-    .pipe(sass(TASK_CONFIG.stylesheets.sass))
-    .on("error", handleErrors)
-    .pipe(postcss(plugins))
+    .pipe(postcss(plugins, TASK_CONFIG.stylesheets.postcss))
     .pipe(gulpif(!global.production, sourcemaps.write()))
     .pipe(gulp.dest(paths.dest));
 };
 
-const { alternateTask = () => sassTask } = TASK_CONFIG.stylesheets;
+const { alternateTask = () => postcssTask } = TASK_CONFIG.stylesheets;
 const stylesheetsTask = alternateTask(gulp, PATH_CONFIG, TASK_CONFIG);
 
 gulp.task("stylesheets", stylesheetsTask);
