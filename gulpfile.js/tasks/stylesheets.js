@@ -8,7 +8,6 @@ const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
 const easyImport = require("postcss-easy-import");
 const sass = require("postcss-node-sass");
-const scssParser = require("postcss-scss");
 const projectPath = require("../lib/projectPath");
 
 const postcssTask = function() {
@@ -30,7 +29,7 @@ const postcssTask = function() {
   }
 
   const plugins = [
-    scssParser(),
+    sass(TASK_CONFIG.stylesheets.sass),
     easyImport({
       prefix: "_",
       extensions: Array.from(
@@ -38,7 +37,6 @@ const postcssTask = function() {
         x => `.${x}`
       )
     }),
-    sass(TASK_CONFIG.stylesheets.sass),
     autoprefixer(TASK_CONFIG.stylesheets.autoprefixer)
   ];
   if (
