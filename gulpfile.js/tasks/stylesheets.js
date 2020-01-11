@@ -29,7 +29,6 @@ const postcssTask = function() {
   }
 
   const plugins = [
-    sass(TASK_CONFIG.stylesheets.sass),
     easyImport({
       prefix: "_",
       extensions: Array.from(
@@ -37,6 +36,7 @@ const postcssTask = function() {
         x => `.${x}`
       )
     }),
+    sass(TASK_CONFIG.stylesheets.sass),
     autoprefixer(TASK_CONFIG.stylesheets.autoprefixer)
   ];
   if (
