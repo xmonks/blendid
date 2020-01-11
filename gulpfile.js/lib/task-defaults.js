@@ -1,7 +1,4 @@
-const os = require("os");
-const path = require("path");
-const projectPath = require("./projectPath");
-const pkg = require(projectPath("package.json"));
+const scssParser = require("postcss-scss");
 
 module.exports = {
   javascripts: {},
@@ -9,6 +6,7 @@ module.exports = {
   stylesheets: {
     postcss: {
       syntax: "postcss-scss",
+      parser: scssParser
     },
     extensions: ["sass", "scss", "css"]
   },
