@@ -7,8 +7,9 @@ module.exports = {
   javascripts: {},
 
   stylesheets: {
-    parser: "postcss-scss",
-    sass: {},
+    postcss: {
+      parser: "postcss-scss",
+    },
     extensions: ["sass", "scss", "css"]
   },
 
