@@ -15,14 +15,11 @@ const svgSpriteTask = function() {
   return gulp
     .src(settings.src)
     .pipe(
-      svgmin(({ relative }) => ({
+      svgmin(() => ({
         plugins: [
-          {
-            cleanupIDs: {
-              prefix: `${path.basename(relative, path.extname(relative))}-`,
-              minify: true
-            }
-          }
+          { removeXMLNS: true },
+          { prefixIDs: true },
+          { cleanupIDs: { force: true } }
         ]
       }))
     )
