@@ -15,13 +15,13 @@ const svgSpriteTask = function() {
   return gulp
     .src(settings.src)
     .pipe(
-      svgmin(() => ({
+      svgmin({
         plugins: [
           { removeXMLNS: true },
           { prefixIDs: true },
           { cleanupIDs: { force: true } }
         ]
-      }))
+      })
     )
     .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore))
     .pipe(gulp.dest(settings.dest));
