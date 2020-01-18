@@ -1,13 +1,11 @@
 # ![Blendid](https://raw.githubusercontent.com/topmonks/blendid/master/blendid-logo.png)
 
-[![Build Status](https://travis-ci.com/topmonks/blendid.svg?branch=master)](https://travis-ci.com/topmonks/blendid)
-
 **Blendid** is a delicious stand-alone blend of tasks and build tools that form a full-featured modern asset pipeline. It can be used as-is as a static site builder, or can be configured and integrated into your own development environment and site or app structure.
 
 ## Quick start on a fresh project (empty directory)
 ```bash
 yarn init
-yarn add blendid
+yarn add git://github.com/topmonks/blendid.git
 yarn blendid init
 yarn blendid
 ```
