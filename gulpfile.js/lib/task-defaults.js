@@ -54,7 +54,7 @@ module.exports = {
             dpr = 1,
             crop = "scale",
             gravity = "center"
-          }
+          } = {}
         ) =>
           cloudinary.url(publicId, {
             crop,
