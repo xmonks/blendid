@@ -1,9 +1,32 @@
 const scssParser = require("postcss-scss");
+const sass = require("node-sass");
+const cloudinary = require("cloudinary").v2;
 
 module.exports = {
   javascripts: {},
 
   stylesheets: {
+    sass: {
+      functions: {
+        "cloudinaryUrl($publicId, $width: 'auto', $format: 'auto', $quality: 'auto', $dpr: 1)": (
+          publicId,
+          width,
+          format,
+          quality,
+          dpr
+        ) => {
+          return new sass.types.String(
+            `url(${cloudinary.url(publicId.getValue(), {
+              width: width.getValue(),
+              fetch_format: format.getValue(),
+              quality: quality.getValue(),
+              dpr: dpr.getValue(),
+              secure: true
+            })})`
+          );
+        }
+      }
+    },
     postcss: {
       parser: scssParser
     },

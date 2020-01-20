@@ -9,7 +9,6 @@ const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
 const easyImport = require("postcss-easy-import");
 const sass = require("postcss-node-sass");
-const functions = require("postcss-functions");
 const projectPath = require("../lib/projectPath");
 
 const postcssTask = function() {
@@ -22,12 +21,10 @@ const postcssTask = function() {
     dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.stylesheets.dest)
   };
 
-  if (TASK_CONFIG.stylesheets.sass) {
-    if (TASK_CONFIG.stylesheets.sass.includePaths) {
-      TASK_CONFIG.stylesheets.sass.includePaths = TASK_CONFIG.stylesheets.sass.includePaths.map(
-        includePath => projectPath(includePath)
-      );
-    }
+  if (TASK_CONFIG.stylesheets.sass && TASK_CONFIG.stylesheets.sass.includePaths) {
+    TASK_CONFIG.stylesheets.sass.includePaths = TASK_CONFIG.stylesheets.sass.includePaths.map(
+      includePath => projectPath(includePath)
+    );
   }
 
   const plugins = [
@@ -38,7 +35,6 @@ const postcssTask = function() {
         x => `.${x}`
       )
     }),
-    functions(TASK_CONFIG.stylesheets.functions || {}),
     sass(TASK_CONFIG.stylesheets.sass),
     autoprefixer(TASK_CONFIG.stylesheets.autoprefixer)
   ];
