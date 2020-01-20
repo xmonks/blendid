@@ -66,6 +66,20 @@ const htmlTask = function() {
   TASK_CONFIG.html.nunjucksRender.path =
     TASK_CONFIG.html.nunjucksRender.path || nunjucksRenderPath;
 
+  const filters = TASK_CONFIG.html.nunjucksRender.filters;
+  if (filters) {
+    const origFn = TASK_CONFIG.html.nunjucksRender.manageEnv;
+    TASK_CONFIG.html.nunjucksRender.manageEnv = env => {
+      for (let filter of Object.keys(filters)) {
+        env.addFilter(filter, filters[filter]);
+      }
+      if (typeof origFn === "function") {
+        origFn(env);
+      }
+    };
+    delete TASK_CONFIG.html.nunjucksRender.filters;
+  }
+
   return gulp
     .src(paths.src)
     .pipe(data(dataFunction))
