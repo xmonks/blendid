@@ -17,10 +17,10 @@ module.exports = {
         ) => {
           return new sass.types.String(
             `url(${cloudinary.url(publicId.getValue(), {
-              width: width.getValue(),
+              dpr: dpr.getValue(),
               fetch_format: format.getValue(),
               quality: quality.getValue(),
-              dpr: dpr.getValue(),
+              width: width.getValue(),
               secure: true
             })})`
           );
@@ -36,6 +36,20 @@ module.exports = {
   html: {
     dataFile: "data/global.json",
     nunjucksRender: {
+      filters: {
+        split: (str, seperator) => str.split(seperator),
+        cloudinaryUrl: (
+          publicId,
+          { width = "auto", format = "auto", quality = "auto", dpr = 1 }
+        ) =>
+          cloudinary.url(publicId, {
+            dpr,
+            fetch_format: format,
+            quality,
+            secure: true,
+            width
+          })
+      },
       envOptions: {
         watch: false
       }
@@ -74,9 +88,7 @@ module.exports = {
   },
 
   additionalTasks: {
-    initialize(gulp, PATH_CONFIG, TASK_CONFIG) {
-      // gulp.task('myTask', function() { })
-    },
+    initialize(gulp, PATH_CONFIG, TASK_CONFIG) {},
     development: {
       prebuild: null,
       postbuild: null
