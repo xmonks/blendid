@@ -8,7 +8,7 @@ module.exports = {
   stylesheets: {
     sass: {
       functions: {
-        "cloudinaryUrl($publicId, $width: 'auto', $height: 'auto', $format: 'auto', $quality: 'auto', $dpr: 1, $crop: 'scale', $gravity: 'center')": (
+        "cloudinaryUrl($publicId, $width: 'auto', $height: null, $format: 'auto', $quality: 'auto', $dpr: 1, $crop: null, $gravity: null)": (
           publicId,
           width,
           height,
@@ -20,11 +20,11 @@ module.exports = {
         ) => {
           return new sass.types.String(
             `url(${cloudinary.url(publicId.getValue(), {
-              crop: crop.getValue(),
+              crop: sass.NULL === crop ? null : crop.getValue(),
               dpr: dpr.getValue(),
               fetch_format: format.getValue(),
-              gravity: gravity.getValue(),
-              height: height.getValue(),
+              gravity: sass.NULL === gravity ? null : gravity.getValue(),
+              height: sass.NULL === height ? null : height.getValue(),
               quality: quality.getValue(),
               width: width.getValue(),
               secure: true
