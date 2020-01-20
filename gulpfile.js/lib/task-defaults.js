@@ -48,15 +48,15 @@ module.exports = {
           publicId,
           {
             width = "auto",
-            height = "auto",
+            height,
             format = "auto",
             quality = "auto",
             dpr = 1,
-            crop = "scale",
-            gravity = "center"
+            crop,
+            gravity
           } = {}
-        ) =>
-          cloudinary.url(publicId, {
+        ) => {
+          return cloudinary.url(publicId, {
             crop,
             dpr,
             fetch_format: format,
@@ -65,7 +65,8 @@ module.exports = {
             quality,
             secure: true,
             width
-          })
+          });
+        }
       },
       envOptions: {
         watch: false
