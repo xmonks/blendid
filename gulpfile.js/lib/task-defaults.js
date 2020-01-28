@@ -2,6 +2,7 @@ const scssParser = require("postcss-scss");
 const sass = require("node-sass");
 const cloudinary = require("cloudinary").v2;
 const terser = require("terser");
+const { minifyHTMLLiterals } = require("minify-html-literals");
 
 function cloudinaryUrl(
   publicId,
@@ -27,6 +28,8 @@ function cloudinaryUrl(
   });
 }
 
+const sassCloudinaryUrlSignature =
+  "cloudinaryUrl($publicId, $width: 'auto', $height: null, $format: 'auto', $quality: 'auto', $dpr: 1, $crop: null, $gravity: null)";
 function sassCloudinaryUrl(
   publicId,
   width,
@@ -52,10 +55,13 @@ function sassCloudinaryUrl(
 }
 
 function minifyJS(text, inline) {
-  const res = terser.minify(text, {
-    warnings: true,
+  const litTags = new Set(["html", "svg"]);
+  const min = minifyHTMLLiterals(text, {
+    fileName: "yolo.js",
+    shouldMinify: ({ tag }) => tag && litTags.has(tag.toLowerCase())
+  });
+  const res = terser.minify(min ? min.code : text, {
     module: true,
-    mangle: false,
     ecma: 2018
   });
   if (res.warnings) console.log(res.warnings);
@@ -72,7 +78,7 @@ module.exports = {
   stylesheets: {
     sass: {
       functions: {
-        "cloudinaryUrl($publicId, $width: 'auto', $height: null, $format: 'auto', $quality: 'auto', $dpr: 1, $crop: null, $gravity: null)": sassCloudinaryUrl
+        [sassCloudinaryUrlSignature]: sassCloudinaryUrl
       }
     },
     postcss: {
@@ -93,6 +99,7 @@ module.exports = {
       }
     },
     htmlmin: {
+      collapseWhitespace: true,
       collapseBooleanAttributes: true,
       decodeEntities: true,
       minifyCSS: true,
@@ -100,7 +107,6 @@ module.exports = {
       removeAttributeQuotes: true,
       removeOptionalTags: true,
       removeRedundantAttributes: true,
-      removeScriptTypeAttributes: true,
       removeStyleLinkTypeAttributes: true
     },
     excludeFolders: ["layouts", "shared", "macros", "data"],

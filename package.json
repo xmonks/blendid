@@ -50,6 +50,7 @@
     "intl-locales-supported": "^1.8.4",
     "lodash": "^4.17.15",
     "merge-stream": "2.0.0",
+    "minify-html-literals": "^1.2.2",
     "minimist": "^1.2.0",
     "node-fs-extra": "^0.8.2",
     "node-sass": "^4.13.1",
@@ -66,5 +67,8 @@
     "chai": "^4.2.0",
     "mocha": "7.0.0",
     "prettier": "^1.19.1"
+  },
+  "resolutions": {
+    "html-minifier": "https://github.com/rarous/html-minifier-terser.git#4b9949c288c9a57ea47ff1bfeac781e9b8b5ea99"
   }
 }
