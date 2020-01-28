@@ -61,7 +61,7 @@ function minifyJS(text, inline) {
     shouldMinify: ({ tag }) => tag && litTags.has(tag.toLowerCase())
   });
   const res = terser.minify(min ? min.code : text, {
-    munging: false,
+    mangle: false,
     module: true,
     ecma: 2018
   });
