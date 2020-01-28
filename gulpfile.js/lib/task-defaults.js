@@ -1,6 +1,70 @@
 const scssParser = require("postcss-scss");
 const sass = require("node-sass");
 const cloudinary = require("cloudinary").v2;
+const terser = require("terser");
+
+function cloudinaryUrl(
+  publicId,
+  {
+    width = "auto",
+    height,
+    format = "auto",
+    quality = "auto",
+    dpr = 1,
+    crop,
+    gravity
+  } = {}
+) {
+  return cloudinary.url(publicId, {
+    crop,
+    dpr,
+    fetch_format: format,
+    gravity,
+    height,
+    quality,
+    secure: true,
+    width
+  });
+}
+
+function sassCloudinaryUrl(
+  publicId,
+  width,
+  height,
+  format,
+  quality,
+  dpr,
+  crop,
+  gravity
+) {
+  const nullableValue = x => (sass.NULL === x ? null : x.getValue());
+  return new sass.types.String(
+    `url(${cloudinaryUrl(publicId.getValue(), {
+      crop: nullableValue(crop),
+      dpr: nullableValue(dpr),
+      format: nullableValue(format),
+      gravity: nullableValue(gravity),
+      height: nullableValue(height),
+      quality: nullableValue(quality),
+      width: nullableValue(width)
+    })})`
+  );
+}
+
+function minifyJS(text, inline) {
+  const res = terser.minify(text, {
+    warnings: true,
+    module: true,
+    mangle: false,
+    ecma: 2018
+  });
+  if (res.warnings) console.log(res.warnings);
+  if (res.error) {
+    console.log(text);
+    throw res.error;
+  }
+  return res.code;
+}
 
 module.exports = {
   javascripts: {},
@@ -8,29 +72,7 @@ module.exports = {
   stylesheets: {
     sass: {
       functions: {
-        "cloudinaryUrl($publicId, $width: 'auto', $height: null, $format: 'auto', $quality: 'auto', $dpr: 1, $crop: null, $gravity: null)": (
-          publicId,
-          width,
-          height,
-          format,
-          quality,
-          dpr,
-          crop,
-          gravity
-        ) => {
-          return new sass.types.String(
-            `url(${cloudinary.url(publicId.getValue(), {
-              crop: sass.NULL === crop ? null : crop.getValue(),
-              dpr: dpr.getValue(),
-              fetch_format: format.getValue(),
-              gravity: sass.NULL === gravity ? null : gravity.getValue(),
-              height: sass.NULL === height ? null : height.getValue(),
-              quality: quality.getValue(),
-              width: width.getValue(),
-              secure: true
-            })})`
-          );
-        }
+        "cloudinaryUrl($publicId, $width: 'auto', $height: null, $format: 'auto', $quality: 'auto', $dpr: 1, $crop: null, $gravity: null)": sassCloudinaryUrl
       }
     },
     postcss: {
@@ -44,29 +86,7 @@ module.exports = {
     nunjucksRender: {
       filters: {
         split: (str, seperator) => str.split(seperator),
-        cloudinaryUrl: (
-          publicId,
-          {
-            width = "auto",
-            height,
-            format = "auto",
-            quality = "auto",
-            dpr = 1,
-            crop,
-            gravity
-          } = {}
-        ) => {
-          return cloudinary.url(publicId, {
-            crop,
-            dpr,
-            fetch_format: format,
-            gravity,
-            height,
-            quality,
-            secure: true,
-            width
-          });
-        }
+        cloudinaryUrl
       },
       envOptions: {
         watch: false
@@ -76,7 +96,7 @@ module.exports = {
       collapseBooleanAttributes: true,
       decodeEntities: true,
       minifyCSS: true,
-      minifyJS: true,
+      minifyJS,
       removeAttributeQuotes: true,
       removeOptionalTags: true,
       removeRedundantAttributes: true,
