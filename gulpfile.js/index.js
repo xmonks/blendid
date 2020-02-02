@@ -38,6 +38,7 @@ if (global.Intl) {
 
 require("./tasks/browserSync");
 require("./tasks/clean");
+require("./tasks/cloudinary");
 require("./tasks/fonts");
 require("./tasks/html");
 require("./tasks/images");

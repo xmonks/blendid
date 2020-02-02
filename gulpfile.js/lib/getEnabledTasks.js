@@ -2,7 +2,7 @@ const compact = require("lodash/compact");
 const isEmpty = require("lodash/isEmpty");
 
 // Grouped by what can run in parallel
-const assetTasks = ["fonts", "iconFont", "images", "svgSprite"];
+const assetTasks = ["cloudinary", "fonts", "iconFont", "images", "svgSprite"];
 const codeTasks = ["html", "stylesheets", "javascripts"];
 
 module.exports = function(env) {

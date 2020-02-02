@@ -37,5 +37,5 @@ const cloudinaryTask = () =>
     )
     .pipe(dest(projectPath(PATH_CONFIG.src, PATH_CONFIG.data.src)));
 
-task("cloudinaryUpload", cloudinaryTask);
+task("cloudinary", cloudinaryTask);
 module.exports = cloudinaryTask;
