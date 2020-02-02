@@ -2499,13 +2499,6 @@ growly@^1.3.0:
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
   integrity sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=
 
-gulp-changed-in-place@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/gulp-changed-in-place/-/gulp-changed-in-place-2.3.0.tgz#de4150c276d8c0052451caf2f0c7d2be17e76888"
-  integrity sha1-3kFQwnbYwAUkUcry8MfSvhfnaIg=
-  dependencies:
-    through2 "^2.0.0"
-
 gulp-changed@4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/gulp-changed/-/gulp-changed-4.0.2.tgz#387c6b05a3d18519281516ebf8f49f2d5d56efd3"
@@ -2541,9 +2534,9 @@ gulp-cli@^2.2.0:
     v8flags "^3.0.1"
     yargs "^7.1.0"
 
-"gulp-cloudinary-upload@https://github.com/topmonks/gulp-cloudinary-upload.git#4bd78d6776c040df8d8ec655d4f4f9a3d42978bc":
+"gulp-cloudinary-upload@https://github.com/topmonks/gulp-cloudinary-upload.git#50b82e73a9d9cd4b350647b8717e843c1acd201a":
   version "0.0.0-development"
-  resolved "https://github.com/topmonks/gulp-cloudinary-upload.git#4bd78d6776c040df8d8ec655d4f4f9a3d42978bc"
+  resolved "https://github.com/topmonks/gulp-cloudinary-upload.git#50b82e73a9d9cd4b350647b8717e843c1acd201a"
   dependencies:
     cloudinary "^1.13.1"
     plugin-error "^1.0.1"

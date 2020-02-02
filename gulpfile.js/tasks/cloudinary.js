@@ -1,8 +1,7 @@
 if (!TASK_CONFIG.cloudinary) return;
 
-const { task, src, dest } = require("gulp");
+const { task, src, dest, lastRun } = require("gulp");
 const cloudinaryUpload = require("gulp-cloudinary-upload");
-const changedInPlace = require("gulp-changed-in-place");
 const path = require("path");
 const projectPath = require("../lib/projectPath");
 
@@ -12,8 +11,9 @@ const paths = {
 };
 
 const cloudinaryTask = () =>
-  src(path.join(paths.src, "**", `*.{${TASK_CONFIG.cloudinary.extensions}}`))
-    //.pipe(changedInPlace({ firsPass: true }))
+  src(path.join(paths.src, "**", `*.{${TASK_CONFIG.cloudinary.extensions}}`), {
+    since: lastRun(cloudinaryTask)
+  })
     .pipe(
       cloudinaryUpload({
         folderResolver(filePath) {
