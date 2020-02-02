@@ -32,6 +32,10 @@
     "dest": ""
   },
 
+  "data": {
+    "src": "data"
+  },
+
   "fonts": {
     "src": "fonts",
     "dest": "fonts"
