@@ -118,6 +118,11 @@ module.exports = {
     extensions: ["jpg", "png", "svg", "gif"]
   },
 
+  cloudinary: {
+    extensions: ["*"],
+    manifest: "images.json"
+  },
+
   fonts: {
     extensions: ["woff2", "woff", "eot", "ttf", "svg"]
   },

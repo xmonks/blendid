@@ -1068,7 +1068,7 @@ cloneable-readable@^1.0.0:
     process-nextick-args "^2.0.0"
     readable-stream "^2.3.5"
 
-cloudinary@^1.19.0:
+cloudinary@^1.13.1, cloudinary@^1.19.0:
   version "1.19.0"
   resolved "https://registry.yarnpkg.com/cloudinary/-/cloudinary-1.19.0.tgz#333dafb53ee32efea5457e28a80ecb8f6d31e48c"
   integrity sha512-oEz4Fsqshd9SI7UAvF1CCyAmt3wgsv8tK1eRY0900gQaq+wP8TAzpruxpbQCmxvF6gL9Po7OpO0m0Jefx6uK8w==
@@ -2499,6 +2499,13 @@ growly@^1.3.0:
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
   integrity sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=
 
+gulp-changed-in-place@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/gulp-changed-in-place/-/gulp-changed-in-place-2.3.0.tgz#de4150c276d8c0052451caf2f0c7d2be17e76888"
+  integrity sha1-3kFQwnbYwAUkUcry8MfSvhfnaIg=
+  dependencies:
+    through2 "^2.0.0"
+
 gulp-changed@4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/gulp-changed/-/gulp-changed-4.0.2.tgz#387c6b05a3d18519281516ebf8f49f2d5d56efd3"
@@ -2533,6 +2540,16 @@ gulp-cli@^2.2.0:
     semver-greatest-satisfied-range "^1.1.0"
     v8flags "^3.0.1"
     yargs "^7.1.0"
+
+"gulp-cloudinary-upload@https://github.com/topmonks/gulp-cloudinary-upload.git#4bd78d6776c040df8d8ec655d4f4f9a3d42978bc":
+  version "0.0.0-development"
+  resolved "https://github.com/topmonks/gulp-cloudinary-upload.git#4bd78d6776c040df8d8ec655d4f4f9a3d42978bc"
+  dependencies:
+    cloudinary "^1.13.1"
+    plugin-error "^1.0.1"
+    through2 "^3.0.0"
+    vinyl "^2.1.0"
+    vinyl-file "^3.0.0"
 
 gulp-data@1.3.1:
   version "1.3.1"
@@ -6124,7 +6141,7 @@ through2@^0.6.5:
     readable-stream ">=1.0.33-1 <1.1.0-0"
     xtend ">=4.0.0 <4.1.0-0"
 
-through2@^3.0.1:
+through2@^3.0.0, through2@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/through2/-/through2-3.0.1.tgz#39276e713c3302edf9e388dd9c812dd3b825bd5a"
   integrity sha512-M96dvTalPT3YbYLaKaCuwu+j06D/8Jfib0o/PxbVt6Amhv3dUAtW6rTV1jPgJSBG83I/e04Y6xkVdVhSRhi0ww==

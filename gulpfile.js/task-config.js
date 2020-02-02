@@ -3,6 +3,7 @@ const pathConfig = require("./path-config.json");
 module.exports = {
   html: true,
   images: true,
+  cloudinary: false,
   fonts: true,
   static: true,
   svgSprite: true,
