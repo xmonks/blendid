@@ -30,7 +30,8 @@ const cloudinaryTask = () =>
     )
     .pipe(
       cloudinaryUpload.manifest({
-        path: path.join(paths.dest, TASK_CONFIG.cloudinary.manifest)
+        path: path.join(paths.dest, TASK_CONFIG.cloudinary.manifest),
+        merge: true
       })
     )
     .pipe(dest(paths.dest));

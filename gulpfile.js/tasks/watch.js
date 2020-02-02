@@ -8,6 +8,7 @@ const watchTask = function(done) {
     "fonts",
     "iconFont",
     "images",
+    "cloudinary",
     "svgSprite",
     "html",
     "stylesheets",
@@ -20,10 +21,6 @@ const watchTask = function(done) {
         return PATH_CONFIG.icons;
       case "svgSprite":
         return PATH_CONFIG.icons;
-      case "html":
-        return PATH_CONFIG.html;
-      case "static":
-        return PATH_CONFIG.static;
       default:
         return PATH_CONFIG[taskName];
     }
