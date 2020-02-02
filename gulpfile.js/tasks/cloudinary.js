@@ -13,7 +13,7 @@ const paths = {
 
 const cloudinaryTask = () =>
   src(path.join(paths.src, "**", `*.{${TASK_CONFIG.cloudinary.extensions}}`))
-    .pipe(changedInPlace({ firsPass: true }))
+    //.pipe(changedInPlace({ firsPass: true }))
     .pipe(
       cloudinaryUpload({
         folderResolver(filePath) {
