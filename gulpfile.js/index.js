@@ -57,10 +57,6 @@ require("./tasks/workboxBuild");
 const init = TASK_CONFIG.additionalTasks.initialize || function() {};
 init(gulp, PATH_CONFIG, TASK_CONFIG);
 
-const noop = cb => {
-  cb();
-};
-
 gulp.task("build", function(done) {
   global.production = true;
 
@@ -75,42 +71,46 @@ gulp.task("build", function(done) {
   fs.mkdirSync(PATH_CONFIG.dest);
 
   const tasks = getEnabledTasks("production");
-  const rev = TASK_CONFIG.production.rev ? "rev" : noop;
-  const staticFiles = TASK_CONFIG.static ? "static" : noop;
-  const workboxBuild = TASK_CONFIG.workboxBuild ? "workboxBuild" : noop;
+  const rev = TASK_CONFIG.production.rev ? "rev" : null;
+  const staticFiles = TASK_CONFIG.static ? "static" : null;
+  const workboxBuild = TASK_CONFIG.workboxBuild ? "workboxBuild" : null;
   const { prebuild, postbuild } = TASK_CONFIG.additionalTasks.production;
 
-  const runTasks = gulp.series(
-    prebuild || noop,
-    tasks.assetTasks || noop,
-    tasks.codeTasks || noop,
+  const tasksToRun = [
+    prebuild,
+    tasks.assetTasks,
+    tasks.codeTasks,
     rev,
     "size-report",
     staticFiles,
-    postbuild || noop,
+    postbuild,
     "replaceFiles",
     workboxBuild
-  );
+  ].filter(Boolean);
+
+  const runTasks = gulp.series(tasksToRun);
   runTasks();
   done();
 });
 
 gulp.task("default", function(done) {
   const tasks = getEnabledTasks("watch");
-  const staticFiles = TASK_CONFIG.static ? "static" : noop;
-  const workboxBuild = TASK_CONFIG.workboxBuild ? "workboxBuild" : noop;
+  const staticFiles = TASK_CONFIG.static ? "static" : null;
+  const workboxBuild = TASK_CONFIG.workboxBuild ? "workboxBuild" : null;
   const { prebuild, postbuild } = TASK_CONFIG.additionalTasks.development;
 
-  const runTasks = gulp.series(
+  const tasksToRun = [
     "clean",
-    prebuild || noop,
-    tasks.assetTasks || noop,
-    tasks.codeTasks || noop,
+    prebuild,
+    tasks.assetTasks,
+    tasks.codeTasks,
     staticFiles,
-    postbuild || noop,
+    postbuild,
     workboxBuild,
     "watch"
-  );
+  ].filter(Boolean);
+
+  const runTasks = gulp.series(tasksToRun);
   runTasks();
   done();
 });
