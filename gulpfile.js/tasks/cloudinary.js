@@ -14,7 +14,7 @@ const cloudinaryTask = () =>
       `**/*.{${TASK_CONFIG.cloudinary.extensions}}`
     )
   )
-    //.pipe(changedInPlace())
+    .pipe(changedInPlace())
     .pipe(
       cloudinaryUpload({
         folderResolver(filePath) {
