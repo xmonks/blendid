@@ -12,6 +12,7 @@ describe("getEnabledTasks", function() {
     describe("#assetTasks", function() {
       beforeEach(function() {
         TASK_CONFIG = {
+          cloudinary: true,
           fonts: true,
           iconFont: true,
           images: true,
@@ -22,6 +23,7 @@ describe("getEnabledTasks", function() {
       it("returns all tasks when none disabled", function() {
         const tasks = getEnabledTasks(ENV);
         assert.deepEqual(tasks.assetTasks, [
+          "cloudinary",
           "fonts",
           "iconFont",
           "images",
@@ -34,7 +36,7 @@ describe("getEnabledTasks", function() {
         TASK_CONFIG["svgSprite"] = false;
 
         const tasks = getEnabledTasks(ENV);
-        assert.deepEqual(tasks.assetTasks, ["fonts", "images"]);
+        assert.deepEqual(tasks.assetTasks, ["cloudinary", "fonts", "images"]);
       });
 
       it("returns false when all disabled", function() {
@@ -87,6 +89,7 @@ describe("getEnabledTasks", function() {
     describe("#assetTasks", function() {
       beforeEach(function() {
         TASK_CONFIG = {
+          cloudinary: true,
           fonts: true,
           iconFont: true,
           images: true,
@@ -97,6 +100,7 @@ describe("getEnabledTasks", function() {
       it("returns all tasks when none disabled", function() {
         const tasks = getEnabledTasks(ENV);
         assert.deepEqual(tasks.assetTasks, [
+          "cloudinary",
           "fonts",
           "iconFont",
           "images",
@@ -109,7 +113,7 @@ describe("getEnabledTasks", function() {
         TASK_CONFIG["svgSprite"] = false;
 
         const tasks = getEnabledTasks(ENV);
-        assert.deepEqual(tasks.assetTasks, ["fonts", "images"]);
+        assert.deepEqual(tasks.assetTasks, ["cloudinary", "fonts", "images"]);
       });
 
       it("returns false when all disabled", function() {

@@ -19,7 +19,7 @@
   "scripts": {
     "start": "gulp",
     "build": "gulp build",
-    "dev:test": "mocha ./gulpfile.js/**/*.test.js"
+    "test": "mocha ./gulpfile.js/**/*.test.js"
   },
   "dependencies": {
     "ansi-colors": "4.1.1",
