@@ -39,6 +39,13 @@ const cloudinaryTask = () =>
       changed(paths.dest, {
         async hasChanged(stream, sourceFile, targetPath) {
           const manifest = await readManifest(paths.manifest);
+          console.log("hasChaged:", {
+            manifest,
+            image: manifest[getRelativePath(sourceFile.path)],
+            path: sourceFile.path,
+            relPath: getRelativePath(sourceFile.path),
+            manifestPath: paths.manifest
+          });
           if (!(manifest && manifest[getRelativePath(sourceFile.path)])) {
             stream.push(sourceFile);
           }
