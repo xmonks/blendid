@@ -31,6 +31,13 @@ function getRelativePath(filePath) {
   );
 }
 
+function getRelativeFilePath(filePath) {
+  return path.relative(
+    paths.src,
+    path.resolve(__dirname, filePath)
+  );
+}
+
 const cloudinaryTask = () =>
   src(path.join(paths.src, "**", `*.{${TASK_CONFIG.cloudinary.extensions}}`), {
     since: lastRun(cloudinaryTask)
@@ -39,14 +46,14 @@ const cloudinaryTask = () =>
       changed(paths.dest, {
         async hasChanged(stream, sourceFile, targetPath) {
           const manifest = await readManifest(paths.manifest);
+          const imagePath = getRelativeFilePath(sourceFile.path);
           console.log("hasChaged:", {
-            manifest,
-            image: manifest[getRelativePath(sourceFile.path)],
+            image: manifest[imagePath],
             path: sourceFile.path,
-            relPath: getRelativePath(sourceFile.path),
+            relPath: imagePath,
             manifestPath: paths.manifest
           });
-          if (!(manifest && manifest[getRelativePath(sourceFile.path)])) {
+          if (!(manifest && manifest[imagePath])) {
             stream.push(sourceFile);
           }
         }
