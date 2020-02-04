@@ -17,7 +17,7 @@ const paths = {
   )
 };
 
-async function readManifest(path) {
+function readManifest(path) {
   return fs.promises
     .readFile(path, "utf-8")
     .then(x => JSON.parse(x))
@@ -44,15 +44,9 @@ const cloudinaryTask = () =>
   })
     .pipe(
       changed(paths.dest, {
-        async hasChanged(stream, sourceFile, targetPath) {
+        async hasChanged(stream, sourceFile) {
           const manifest = await readManifest(paths.manifest);
           const imagePath = getRelativeFilePath(sourceFile.path);
-          console.log("hasChaged:", {
-            image: manifest[imagePath],
-            path: sourceFile.path,
-            relPath: imagePath,
-            manifestPath: paths.manifest
-          });
           if (!(manifest && manifest[imagePath])) {
             stream.push(sourceFile);
           }
