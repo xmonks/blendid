@@ -34,14 +34,14 @@ function resolveInputPaths(modules, src) {
   return input;
 }
 
-function registerDefaultPlugins(plugins) {
+function registerDefaultPlugins(plugins, replacePlugins, terserOptions) {
   // Enable node_modules resolution for browser packages
-  const result = TASK_CONFIG.javascripts.replacePlugins
+  const result = replacePlugins
     ? [...plugins]
     : [resolve({ browser: true }), ...plugins];
   // Minify production build
   if (global.production) {
-    result.push(terser(TASK_CONFIG.javascripts.terser));
+    result.push(terser(terserOptions));
   }
   return result;
 }
@@ -52,15 +52,23 @@ const paths = {
 };
 
 task("javascripts", async function() {
-  const { modules = {}, plugins = [], output = {} } = TASK_CONFIG.javascripts;
+  const {
+    modules = {},
+    plugins = [],
+    output = {},
+    replacePlugins,
+    terser: terserOptions,
+    ...rest
+  } = TASK_CONFIG.javascripts;
   // Rollup resolves imports relative to working directory. Gulp restores it per task
   process.chdir(paths.src);
   const bundle = await rollup.rollup({
     input: resolveInputPaths(modules, paths.src),
-    plugins: registerDefaultPlugins(plugins)
+    plugins: registerDefaultPlugins(plugins, replacePlugins, terserOptions),
+    ...rest
   });
   const options = {
-    entryFileNames: "[name].js",
+    entryFileNames: "[name].mjs",
     dir: paths.dest,
     format: "esm",
     ...output
