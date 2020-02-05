@@ -57,6 +57,7 @@ task("javascripts", async function() {
     plugins = [],
     output = {},
     replacePlugins,
+    extensions,
     terser: terserOptions,
     ...rest
   } = TASK_CONFIG.javascripts;

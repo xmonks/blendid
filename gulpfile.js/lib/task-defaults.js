@@ -80,7 +80,8 @@ function minifyJS(text, inline) {
 
 module.exports = {
   javascripts: {
-    terser: terserOptions
+    terser: terserOptions,
+    extensions: ["js", "mjs", "cjs"]
   },
 
   stylesheets: {
