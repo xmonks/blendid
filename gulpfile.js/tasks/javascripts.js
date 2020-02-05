@@ -36,7 +36,9 @@ function resolveInputPaths(modules, src) {
 
 function registerDefaultPlugins(plugins) {
   // Enable node_modules resolution for browser packages
-  const result = [resolve({ browser: true }), ...plugins];
+  const result = TASK_CONFIG.javascripts.replacePlugins
+    ? [...plugins]
+    : [resolve({ browser: true }), ...plugins];
   // Minify production build
   if (global.production) {
     result.push(terser(TASK_CONFIG.javascripts.terser));
