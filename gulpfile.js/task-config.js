@@ -8,7 +8,11 @@ module.exports = {
   static: true,
   svgSprite: true,
   stylesheets: true,
-  javascripts: false,
+  javascripts: {
+    modules: {
+      app: "app.js"
+    }
+  },
 
   browserSync: {
     server: {

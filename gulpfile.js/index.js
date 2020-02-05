@@ -44,6 +44,7 @@ require("./tasks/html");
 require("./tasks/images");
 require("./tasks/init");
 require("./tasks/init-config");
+require("./tasks/javascripts");
 require("./tasks/replace-files");
 require("./tasks/sizereport");
 require("./tasks/static");

@@ -1,6 +1,6 @@
 if (!TASK_CONFIG.production.rev) return;
 
-const gulp = require("gulp");
+const { task, series } = require("gulp");
 
 require("./rev-assets");
 require("./rev-css");
@@ -10,7 +10,7 @@ require("./update-html");
 const updateHtml = TASK_CONFIG.html ? "update-html" : false;
 // If you are familiar with Rails, this task the equivalent of `rake assets:precompile`
 const revTask = function() {
-  return gulp.series(
+  return series(
     // 1) Add md5 hashes to assets referenced by CSS and JS files
     "rev-assets",
     // 2) Update asset references (images, fonts, etc) with reved filenames in compiled css + js
@@ -22,5 +22,5 @@ const revTask = function() {
   );
 };
 
-gulp.task("rev", revTask());
+task("rev", revTask());
 module.exports = revTask();

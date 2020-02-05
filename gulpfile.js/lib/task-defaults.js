@@ -4,6 +4,12 @@ const cloudinary = require("cloudinary").v2;
 const terser = require("terser");
 const { minifyHTMLLiterals } = require("minify-html-literals");
 
+const terserOptions = {
+  mangle: false,
+  module: true,
+  ecma: 2018
+};
+
 function cloudinaryUrl(
   publicId,
   {
@@ -60,11 +66,10 @@ function minifyJS(text, inline) {
     fileName: "yolo.js",
     shouldMinify: ({ tag }) => tag && litTags.has(tag.toLowerCase())
   });
-  const res = terser.minify(min ? min.code : text, {
-    mangle: false,
-    module: true,
-    ecma: 2018
-  });
+  const res = terser.minify(
+    min ? min.code : text,
+    Object.assign({}, terserOptions) // create copy because options are mutated
+  );
   if (res.warnings) console.log(res.warnings);
   if (res.error) {
     console.log(text);
@@ -74,7 +79,9 @@ function minifyJS(text, inline) {
 }
 
 module.exports = {
-  javascripts: {},
+  javascripts: {
+    terser: terserOptions
+  },
 
   stylesheets: {
     sass: {

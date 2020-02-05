@@ -37,7 +37,7 @@ const watchTask = function(done) {
         (taskConfig.extensions
           ? ".{" + taskConfig.extensions.join(",") + "}"
           : "");
-      watch(path.join(srcPath, globPattern), series(taskName));
+      watch(path.join(srcPath, globPattern), task(taskName));
     }
   });
   watch(projectPath(PATH_CONFIG.dest, "**/*")).on("change", browserSync.reload);
