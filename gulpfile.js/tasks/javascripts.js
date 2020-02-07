@@ -5,6 +5,7 @@ const { task } = require("gulp");
 const path = require("path");
 const rollup = require("rollup");
 const { terser } = require("rollup-plugin-terser");
+const alias = require("@rollup/plugin-alias");
 const resolve = require("@rollup/plugin-node-resolve");
 const projectPath = require("../lib/projectPath");
 
@@ -35,10 +36,17 @@ function resolveInputPaths(modules, src) {
 }
 
 function registerDefaultPlugins(plugins, replacePlugins, terserOptions) {
-  // Enable node_modules resolution for browser packages
   const result = replacePlugins
     ? [...plugins]
-    : [resolve({ browser: true }), ...plugins];
+    : [
+        // Solves common problem with tslib resolution
+        alias({
+          entries: [{ find: "tslib", replacement: "tslib/tslib.es6.js" }]
+        }),
+        // Enable node_modules resolution for browser packages
+        resolve({ browser: true }),
+        ...plugins
+      ];
   // Minify production build
   if (global.production) {
     result.push(terser(terserOptions));
