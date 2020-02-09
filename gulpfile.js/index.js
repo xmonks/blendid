@@ -79,8 +79,8 @@ gulp.task("build", function(done) {
 
   const tasksToRun = [
     prebuild,
-    tasks.assetTasks,
-    tasks.codeTasks,
+    gulp.parallel(...tasks.assetTasks),
+    gulp.parallel(...tasks.codeTasks),
     rev,
     "size-report",
     staticFiles,
@@ -103,8 +103,8 @@ gulp.task("default", function(done) {
   const tasksToRun = [
     "clean",
     prebuild,
-    tasks.assetTasks,
-    tasks.codeTasks,
+    gulp.parallel(...tasks.assetTasks),
+    gulp.parallel(...tasks.codeTasks),
     staticFiles,
     postbuild,
     workboxBuild,
