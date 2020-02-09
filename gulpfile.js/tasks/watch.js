@@ -12,6 +12,7 @@ const watchTask = function(done) {
     "svgSprite",
     "html",
     "stylesheets",
+    "javascripts",
     "static"
   ];
 
