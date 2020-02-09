@@ -139,6 +139,10 @@ module.exports = {
     svgstore: {}
   },
 
+  watch: {
+    tasks: []
+  },
+
   workboxBuild: {},
 
   production: {

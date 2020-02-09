@@ -1,5 +1,4 @@
 const { task, series, watch } = require("gulp");
-const path = require("path");
 const browserSync = require("browser-sync");
 const projectPath = require("../lib/projectPath");
 
@@ -13,7 +12,8 @@ const watchTask = function(done) {
     "html",
     "stylesheets",
     "javascripts",
-    "static"
+    "static",
+    ...TASK_CONFIG.watch.tasks
   ];
 
   function getTaskPathFor(taskName) {
@@ -38,7 +38,7 @@ const watchTask = function(done) {
         (taskConfig.extensions
           ? ".{" + taskConfig.extensions.join(",") + "}"
           : "");
-      watch(globPattern, { cwd: srcPath }, series(taskName));
+      watch(globPattern, { cwd: srcPath }, task(taskName));
     }
   });
   watch(projectPath(PATH_CONFIG.dest, "**/*")).on("change", browserSync.reload);
