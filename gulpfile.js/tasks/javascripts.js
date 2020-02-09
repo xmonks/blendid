@@ -70,6 +70,7 @@ const rollupTask = async function() {
     ...rest
   } = TASK_CONFIG.javascripts;
   // Rollup resolves imports relative to working directory. Gulp restores it per task
+  const origWd = process.cwd();
   process.chdir(paths.src);
   const bundle = await rollup.rollup({
     input: resolveInputPaths(modules, paths.src),
@@ -83,7 +84,9 @@ const rollupTask = async function() {
     ...output
   };
   await writeBundleManifest(bundle, options);
-  return bundle.write(options);
+  const result = await bundle.write(options);
+  process.chdir(origWd);
+  return result;
 };
 task("javascripts", rollupTask);
 module.exports = rollupTask;
