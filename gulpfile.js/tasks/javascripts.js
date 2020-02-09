@@ -59,7 +59,7 @@ const paths = {
   dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.javascripts.dest)
 };
 
-task("javascripts", async function() {
+const rollupTask = async function() {
   const {
     modules = {},
     plugins = [],
@@ -77,11 +77,13 @@ task("javascripts", async function() {
     ...rest
   });
   const options = {
-    entryFileNames: "[name].mjs",
+    entryFileNames: "[name].js",
     dir: paths.dest,
     format: "esm",
     ...output
   };
   await writeBundleManifest(bundle, options);
   return bundle.write(options);
-});
+};
+task("javascripts", rollupTask);
+module.exports = rollupTask;
