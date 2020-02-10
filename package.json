@@ -74,6 +74,6 @@
     "prettier": "^1.19.1"
   },
   "resolutions": {
-    "html-minifier": "https://github.com/rarous/html-minifier-terser.git#4b9949c288c9a57ea47ff1bfeac781e9b8b5ea99"
+    "html-minifier": "npm:html-minifier-terser@5.0.3"
   }
 }
