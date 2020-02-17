@@ -5514,6 +5514,14 @@ rimraf@~2.2.0:
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
   integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
 
+rollup-plugin-minify-html-literals@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-minify-html-literals/-/rollup-plugin-minify-html-literals-1.2.3.tgz#266ab8413be46c4b7744736ff29e90bd3195ad9f"
+  integrity sha512-7Oj1v5fa8eT0aQMsOUq9gO1E60MqGgeFMTMyFLYpzBP5q83gRSOp0YDIa/iPoItx9WBrciuNqqFdThY6YvUwQA==
+  dependencies:
+    minify-html-literals "^1.3.0"
+    rollup-pluginutils "^2.8.2"
+
 rollup-plugin-terser@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-terser/-/rollup-plugin-terser-5.2.0.tgz#ba758adf769347b7f1eaf9ef35978d2e207dccc7"

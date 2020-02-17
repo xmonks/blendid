@@ -5,6 +5,7 @@ const { task } = require("gulp");
 const path = require("path");
 const rollup = require("rollup");
 const { terser } = require("rollup-plugin-terser");
+const minifyHtmlLits = require("rollup-plugin-minify-html-literals");
 const alias = require("@rollup/plugin-alias");
 const resolve = require("@rollup/plugin-node-resolve");
 const projectPath = require("../lib/projectPath");
@@ -49,7 +50,7 @@ function registerDefaultPlugins(plugins, replacePlugins, terserOptions) {
       ];
   // Minify production build
   if (global.production) {
-    result.push(terser(terserOptions));
+    result.push(minifyHtmlLits(), terser(terserOptions));
   }
   return result;
 }
