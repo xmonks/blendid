@@ -20,5 +20,5 @@ const revTasks = [
 ].filter(Boolean);
 const revTask = series(revTasks);
 
-task("rev", revTask());
-module.exports = revTask();
+task("rev", revTask);
+module.exports = revTask;
