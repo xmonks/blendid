@@ -12,13 +12,8 @@ module.exports = function(env) {
     }
   }
 
-  function exists(value) {
-    return !!value;
-  }
-
   function findExistingTasks(candidates) {
-    const tasks = compact(candidates.map(matchFilter).filter(exists));
-
+    const tasks = compact(candidates.map(matchFilter).filter(Boolean));
     return isEmpty(tasks) ? false : tasks;
   }
 
