@@ -48,9 +48,9 @@ function registerDefaultPlugins(plugins, replacePlugins, terserOptions) {
         ...plugins
       ];
   // Minify production build
-  if (global.production) {
-    result.push(terser(terserOptions));
-  }
+  //if (global.production) {
+   // result.push(terser(terserOptions));
+  //}
   return result;
 }
 
