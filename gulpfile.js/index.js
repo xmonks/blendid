@@ -45,7 +45,6 @@ require("./tasks/images");
 require("./tasks/init");
 require("./tasks/init-config");
 require("./tasks/javascripts");
-require("./tasks/replace-files");
 require("./tasks/sizereport");
 require("./tasks/static");
 require("./tasks/stylesheets");
@@ -58,49 +57,13 @@ require("./tasks/workboxBuild");
 const init = TASK_CONFIG.additionalTasks.initialize || function() {};
 init(gulp, PATH_CONFIG, TASK_CONFIG);
 
-gulp.task("build", function(done) {
-  global.production = true;
-
-  // Build to a temporary directory, then move compiled files as a last step
-  PATH_CONFIG.finalDest = PATH_CONFIG.dest;
-  PATH_CONFIG.dest = PATH_CONFIG.temp
-    ? projectPath(PATH_CONFIG.temp)
-    : path.join(os.tmpdir(), "blendid");
-
-  // Make sure the temp directory exists and is empty
-  del.sync(PATH_CONFIG.dest, { force: true });
-  fs.mkdirSync(PATH_CONFIG.dest);
-
-  const tasks = getEnabledTasks("production");
-  const rev = TASK_CONFIG.production.rev ? "rev" : null;
-  const staticFiles = TASK_CONFIG.static ? "static" : null;
-  const workboxBuild = TASK_CONFIG.workboxBuild ? "workboxBuild" : null;
-  const { prebuild, postbuild } = TASK_CONFIG.additionalTasks.production;
-
-  const tasksToRun = [
-    prebuild,
-    gulp.parallel(...tasks.assetTasks),
-    gulp.parallel(...tasks.codeTasks),
-    rev,
-    "size-report",
-    staticFiles,
-    postbuild,
-    "replaceFiles",
-    workboxBuild
-  ].filter(Boolean);
-
-  const runTasks = gulp.series(tasksToRun);
-  runTasks();
-  done();
-});
-
-gulp.task("default", function(done) {
+const devTasks = function() {
   const tasks = getEnabledTasks("watch");
   const staticFiles = TASK_CONFIG.static ? "static" : null;
   const workboxBuild = TASK_CONFIG.workboxBuild ? "workboxBuild" : null;
   const { prebuild, postbuild } = TASK_CONFIG.additionalTasks.development;
 
-  const tasksToRun = [
+  return [
     "clean",
     prebuild,
     gulp.parallel(...tasks.assetTasks),
@@ -110,8 +73,29 @@ gulp.task("default", function(done) {
     workboxBuild,
     "watch"
   ].filter(Boolean);
+};
 
-  const runTasks = gulp.series(tasksToRun);
-  runTasks();
-  done();
-});
+const prodTasks = function() {
+  global.production = true;
+
+  const { assetTasks, codeTasks } = getEnabledTasks("production");
+  const rev = TASK_CONFIG.production.rev ? "rev" : null;
+  const staticFiles = TASK_CONFIG.static ? "static" : null;
+  const workboxBuild = TASK_CONFIG.workboxBuild ? "workboxBuild" : null;
+  const { prebuild, postbuild } = TASK_CONFIG.additionalTasks.production;
+
+  return [
+    "clean",
+    prebuild,
+    gulp.parallel(assetTasks),
+    gulp.parallel(codeTasks),
+    rev,
+    staticFiles,
+    postbuild,
+    workboxBuild,
+    "size-report"
+  ].filter(Boolean);
+};
+
+exports.build = gulp.series(prodTasks());
+exports.default = gulp.series(devTasks());
