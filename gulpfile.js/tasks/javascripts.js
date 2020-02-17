@@ -4,10 +4,6 @@ const fs = require("fs");
 const { task } = require("gulp");
 const path = require("path");
 const rollup = require("rollup");
-const { terser } = require("rollup-plugin-terser");
-const minifyHtmlLits = require("rollup-plugin-minify-html-literals");
-const alias = require("@rollup/plugin-alias");
-const resolve = require("@rollup/plugin-node-resolve");
 const projectPath = require("../lib/projectPath");
 
 /**
@@ -37,20 +33,32 @@ function resolveInputPaths(modules, src) {
 }
 
 function registerDefaultPlugins(plugins, replacePlugins, terserOptions) {
-  const result = replacePlugins
-    ? [...plugins]
-    : [
-        // Solves common problem with tslib resolution
-        alias({
-          entries: [{ find: "tslib", replacement: "tslib/tslib.es6.js" }]
-        }),
-        // Enable node_modules resolution for browser packages
-        resolve({ browser: true }),
-        ...plugins
-      ];
+  // create shallow copy so we don't modify our parameters
+  const result = [...plugins];
+  if (!replacePlugins) {
+    const alias = require("@rollup/plugin-alias");
+    const resolve = require("@rollup/plugin-node-resolve");
+    result.unshift(
+      // Solves common problem with tslib resolution
+      alias({
+        entries: [{ find: "tslib", replacement: "tslib/tslib.es6.js" }]
+      }),
+      // Enable node_modules resolution for browser packages
+      resolve({ browser: true })
+    );
+  }
   // Minify production build
   if (global.production) {
-    result.push(minifyHtmlLits(), terser(terserOptions));
+    const { terser } = require("rollup-plugin-terser");
+    const {
+      default: minifyHtml
+    } = require("rollup-plugin-minify-html-literals");
+    result.push(
+      // minifies lit-html literals
+      minifyHtml(),
+      // minifies EcmaScript code
+      terser(terserOptions)
+    );
   }
   return result;
 }
