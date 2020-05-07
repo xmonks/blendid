@@ -12,7 +12,7 @@ const html = require("./html");
 const svgSpriteTask = function() {
   const settings = {
     src: projectPath(PATH_CONFIG.src, PATH_CONFIG.icons.src, "*.svg"),
-    dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.html.src)
+    dest: projectPath(PATH_CONFIG.src, PATH_CONFIG.html.src)
   };
 
   const svgs = gulp
@@ -26,32 +26,25 @@ const svgSpriteTask = function() {
         return {
           plugins: [
             { removeXMLNS: true },
+            { prefixIDs: { prefix } },
             {
               cleanupIDs: {
                 prefix: prefix + "-",
-                minify: true
+                minify: true,
+                force: true
               }
             }
           ]
         };
       })
     )
-    .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore))
-    .pipe(debug());
+    .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore));
   const paths = html.getPaths();
   return gulp
     .src(paths.src)
     .pipe(
       inject(svgs, {
-        transform: (_, file) => {
-          console.log(file)
-          console.log("============================")
-          console.log(file.contents.toString())
-          console.log("============================")
-          console.log(file._contents.toString())
-          console.log("============================")
-          return file.contents.toString()
-        }
+        transform: (_, file) => file.contents.toString()
       })
     )
     .pipe(gulp.dest(settings.dest));
