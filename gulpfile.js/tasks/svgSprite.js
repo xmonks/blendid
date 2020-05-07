@@ -41,7 +41,7 @@ const svgSpriteTask = function() {
     .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore));
   const paths = html.getPaths();
   return gulp
-    .src(paths.dest)
+    .src(path.join(paths.dest, "**/*.{" + TASK_CONFIG.html.extensions + "}"))
     .pipe(
       inject(svgs, {
         transform: (_, file) => file.contents.toString()
