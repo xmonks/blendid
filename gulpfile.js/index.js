@@ -48,7 +48,6 @@ require("./tasks/javascripts");
 require("./tasks/sizereport");
 require("./tasks/static");
 require("./tasks/stylesheets");
-require("./tasks/svgSprite");
 require("./tasks/watch");
 require("./tasks/rev");
 require("./tasks/workboxBuild");
@@ -68,7 +67,6 @@ const devTasks = function() {
     prebuild,
     gulp.parallel(...tasks.assetTasks),
     gulp.parallel(...tasks.codeTasks),
-    "svgSprite",
     staticFiles,
     postbuild,
     workboxBuild,
@@ -90,7 +88,6 @@ const prodTasks = function() {
     prebuild,
     gulp.parallel(assetTasks),
     gulp.parallel(codeTasks),
-    "svgSprite",
     rev,
     staticFiles,
     postbuild,

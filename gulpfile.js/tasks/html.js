@@ -5,6 +5,9 @@ const gulp = require("gulp");
 const data = require("gulp-data");
 const gulpif = require("gulp-if");
 const htmlmin = require("gulp-htmlmin");
+const inject = require("gulp-inject");
+const svgmin = require("gulp-svgmin");
+const svgstore = require("gulp-svgstore");
 const nunjucksRender = require("gulp-nunjucks-render");
 const handleErrors = require("../lib/handleErrors");
 const projectPath = require("../lib/projectPath");
@@ -26,6 +29,7 @@ const getPaths = exclude => ({
     ),
     exclude
   ].filter(Boolean),
+  spritesSrc: projectPath(PATH_CONFIG.src, PATH_CONFIG.icons.src, "*.svg"),
   dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.html.dest)
 });
 
@@ -81,6 +85,30 @@ const htmlTask = function() {
     };
     delete TASK_CONFIG.html.nunjucksRender.filters;
   }
+  const svgs = TASK_CONFIG.svgSprite && gulp
+    .src(paths.spritesSrc)
+    .pipe(
+      svgmin(file => {
+        const prefix = path.basename(
+          file.relative,
+          path.extname(file.relative)
+        );
+        return {
+          plugins: [
+            { removeXMLNS: true },
+            { prefixIDs: { prefix } },
+            {
+              cleanupIDs: {
+                prefix: prefix + "-",
+                minify: true,
+                force: true
+              }
+            }
+          ]
+        };
+      })
+    )
+    .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore));
 
   return gulp
     .src(paths.src)
@@ -88,6 +116,11 @@ const htmlTask = function() {
     .on("error", handleErrors)
     .pipe(nunjucksRender(TASK_CONFIG.html.nunjucksRender))
     .on("error", handleErrors)
+    .pipe(gulpif(TASK_CONFIG.svgSprite,
+      inject(svgs, {
+        transform: (_, file) => file.contents.toString()
+      })
+    ))
     .pipe(gulpif(global.production, htmlmin(TASK_CONFIG.html.htmlmin)))
     .pipe(gulp.dest(paths.dest))
     .on("error", handleErrors);
