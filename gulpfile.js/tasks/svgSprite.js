@@ -2,6 +2,7 @@ if (!TASK_CONFIG.svgSprite) return;
 
 const gulp = require("gulp");
 const path = require("path");
+const debug = require("gulp-debug");
 const inject = require("gulp-inject");
 const svgmin = require("gulp-svgmin");
 const svgstore = require("gulp-svgstore");
@@ -29,8 +30,7 @@ const svgSpriteTask = function() {
         ]
       };
     })
-  );
-  console.dir(svgs);
+  ).pipe(debug());
   const paths = html.getPaths();
   return gulp
     .src(paths.src)
