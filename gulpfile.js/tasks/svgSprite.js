@@ -12,7 +12,7 @@ const html = require("./html");
 const svgSpriteTask = function() {
   const settings = {
     src: projectPath(PATH_CONFIG.src, PATH_CONFIG.icons.src, "*.svg"),
-    dest: projectPath(PATH_CONFIG.src, PATH_CONFIG.html.src)
+    dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.html.dest)
   };
 
   const svgs = gulp
@@ -41,7 +41,7 @@ const svgSpriteTask = function() {
     .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore));
   const paths = html.getPaths();
   return gulp
-    .src(paths.src)
+    .src(paths.dest)
     .pipe(
       inject(svgs, {
         transform: (_, file) => file.contents.toString()

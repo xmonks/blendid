@@ -17,21 +17,17 @@ const jsonData = pathConfig => name =>
     .then(f => JSON.parse(f))
     .catch(() => {});
 
-function getPaths(exclude) {
-
-  const paths = {
-    src: [
-      projectPath(
-        PATH_CONFIG.src,
-        PATH_CONFIG.html.src,
-        "**/*.{" + TASK_CONFIG.html.extensions + "}"
-      ),
-      exclude
-    ].filter(Boolean),
-    dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.html.dest)
-  };
-  return paths;
-}
+const getPaths = exclude => ({
+  src: [
+    projectPath(
+      PATH_CONFIG.src,
+      PATH_CONFIG.html.src,
+      "**/*.{" + TASK_CONFIG.html.extensions + "}"
+    ),
+    exclude
+  ].filter(Boolean),
+  dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.html.dest)
+});
 
 const htmlTask = function() {
   const exclude =
