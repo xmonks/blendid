@@ -17,14 +17,7 @@ const jsonData = pathConfig => name =>
     .then(f => JSON.parse(f))
     .catch(() => {});
 
-function getPaths() {
-  const exclude =
-    "!" +
-    projectPath(
-      PATH_CONFIG.src,
-      PATH_CONFIG.html.src,
-      "**/{" + TASK_CONFIG.html.excludeFolders.join(",") + "}/**"
-    );
+function getPaths(exclude) {
 
   const paths = {
     src: [
@@ -41,7 +34,15 @@ function getPaths() {
 }
 
 const htmlTask = function() {
-  const paths = getPaths();
+  const exclude =
+    "!" +
+    projectPath(
+      PATH_CONFIG.src,
+      PATH_CONFIG.html.src,
+      "**/{" + TASK_CONFIG.html.excludeFolders.join(",") + "}/**"
+    );
+
+  const paths = getPaths(exclude);
 
   const collectionsDataFunction =
     PATH_CONFIG.data &&
