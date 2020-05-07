@@ -27,7 +27,7 @@ function getPaths(exclude) {
         "**/*.{" + TASK_CONFIG.html.extensions + "}"
       ),
       exclude
-    ],
+    ].filter(Boolean),
     dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.html.dest)
   };
   return paths;
