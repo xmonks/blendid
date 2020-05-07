@@ -44,7 +44,12 @@ const svgSpriteTask = function() {
     .pipe(
       inject(svgs, {
         transform: (_, file) => {
-          console.dir(file)
+          console.log(file)
+          console.log("============================")
+          console.log(file.contents.toString())
+          console.log("============================")
+          console.log(file._contents.toString())
+          console.log("============================")
           return file.contents.toString()
         }
       })
