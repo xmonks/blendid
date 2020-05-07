@@ -33,6 +33,7 @@ const svgSpriteTask = function() {
       })
     )
     .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore));
+  console.dir(svgs)
   const paths = html.getPaths();
   return gulp.src(paths.src)
     .pipe(inject(svgs,  { transform: (_, file) => file.contents.toString() }))
