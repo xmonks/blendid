@@ -1,6 +1,7 @@
 if (!TASK_CONFIG.html) return;
 
 const fs = require("fs");
+const path = require("path");
 const gulp = require("gulp");
 const data = require("gulp-data");
 const gulpif = require("gulp-if");
