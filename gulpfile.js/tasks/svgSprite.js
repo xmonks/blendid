@@ -42,7 +42,12 @@ const svgSpriteTask = function() {
   return gulp
     .src(paths.src)
     .pipe(
-      inject(svgs)
+      inject(svgs, {
+        transform: (_, file) => {
+          console.dir(file)
+          return file.contents.toString()
+        }
+      })
     )
     .pipe(gulp.dest(settings.dest));
 };
