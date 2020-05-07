@@ -2,17 +2,19 @@ if (!TASK_CONFIG.svgSprite) return;
 
 const gulp = require("gulp");
 const path = require("path");
+const inject = require("gulp-inject");
 const svgmin = require("gulp-svgmin");
 const svgstore = require("gulp-svgstore");
 const projectPath = require("../lib/projectPath");
+const html = require("./html");
 
 const svgSpriteTask = function() {
   const settings = {
     src: projectPath(PATH_CONFIG.src, PATH_CONFIG.icons.src, "*.svg"),
-    dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.icons.dest)
+    dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.html.src)
   };
 
-  return gulp
+  const svgs = gulp
     .src(settings.src)
     .pipe(
       svgmin(file => {
@@ -30,7 +32,10 @@ const svgSpriteTask = function() {
         };
       })
     )
-    .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore))
+    .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore));
+  const paths = html.getPaths();
+  return svgs.src(paths.src)
+    .pipe(inject(svgs,  { transform: (_, file) => file.contents.toString() }))
     .pipe(gulp.dest(settings.dest));
 };
 

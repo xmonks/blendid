@@ -136,7 +136,9 @@ module.exports = {
   },
 
   svgSprite: {
-    svgstore: {}
+    svgstore: {
+      inlineSvg: true
+    }
   },
 
   watch: {

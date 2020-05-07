@@ -17,7 +17,7 @@ const jsonData = pathConfig => name =>
     .then(f => JSON.parse(f))
     .catch(() => {});
 
-const htmlTask = function() {
+function getPaths() {
   const exclude =
     "!" +
     projectPath(
@@ -37,6 +37,11 @@ const htmlTask = function() {
     ],
     dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.html.dest)
   };
+  return paths;
+}
+
+const htmlTask = function() {
+  const paths = getPaths();
 
   const collectionsDataFunction =
     PATH_CONFIG.data &&
@@ -95,3 +100,4 @@ const { alternateTask = () => htmlTask } = TASK_CONFIG.html;
 const task = alternateTask(gulp, PATH_CONFIG, TASK_CONFIG);
 gulp.task("html", task);
 module.exports = task;
+module.exports.getPaths = getPaths;
