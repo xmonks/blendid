@@ -14,29 +14,31 @@ const svgSpriteTask = function() {
     dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.html.src)
   };
 
-  const svgs = gulp
-    .src(settings.src)
-    .pipe(
-      svgmin(file => {
-        const prefix = path.basename(file.relative, path.extname(file.relative));
-        return {
-          plugins: [
-            { removeXMLNS: true },
-            {
-              cleanupIDs: {
-                prefix: prefix + "-",
-                minify: true
-              }
+  const svgs = gulp.src(settings.src).pipe(
+    svgmin(file => {
+      const prefix = path.basename(file.relative, path.extname(file.relative));
+      return {
+        plugins: [
+          { removeXMLNS: true },
+          {
+            cleanupIDs: {
+              prefix: prefix + "-",
+              minify: true
             }
-          ]
-        };
+          }
+        ]
+      };
+    })
+  );
+  console.dir(svgs);
+  const paths = html.getPaths();
+  return gulp
+    .src(paths.src)
+    .pipe(
+      inject(svgs.pipe(svgstore(TASK_CONFIG.svgSprite.svgstore)), {
+        transform: (_, file) => file.contents.toString()
       })
     )
-    .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore));
-  console.dir(svgs)
-  const paths = html.getPaths();
-  return gulp.src(paths.src)
-    .pipe(inject(svgs,  { transform: (_, file) => file.contents.toString() }))
     .pipe(gulp.dest(settings.dest));
 };
 
