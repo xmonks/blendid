@@ -2,6 +2,7 @@ if (!TASK_CONFIG.html) return;
 
 const fs = require("fs");
 const path = require("path");
+const Vinyl = require("vinyl");
 const gulp = require("gulp");
 const data = require("gulp-data");
 const gulpif = require("gulp-if");
@@ -86,30 +87,32 @@ const htmlTask = function() {
     };
     delete TASK_CONFIG.html.nunjucksRender.filters;
   }
-  const svgs = TASK_CONFIG.svgSprite && gulp
-    .src(paths.spritesSrc)
-    .pipe(
-      svgmin(file => {
-        const prefix = path.basename(
-          file.relative,
-          path.extname(file.relative)
-        );
-        return {
-          plugins: [
-            { removeXMLNS: true },
-            { prefixIDs: { prefix } },
-            {
-              cleanupIDs: {
-                prefix: prefix + "-",
-                minify: true,
-                force: true
-              }
-            }
-          ]
-        };
-      })
-    )
-    .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore));
+  const svgs = TASK_CONFIG.svgSprite
+    ? gulp
+        .src(paths.spritesSrc)
+        .pipe(
+          svgmin(file => {
+            const prefix = path.basename(
+              file.relative,
+              path.extname(file.relative)
+            );
+            return {
+              plugins: [
+                { removeXMLNS: true },
+                { prefixIDs: { prefix } },
+                {
+                  cleanupIDs: {
+                    prefix: prefix + "-",
+                    minify: true,
+                    force: true
+                  }
+                }
+              ]
+            };
+          })
+        )
+        .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore))
+    : new Vinyl();
 
   return gulp
     .src(paths.src)
@@ -117,11 +120,14 @@ const htmlTask = function() {
     .on("error", handleErrors)
     .pipe(nunjucksRender(TASK_CONFIG.html.nunjucksRender))
     .on("error", handleErrors)
-    .pipe(gulpif(TASK_CONFIG.svgSprite,
-      inject(svgs, {
-        transform: (_, file) => file.contents.toString()
-      })
-    ))
+    .pipe(
+      gulpif(
+        TASK_CONFIG.svgSprite,
+        inject(svgs, {
+          transform: (_, file) => file.contents.toString()
+        })
+      )
+    )
     .pipe(gulpif(global.production, htmlmin(TASK_CONFIG.html.htmlmin)))
     .pipe(gulp.dest(paths.dest))
     .on("error", handleErrors);
