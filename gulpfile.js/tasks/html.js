@@ -2,7 +2,6 @@ if (!TASK_CONFIG.html) return;
 
 const fs = require("fs");
 const path = require("path");
-const Vinyl = require("vinyl");
 const gulp = require("gulp");
 const data = require("gulp-data");
 const gulpif = require("gulp-if");
