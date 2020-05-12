@@ -57,7 +57,7 @@ const init = TASK_CONFIG.additionalTasks.initialize || function() {};
 init(gulp, PATH_CONFIG, TASK_CONFIG);
 
 const devTasks = function() {
-  const tasks = getEnabledTasks("watch");
+  const { assetTasks, codeTasks }  = getEnabledTasks("watch");
   const staticFiles = TASK_CONFIG.static ? "static" : null;
   const workboxBuild = TASK_CONFIG.workboxBuild ? "workboxBuild" : null;
   const { prebuild, postbuild } = TASK_CONFIG.additionalTasks.development;
@@ -65,8 +65,8 @@ const devTasks = function() {
   return [
     "clean",
     prebuild,
-    gulp.parallel(...tasks.assetTasks),
-    gulp.parallel(...tasks.codeTasks),
+    assetTasks && gulp.parallel(assetTasks),
+    codeTasks && gulp.parallel(codeTasks),
     staticFiles,
     postbuild,
     workboxBuild,
@@ -86,8 +86,8 @@ const prodTasks = function() {
   return [
     "clean",
     prebuild,
-    gulp.parallel(assetTasks),
-    gulp.parallel(codeTasks),
+    assetTasks && gulp.parallel(assetTasks),
+    codeTasks && gulp.parallel(codeTasks),
     rev,
     staticFiles,
     postbuild,

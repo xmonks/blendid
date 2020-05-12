@@ -14,7 +14,7 @@ module.exports = function(env) {
 
   function findExistingTasks(candidates) {
     const tasks = compact(candidates.map(matchFilter).filter(Boolean));
-    return isEmpty(tasks) ? false : tasks;
+    return isEmpty(tasks) ? null : tasks;
   }
 
   return {
