@@ -87,32 +87,30 @@ const htmlTask = function() {
     };
     delete TASK_CONFIG.html.nunjucksRender.filters;
   }
-  const svgs = TASK_CONFIG.svgSprite
-    ? gulp
-        .src(paths.spritesSrc)
-        .pipe(
-          svgmin(file => {
-            const prefix = path.basename(
-              file.relative,
-              path.extname(file.relative)
-            );
-            return {
-              plugins: [
-                { removeXMLNS: true },
-                { prefixIDs: { prefix } },
-                {
-                  cleanupIDs: {
-                    prefix: prefix + "-",
-                    minify: true,
-                    force: true
-                  }
-                }
-              ]
-            };
-          })
-        )
-        .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore))
-    : new Vinyl();
+  const svgs = gulp
+    .src(paths.spritesSrc)
+    .pipe(
+      svgmin(file => {
+        const prefix = path.basename(
+          file.relative,
+          path.extname(file.relative)
+        );
+        return {
+          plugins: [
+            { removeXMLNS: true },
+            { prefixIDs: { prefix } },
+            {
+              cleanupIDs: {
+                prefix: prefix + "-",
+                minify: true,
+                force: true
+              }
+            }
+          ]
+        };
+      })
+    )
+    .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore));
 
   return gulp
     .src(paths.src)
