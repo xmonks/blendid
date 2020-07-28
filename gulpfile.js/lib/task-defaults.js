@@ -1,5 +1,5 @@
 const scssParser = require("postcss-scss");
-const sass = require("node-sass");
+const sass = require("sass");
 const cloudinary = require("cloudinary").v2;
 const terser = require("terser");
 const { minifyHTMLLiterals } = require("minify-html-literals");
