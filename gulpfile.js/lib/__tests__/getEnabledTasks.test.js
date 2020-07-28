@@ -26,14 +26,12 @@ describe("getEnabledTasks", function() {
           "cloudinary",
           "fonts",
           "iconFont",
-          "images",
-          "svgSprite"
+          "images"
         ]);
       });
 
       it("returns only enabled task when some disabled", function() {
         TASK_CONFIG["iconFont"] = false;
-        TASK_CONFIG["svgSprite"] = false;
 
         const tasks = getEnabledTasks(ENV);
         assert.deepEqual(tasks.assetTasks, ["cloudinary", "fonts", "images"]);
@@ -45,7 +43,7 @@ describe("getEnabledTasks", function() {
         });
 
         const tasks = getEnabledTasks(ENV);
-        assert.equal(tasks.assetTasks, false);
+        assert.equal(tasks.assetTasks, null);
       });
     });
 
@@ -60,7 +58,11 @@ describe("getEnabledTasks", function() {
 
       it("returns all except javascripts when none disabled", function() {
         const tasks = getEnabledTasks(ENV);
-        assert.deepEqual(tasks.codeTasks, ["html", "stylesheets", "javascripts"]);
+        assert.deepEqual(tasks.codeTasks, [
+          "html",
+          "stylesheets",
+          "javascripts"
+        ]);
       });
 
       it("returns only enabled except javascripts task when some disabled", function() {
@@ -76,7 +78,7 @@ describe("getEnabledTasks", function() {
         });
 
         const tasks = getEnabledTasks(ENV);
-        assert.equal(tasks.codeTasks, false);
+        assert.equal(tasks.codeTasks, null);
       });
     });
   });
@@ -92,8 +94,7 @@ describe("getEnabledTasks", function() {
           cloudinary: true,
           fonts: true,
           iconFont: true,
-          images: true,
-          svgSprite: true
+          images: true
         };
       });
 
@@ -103,14 +104,12 @@ describe("getEnabledTasks", function() {
           "cloudinary",
           "fonts",
           "iconFont",
-          "images",
-          "svgSprite"
+          "images"
         ]);
       });
 
       it("returns only enabled task when some disabled", function() {
         TASK_CONFIG["iconFont"] = false;
-        TASK_CONFIG["svgSprite"] = false;
 
         const tasks = getEnabledTasks(ENV);
         assert.deepEqual(tasks.assetTasks, ["cloudinary", "fonts", "images"]);
@@ -122,7 +121,7 @@ describe("getEnabledTasks", function() {
         });
 
         const tasks = getEnabledTasks(ENV);
-        assert.equal(tasks.assetTasks, false);
+        assert.equal(tasks.assetTasks, null);
       });
     });
 
@@ -164,7 +163,7 @@ describe("getEnabledTasks", function() {
         });
 
         const tasks = getEnabledTasks(ENV);
-        assert.equal(tasks.codeTasks, false);
+        assert.equal(tasks.codeTasks, null);
       });
     });
   });
