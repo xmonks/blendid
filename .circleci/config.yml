@@ -1,9 +1,22 @@
 version: 2.1
 orbs:
   node: circleci/node@3.0.1
+jobs:
+  build:
+    executor:
+      name: node/default
+      tag: 14.5
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: Build testing site
+          command: yarn build
 workflows:
   ci:
     jobs:
+      - build
       - node/test:
-          version: 14.5.0
+          version: 14.5
           pkg-manager: yarn
