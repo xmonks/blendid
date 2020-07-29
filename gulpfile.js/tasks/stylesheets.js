@@ -16,7 +16,7 @@ const postcssTask = function() {
     src: projectPath(
       PATH_CONFIG.src,
       PATH_CONFIG.stylesheets.src,
-      "**/*.{" + TASK_CONFIG.stylesheets.extensions + "}"
+      "**/[!_]*.{" + TASK_CONFIG.stylesheets.extensions + "}"
     ),
     dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.stylesheets.dest)
   };
