@@ -7,7 +7,7 @@ const cleanTask = function(cb) {
     TASK_CONFIG.clean && TASK_CONFIG.clean.patterns
       ? TASK_CONFIG.clean.patterns
       : projectPath(PATH_CONFIG.dest);
-
+  console.log("clean", { patterns });
   del(patterns, { force: true });
   cb();
 };
