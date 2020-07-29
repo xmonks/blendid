@@ -8,7 +8,7 @@ const sourcemaps = require("gulp-sourcemaps");
 const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
 const easyImport = require("postcss-easy-import");
-const sass = require("postcss-node-sass");
+const sass = require("@csstools/postcss-sass");
 const projectPath = require("../lib/projectPath");
 
 const postcssTask = function() {
