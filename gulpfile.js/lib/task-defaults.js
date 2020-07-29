@@ -34,8 +34,10 @@ function cloudinaryUrl(
   });
 }
 
-const nullableValue = x =>
-  x.constructor.name === "SassNull" ? null : x.getValue();
+function nullableValue(x) {
+  return x.constructor.name === "SassNull" ? null : x.getValue();
+}
+
 const sassCloudinaryUrlSignature =
   "cloudinaryUrl($publicId, $width: 'auto', $height: null, $format: 'auto', $quality: 'auto', $dpr: 1, $crop: null, $gravity: null)";
 function sassCloudinaryUrl(
@@ -48,17 +50,17 @@ function sassCloudinaryUrl(
   crop,
   gravity
 ) {
-  return new sass.types.String(
-    `url(${cloudinaryUrl(publicId.getValue(), {
-      crop: nullableValue(crop),
-      dpr: nullableValue(dpr),
-      format: nullableValue(format),
-      gravity: nullableValue(gravity),
-      height: nullableValue(height),
-      quality: nullableValue(quality),
-      width: nullableValue(width)
-    })})`
-  );
+  const url = `url(${cloudinaryUrl(publicId.getValue(), {
+    crop: nullableValue(crop),
+    dpr: nullableValue(dpr),
+    format: nullableValue(format),
+    gravity: nullableValue(gravity),
+    height: nullableValue(height),
+    quality: nullableValue(quality),
+    width: nullableValue(width)
+  })})`;
+  console.log("cloudinaryUrl", ...arguments, url)
+  return new sass.types.String(url);
 }
 
 function minifyJS(text, inline) {
