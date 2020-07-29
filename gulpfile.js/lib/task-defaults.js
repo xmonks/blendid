@@ -34,6 +34,8 @@ function cloudinaryUrl(
   });
 }
 
+const nullableValue = x =>
+  x.constructor.name === "SassNull" ? null : x.getValue();
 const sassCloudinaryUrlSignature =
   "cloudinaryUrl($publicId, $width: 'auto', $height: null, $format: 'auto', $quality: 'auto', $dpr: 1, $crop: null, $gravity: null)";
 function sassCloudinaryUrl(
@@ -46,10 +48,6 @@ function sassCloudinaryUrl(
   crop,
   gravity
 ) {
-  const nullableValue = x => {
-    console.log(x)
-    return (sass.NULL === x ? null : x.getValue());
-  };
   return new sass.types.String(
     `url(${cloudinaryUrl(publicId.getValue(), {
       crop: nullableValue(crop),
