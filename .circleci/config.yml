@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@3.0.1
+  github: topmonks/github@1.0.1
 jobs:
   build:
     executor:
@@ -13,6 +14,14 @@ jobs:
       - run:
           name: Build testing site
           command: yarn build
+  merge_pr:
+    docker:
+      - image: cimg/base:2020.01
+    steps:
+      - checkout
+      - github/install
+      - github/merge_pr:
+          rebase: true
 workflows:
   ci:
     jobs:
@@ -20,3 +29,11 @@ workflows:
       - node/test:
           version: '14.5.0'
           pkg-manager: yarn
+      - merge_pr:
+          context: org-github
+          requires:
+            - build
+            - test
+          filters:
+            branches:
+              only: /dependabot\/.*/
