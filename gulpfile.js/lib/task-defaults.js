@@ -46,7 +46,10 @@ function sassCloudinaryUrl(
   crop,
   gravity
 ) {
-  const nullableValue = x => (sass.NULL === x ? null : x.getValue());
+  const nullableValue = x => {
+    console.log(x)
+    return (sass.NULL === x ? null : x.getValue());
+  };
   return new sass.types.String(
     `url(${cloudinaryUrl(publicId.getValue(), {
       crop: nullableValue(crop),
