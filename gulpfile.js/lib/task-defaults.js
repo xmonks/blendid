@@ -7,7 +7,7 @@ const { minifyHTMLLiterals } = require("minify-html-literals");
 const terserOptions = {
   mangle: false,
   module: true,
-  ecma: 2018
+  ecma: 2019
 };
 
 function cloudinaryUrl(
