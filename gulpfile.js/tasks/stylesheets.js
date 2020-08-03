@@ -4,6 +4,7 @@ const stream = require("stream");
 const util = require("util");
 const gulp = require("gulp");
 const gulpif = require("gulp-if");
+const changed = require("gulp-changed");
 const postcss = require("gulp-postcss");
 const rename = require("gulp-rename");
 const sourcemaps = require("gulp-sourcemaps");
@@ -55,6 +56,7 @@ const postcssTask = function() {
 
   return pipeline(
     src(paths.src),
+    changed(paths.dest, { extension: ".css" }),
     gulpif(!global.production, sourcemaps.init()),
     sass(config.sass).on("error", sass.logError),
     postcss(plugins, config.postcss),
