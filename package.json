@@ -72,7 +72,6 @@
   "resolutions": {
     "chokidar": "npm:chokidar@3.4.1",
     "html-minifier": "npm:html-minifier-terser@5.1.1",
-    "node-sass": "npm:sass@1.26.10",
     "source-map-resolve": "npm:source-map-resolve@0.6.0"
   }
 }
