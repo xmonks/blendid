@@ -1,24 +1,30 @@
 if (!TASK_CONFIG.fonts) return;
 
+const stream = require("stream");
+const util = require("util");
 const changed = require("gulp-changed");
-const gulp = require("gulp");
+const { src, dest, task } = require("gulp");
 const projectPath = require("../lib/projectPath");
 
-const fontsTask = function () {
+const pipeline = util.promisify(stream.pipeline);
+
+const fontsTask = function() {
+  const config = TASK_CONFIG.fonts;
   const paths = {
     src: projectPath(
       PATH_CONFIG.src,
       PATH_CONFIG.fonts.src,
-      "**/*.{" + TASK_CONFIG.fonts.extensions + "}"
+      "**/*.{" + config.extensions + "}"
     ),
     dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.fonts.dest)
   };
 
-  return gulp
-    .src([paths.src, "*!README.md"])
-    .pipe(changed(paths.dest)) // Ignore unchanged files
-    .pipe(gulp.dest(paths.dest));
+  return pipeline(
+    src([paths.src, "*!README.md"]),
+    changed(paths.dest), // Ignore unchanged files
+    dest(paths.dest)
+  );
 };
 
-gulp.task("fonts", fontsTask);
+task("fonts", fontsTask);
 module.exports = fontsTask;

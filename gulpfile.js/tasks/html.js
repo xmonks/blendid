@@ -1,5 +1,7 @@
 if (!TASK_CONFIG.html) return;
 
+const stream = require("stream");
+const util = require("util");
 const fs = require("fs");
 const path = require("path");
 const gulp = require("gulp");
@@ -10,8 +12,10 @@ const inject = require("gulp-inject");
 const svgmin = require("gulp-svgmin");
 const svgstore = require("gulp-svgstore");
 const nunjucksRender = require("gulp-nunjucks-render");
-const handleErrors = require("../lib/handleErrors");
 const projectPath = require("../lib/projectPath");
+
+const { src, dest, task } = gulp;
+const pipeline = util.promisify(stream.pipeline);
 
 const dataFile = (pathConfig, name) =>
   projectPath(pathConfig.src, `${pathConfig.data.src}/${name}.json`);
@@ -35,21 +39,22 @@ const getPaths = exclude => ({
 });
 
 const htmlTask = function() {
+  const config = TASK_CONFIG.html;
   const exclude =
     "!" +
     projectPath(
       PATH_CONFIG.src,
       PATH_CONFIG.html.src,
-      "**/{" + TASK_CONFIG.html.excludeFolders.join(",") + "}/**"
+      "**/{" + config.excludeFolders.join(",") + "}/**"
     );
 
   const paths = getPaths(exclude);
 
   const collectionsDataFunction =
     PATH_CONFIG.data &&
-    TASK_CONFIG.html.collections &&
+    config.collections &&
     (() => {
-      const cols = TASK_CONFIG.html.collections;
+      const cols = config.collections;
       return Promise.all(cols.map(jsonData(PATH_CONFIG))).then(xs =>
         cols.reduce((acc, x, i) => Object.assign(acc, { [x]: xs[i] }), {})
       );
@@ -57,12 +62,12 @@ const htmlTask = function() {
 
   const dataFunction =
     collectionsDataFunction ||
-    TASK_CONFIG.html.dataFunction ||
-    function(file) {
+    config.dataFunction ||
+    function() {
       const dataPath = projectPath(
         PATH_CONFIG.src,
         PATH_CONFIG.html.src,
-        TASK_CONFIG.html.dataFile
+        config.dataFile
       );
       return fs.promises.readFile(dataPath, "utf-8").then(x => JSON.parse(x));
     };
@@ -70,13 +75,12 @@ const htmlTask = function() {
   const nunjucksRenderPath = [
     projectPath(PATH_CONFIG.src, PATH_CONFIG.html.src)
   ];
-  TASK_CONFIG.html.nunjucksRender.path =
-    TASK_CONFIG.html.nunjucksRender.path || nunjucksRenderPath;
+  config.nunjucksRender.path = config.nunjucksRender.path || nunjucksRenderPath;
 
-  const filters = TASK_CONFIG.html.nunjucksRender.filters;
+  const filters = config.nunjucksRender.filters;
   if (filters) {
-    const origFn = TASK_CONFIG.html.nunjucksRender.manageEnv;
-    TASK_CONFIG.html.nunjucksRender.manageEnv = env => {
+    const origFn = config.nunjucksRender.manageEnv;
+    config.nunjucksRender.manageEnv = env => {
       for (let filter of Object.keys(filters)) {
         env.addFilter(filter, filters[filter]);
       }
@@ -84,10 +88,9 @@ const htmlTask = function() {
         origFn(env);
       }
     };
-    delete TASK_CONFIG.html.nunjucksRender.filters;
+    delete config.nunjucksRender.filters;
   }
-  const svgs = gulp
-    .src(paths.spritesSrc)
+  const svgs = src(paths.spritesSrc)
     .pipe(
       svgmin(file => {
         const prefix = path.basename(
@@ -111,27 +114,23 @@ const htmlTask = function() {
     )
     .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore));
 
-  return gulp
-    .src(paths.src)
-    .pipe(data(dataFunction))
-    .on("error", handleErrors)
-    .pipe(nunjucksRender(TASK_CONFIG.html.nunjucksRender))
-    .on("error", handleErrors)
-    .pipe(
-      gulpif(
-        TASK_CONFIG.svgSprite,
-        inject(svgs, {
-          transform: (_, file) => file.contents.toString()
-        })
-      )
-    )
-    .pipe(gulpif(global.production, htmlmin(TASK_CONFIG.html.htmlmin)))
-    .pipe(gulp.dest(paths.dest))
-    .on("error", handleErrors);
+  return pipeline(
+    src(paths.src),
+    data(dataFunction),
+    nunjucksRender(config.nunjucksRender),
+    gulpif(
+      TASK_CONFIG.svgSprite,
+      inject(svgs, {
+        transform: (_, file) => file.contents.toString()
+      })
+    ),
+    gulpif(global.production, htmlmin(config.htmlmin)),
+    dest(paths.dest)
+  );
 };
 
 const { alternateTask = () => htmlTask } = TASK_CONFIG.html;
-const task = alternateTask(gulp, PATH_CONFIG, TASK_CONFIG);
-gulp.task("html", task);
-module.exports = task;
+const finalTask = alternateTask(gulp, PATH_CONFIG, TASK_CONFIG);
+task("html", finalTask);
+module.exports = finalTask;
 module.exports.getPaths = getPaths;

@@ -1,6 +1,6 @@
 if (!TASK_CONFIG.workboxBuild) return;
 
-const gulp = require("gulp");
+const { task } = require("gulp");
 const projectPath = require("../lib/projectPath");
 const { generateSW, injectManifest } = require("workbox-build");
 
@@ -8,15 +8,12 @@ const transformConfigPaths = ({ globDirectory, swDest, swSrc, ...config }) => {
   if (globDirectory) {
     config.globDirectory = projectPath(globDirectory);
   }
-
   if (swDest) {
     config.swDest = projectPath(swDest);
   }
-
   if (swSrc) {
     config.swSrc = projectPath(swSrc);
   }
-
   return config;
 };
 
@@ -35,5 +32,5 @@ const workboxBuildTask = function() {
   }
 };
 
-gulp.task("workboxBuild", workboxBuildTask);
+task("workboxBuild", workboxBuildTask);
 module.exports = workboxBuildTask;

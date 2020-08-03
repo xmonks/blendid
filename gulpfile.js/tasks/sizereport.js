@@ -1,13 +1,14 @@
-const gulp = require("gulp");
+const stream = require("stream");
+const util = require("util");
+const { src, task } = require("gulp");
 const sizereport = require("gulp-sizereport");
 const projectPath = require("../lib/projectPath");
 
-gulp.task("size-report", function() {
-  return gulp
-    .src([projectPath(PATH_CONFIG.dest, "**/*"), "*!rev-manifest.json"])
-    .pipe(
-      sizereport({
-        gzip: true
-      })
-    );
+const pipeline = util.promisify(stream.pipeline);
+
+task("size-report", function() {
+  return pipeline(
+    src([projectPath(PATH_CONFIG.dest, "**/*"), "*!rev-manifest.json"]),
+    sizereport({ gzip: true })
+  );
 });

@@ -1,8 +1,12 @@
 if (!TASK_CONFIG.images) return;
 
+const stream = require("stream");
+const util = require("util");
+const { src, dest, task } = require("gulp");
 const changed = require("gulp-changed");
-const gulp = require("gulp");
 const projectPath = require("../lib/projectPath");
+
+const pipeline = util.promisify(stream.pipeline);
 
 const imagesTask = function() {
   const paths = {
@@ -14,11 +18,12 @@ const imagesTask = function() {
     dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.images.dest)
   };
 
-  return gulp
-    .src([paths.src, "*!README.md"])
-    .pipe(changed(paths.dest)) // Ignore unchanged files
-    .pipe(gulp.dest(paths.dest));
+  return pipeline(
+    src([paths.src, "*!README.md"]),
+    changed(paths.dest), // Ignore unchanged files
+    dest(paths.dest)
+  );
 };
 
-gulp.task("images", imagesTask);
+task("images", imagesTask);
 module.exports = imagesTask;

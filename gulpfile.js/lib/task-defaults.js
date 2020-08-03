@@ -1,5 +1,5 @@
-const scssParser = require("postcss-scss");
 const sass = require("sass");
+const fiber = require("fibers");
 const cloudinary = require("cloudinary").v2;
 const terser = require("terser");
 const { minifyHTMLLiterals } = require("minify-html-literals");
@@ -22,20 +22,20 @@ function cloudinaryUrl(
     gravity
   } = {}
 ) {
-  return cloudinary.url(publicId, {
-    crop,
-    dpr,
-    fetch_format: format,
-    gravity,
-    height,
-    quality,
-    secure: true,
-    width
-  });
-}
-
-function nullableValue(x) {
-  return x.constructor.name === "SassNull" ? null : x.getValue();
+  try {
+    return cloudinary.url(publicId, {
+      crop,
+      dpr,
+      fetch_format: format,
+      gravity,
+      height,
+      quality,
+      secure: true,
+      width
+    });
+  } catch (err) {
+    console.error("cloudinaryUrl", err);
+  }
 }
 
 function* pairs(dartMap) {
@@ -73,12 +73,10 @@ module.exports = {
 
   stylesheets: {
     sass: {
+      fiber,
       functions: {
         [sassCloudinaryUrlSignature]: sassCloudinaryUrl
-      }
-    },
-    postcss: {
-      parser: scssParser
+      },
     },
     extensions: ["sass", "scss", "css"]
   },

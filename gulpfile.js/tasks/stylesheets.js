@@ -1,5 +1,7 @@
 if (!TASK_CONFIG.stylesheets) return;
 
+const stream = require("stream");
+const util = require("util");
 const gulp = require("gulp");
 const gulpif = require("gulp-if");
 const postcss = require("gulp-postcss");
@@ -7,59 +9,63 @@ const rename = require("gulp-rename");
 const sourcemaps = require("gulp-sourcemaps");
 const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
-const easyImport = require("postcss-easy-import");
-const sass = require("@csstools/postcss-sass");
+const sass = require("gulp-sass");
+sass.compiler = require("sass");
 const projectPath = require("../lib/projectPath");
 
+const pipeline = util.promisify(stream.pipeline);
+const { src, dest, task } = gulp;
+
 const postcssTask = function() {
+  const config = TASK_CONFIG.stylesheets;
   const paths = {
     src: projectPath(
       PATH_CONFIG.src,
       PATH_CONFIG.stylesheets.src,
-      "**/[!_]*.{" + TASK_CONFIG.stylesheets.extensions + "}"
+      "**/[!_]*.{" + config.extensions + "}"
     ),
     dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.stylesheets.dest)
   };
 
-  if (TASK_CONFIG.stylesheets.sass && TASK_CONFIG.stylesheets.sass.includePaths) {
-    TASK_CONFIG.stylesheets.sass.includePaths = TASK_CONFIG.stylesheets.sass.includePaths.map(
-      includePath => projectPath(includePath)
-    );
+  if (config.sass && config.sass.includePaths) {
+    config.sass.includePaths = config.sass.includePaths
+      .filter(Boolean)
+      .map(includePath => projectPath(includePath));
   }
 
-  const plugins = [
-    easyImport({
-      prefix: "_",
-      extensions: Array.from(
-        TASK_CONFIG.stylesheets.extensions || [],
-        x => `.${x}`
-      )
-    }),
-    sass(TASK_CONFIG.stylesheets.sass),
-    autoprefixer(TASK_CONFIG.stylesheets.autoprefixer)
-  ];
-  if (
-    TASK_CONFIG.stylesheets.postcss &&
-    TASK_CONFIG.stylesheets.postcss.plugins
-  ) {
-    plugins.concat(TASK_CONFIG.stylesheets.postcss.plugins);
-    delete TASK_CONFIG.stylesheets.postcss.plugins;
+  if (config.sass) {
+    config.sass.importer = function(url) {
+      try {
+        // try to resolve with node resolution (yarn pnp support)
+        return { file: require.resolve(`${url}.scss`) };
+      } catch (err) {
+        return null;
+      }
+    };
+  }
+
+  const plugins = [autoprefixer(config.autoprefixer)];
+  if (config.postcss && config.postcss.plugins) {
+    plugins.concat(config.postcss.plugins);
+    delete config.postcss.plugins;
   }
   if (global.production) {
-    plugins.push(cssnano(TASK_CONFIG.stylesheets.cssnano));
+    plugins.push(cssnano(config.cssnano));
   }
 
-  return gulp
-    .src(paths.src)
-    .pipe(gulpif(!global.production, sourcemaps.init()))
-    .pipe(postcss(plugins, TASK_CONFIG.stylesheets.postcss))
-    .pipe(rename({ extname: ".css" }))
-    .pipe(gulpif(!global.production, sourcemaps.write()))
-    .pipe(gulp.dest(paths.dest));
+  return pipeline(
+    src(paths.src),
+    gulpif(!global.production, sourcemaps.init()),
+    sass(config.sass).on("error", sass.logError),
+    postcss(plugins, config.postcss),
+    rename({ extname: ".css" }),
+    gulpif(!global.production, sourcemaps.write()),
+    dest(paths.dest)
+  );
 };
 
-const { alternateTask = () => postcssTask } = TASK_CONFIG.stylesheets;
+const { alternateTask = () => null } = TASK_CONFIG.stylesheets;
 const stylesheetsTask = alternateTask(gulp, PATH_CONFIG, TASK_CONFIG);
 
-gulp.task("stylesheets", stylesheetsTask);
-module.exports = stylesheetsTask;
+task("stylesheets", stylesheetsTask || postcssTask);
+module.exports = stylesheetsTask || postcssTask;

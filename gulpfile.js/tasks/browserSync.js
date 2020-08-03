@@ -1,40 +1,34 @@
 if (global.production) return;
 
-const browserSync = require("browser-sync");
+const browserSync = require("browser-sync").create("blendid");
 const gulp = require("gulp");
 const projectPath = require("../lib/projectPath");
 
 const browserSyncTask = function(cb) {
-  const proxyConfig = TASK_CONFIG.browserSync.proxy || null;
-
-  if (typeof proxyConfig === "string") {
-    TASK_CONFIG.browserSync.proxy = {
-      target: proxyConfig
+  const config = TASK_CONFIG.browserSync;
+  if (typeof config.proxy === "string") {
+    config.proxy = {
+      target: config.proxy
     };
   }
 
   // Resolve path from project
-  if (
-    TASK_CONFIG.browserSync.server &&
-    TASK_CONFIG.browserSync.server.baseDir
-  ) {
-    TASK_CONFIG.browserSync.server.baseDir = projectPath(
-      TASK_CONFIG.browserSync.server.baseDir
-    );
+  if (config.server && config.server.baseDir) {
+    config.server.baseDir = projectPath(config.server.baseDir);
   }
 
   // Resolve files from project
-  if (TASK_CONFIG.browserSync.files) {
-    TASK_CONFIG.browserSync.files = TASK_CONFIG.browserSync.files.map(glob =>
-      projectPath(glob)
-    );
+  if (config.files) {
+    config.files = config.files.map(glob => projectPath(glob));
   }
 
-  const server =
-    TASK_CONFIG.browserSync.proxy || TASK_CONFIG.browserSync.server;
+  const server = config.proxy || config.server;
   server.middleware = server.middleware || server.extraMiddlewares || [];
 
-  browserSync.init(TASK_CONFIG.browserSync);
+  browserSync.init(config);
+
+  const output = projectPath(PATH_CONFIG.dest, "**/*");
+  browserSync.watch(output).on("change", browserSync.reload);
   cb();
 };
 
