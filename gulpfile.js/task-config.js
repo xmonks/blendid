@@ -30,5 +30,9 @@ module.exports = {
 
   production: {
     rev: true
+  },
+  
+  watch: {
+    tasks: []
   }
 };
