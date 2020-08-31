@@ -22,6 +22,8 @@ const watchTask = function (done) {
         return PATH_CONFIG.icons;
       case "svgSprite":
         return PATH_CONFIG.icons;
+      case "generate":
+        return PATH_CONFIG.data;
       default:
         return PATH_CONFIG[taskName];
     }
