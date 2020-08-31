@@ -18,6 +18,8 @@ const nunjucksRender = require("gulp-nunjucks-render");
 const projectPath = require("../../lib/projectPath");
 const { getPaths } = require("../html");
 
+const debug = require("gulp-debug");
+
 const pipeline = utils.promisify(stream.pipeline);
 const { src, dest, task, parallel } = gulp;
 
@@ -110,19 +112,20 @@ function generateHtml(sourcePath, destPath, { template, route }) {
       data: { item },
     });
 
-  let source = require(sourcePath);
-  console.log(sourcePath, source);
+  console.dir(config.nunjucksRender);
   return () =>
     pipeline([
-      streamArray(source),
+      streamArray(require(sourcePath)),
       through.obj(function (item, enc, done) {
         let file = createFile(item);
-        console.log(file);
+        console.dir(file);
         this.push(file);
         done();
       }),
       data(dataFunction),
+      debug({ title: "data" }),
       nunjucksRender(config.nunjucksRender),
+      debug({ title: "rendered" }),
       gulpif(
         TASK_CONFIG.svgSprite,
         inject(svgs, {
