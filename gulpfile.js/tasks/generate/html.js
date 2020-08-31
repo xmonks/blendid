@@ -40,7 +40,7 @@ function generateHtml(sourcePath, destPath, { template, route }) {
       const cols = config.collections;
       return Promise.all(cols.map(jsonData(PATH_CONFIG))).then((xs) =>
         cols.reduce(
-          (acc, x, i) => Object.assign(acc, { [x]: xs[i] }),
+          (acc, x, i) => Object.assign({}, acc, { [x]: xs[i] }),
           file.data || {}
         )
       );
@@ -123,6 +123,7 @@ function generateHtml(sourcePath, destPath, { template, route }) {
       nunjucksRender(config.nunjucksRender),
       through.obj(function (item, enc, done) {
         console.dir(item);
+        console.log(item.content);
         this.push(item);
         done();
       }),
