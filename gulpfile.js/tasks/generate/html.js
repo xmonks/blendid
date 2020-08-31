@@ -3,6 +3,7 @@ if (!TASK_CONFIG.generate.html) return;
 const stream = require("stream");
 const utils = require("util");
 const fs = require("fs");
+const path = require("path");
 const gulp = require("gulp");
 const data = require("gulp-data");
 const gulpif = require("gulp-if");
