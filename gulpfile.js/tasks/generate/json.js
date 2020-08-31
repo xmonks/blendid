@@ -28,7 +28,8 @@ function* createTasks() {
   const dataPath = projectPath(PATH_CONFIG.src, PATH_CONFIG.data.src);
   const collections = TASK_CONFIG.generate.json;
   for (let col of collections) {
-    yield generateJson(projectPath(dataPath, col.srcGlob), dataPath, col);
+    const sourcePath = col.srcGlob || `${col.collection}/**/*.md`;
+    yield generateJson(projectPath(dataPath, sourcePath), dataPath, col);
   }
 }
 
