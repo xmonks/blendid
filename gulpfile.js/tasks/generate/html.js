@@ -123,7 +123,7 @@ function generateHtml(sourcePath, destPath, { template, route }) {
       nunjucksRender(config.nunjucksRender),
       through.obj(function (item, enc, done) {
         console.dir(item);
-        console.log(item.content);
+        console.log(item.content.toString("utf-8"));
         this.push(item);
         done();
       }),
