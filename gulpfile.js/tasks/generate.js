@@ -6,6 +6,9 @@ const genTasks = [];
 if (TASK_CONFIG.generate.json) {
   genTasks.push(require("./generate/json"));
 }
+if (TASK_CONFIG.generate.html) {
+  genTasks.push(require("./generate/html"));
+}
 
 let noop = (done) => {
   done();

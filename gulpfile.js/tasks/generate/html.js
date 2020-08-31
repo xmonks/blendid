@@ -1,9 +1,8 @@
-if (!TASK_CONFIG.html) return;
+if (!TASK_CONFIG.generate.html) return;
 
 const stream = require("stream");
-const util = require("util");
-const fs = require("fs");
-const path = require("path");
+const utils = require("util");
+const file = require("file");
 const gulp = require("gulp");
 const data = require("gulp-data");
 const gulpif = require("gulp-if");
@@ -11,11 +10,14 @@ const htmlmin = require("gulp-htmlmin");
 const inject = require("gulp-inject");
 const svgmin = require("gulp-svgmin");
 const svgstore = require("gulp-svgstore");
+const streamArray = require("stream-array");
+const through = require("through2");
+const File = require("vinyl");
 const nunjucksRender = require("gulp-nunjucks-render");
-const projectPath = require("../lib/projectPath");
+const projectPath = require("../../lib/projectPath");
 
-const { src, dest, task } = gulp;
-const pipeline = util.promisify(stream.pipeline);
+const pipeline = utils.promisify(stream.pipeline);
+const { src, dest, task, parallel } = gulp;
 
 const dataFile = (pathConfig, name) =>
   projectPath(pathConfig.src, `${pathConfig.data.src}/${name}.json`);
@@ -25,30 +27,8 @@ const jsonData = (pathConfig) => (name) =>
     .then((f) => JSON.parse(f))
     .catch(() => {});
 
-const getPaths = (exclude) => ({
-  src: [
-    projectPath(
-      PATH_CONFIG.src,
-      PATH_CONFIG.html.src,
-      "**/*.{" + TASK_CONFIG.html.extensions + "}"
-    ),
-    exclude,
-  ].filter(Boolean),
-  spritesSrc: projectPath(PATH_CONFIG.src, PATH_CONFIG.icons.src, "*.svg"),
-  dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.html.dest),
-});
-
-const htmlTask = function () {
+function generateHtml(sourcePath, destPath, { template, route }) {
   const config = TASK_CONFIG.html;
-  const exclude =
-    "!" +
-    projectPath(
-      PATH_CONFIG.src,
-      PATH_CONFIG.html.src,
-      "**/{" + config.excludeFolders.join(",") + "}/**"
-    );
-
-  const paths = getPaths(exclude);
 
   const collectionsDataFunction =
     PATH_CONFIG.data &&
@@ -90,6 +70,7 @@ const htmlTask = function () {
     };
     delete config.nunjucksRender.filters;
   }
+
   const svgs = src(paths.spritesSrc)
     .pipe(
       svgmin((file) => {
@@ -114,23 +95,45 @@ const htmlTask = function () {
     )
     .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore));
 
-  return pipeline(
-    src(paths.src),
-    data(dataFunction),
-    nunjucksRender(config.nunjucksRender),
-    gulpif(
-      TASK_CONFIG.svgSprite,
-      inject(svgs, {
-        transform: (_, file) => file.contents.toString(),
-      })
-    ),
-    gulpif(global.production, htmlmin(config.htmlmin)),
-    dest(paths.dest)
-  );
-};
+  const createFile = (item) =>
+    new File({
+      path: route(item),
+      content: file.readFileSync(
+        projectPath(PATH_CONFIG.src, PATH_CONFIG.html.src, template)
+      ),
+      data: item,
+    });
 
-const { alternateTask = () => htmlTask } = TASK_CONFIG.html;
-const finalTask = alternateTask(gulp, PATH_CONFIG, TASK_CONFIG);
-task("html", finalTask);
-module.exports = finalTask;
-module.exports.getPaths = getPaths;
+  return () =>
+    pipeline([
+      streamArray(require(sourcePath)),
+      through.obj(function (item, enc, done) {
+        this.push(createFile(item));
+        done();
+      }),
+      data(dataFunction),
+      nunjucksRender(config.nunjucksRender),
+      gulpif(
+        TASK_CONFIG.svgSprite,
+        inject(svgs, {
+          transform: (_, file) => file.contents.toString(),
+        })
+      ),
+      gulpif(global.production, htmlmin(config.htmlmin)),
+      dest(destPath),
+    ]);
+}
+
+function* createTasks() {
+  const dataPath = projectPath(PATH_CONFIG.src, PATH_CONFIG.data.src);
+  const destPath = projectPath(PATH_CONFIG.dest, PATH_CONFIG.html.dest);
+  const collections = TASK_CONFIG.generate.html;
+  for (let col of collections) {
+    const sourcePath = `${col.collection}.json`;
+    yield generateHtml(projectPath(dataPath, sourcePath), destPath, col);
+  }
+}
+
+const taskName = "generate-html";
+task(taskName, parallel(Array.from(createTasks())));
+module.exports = taskName;
