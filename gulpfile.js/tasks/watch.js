@@ -8,6 +8,7 @@ const watchTask = function(done) {
     "images",
     "cloudinary",
     "svgSprite",
+    "generate",
     "html",
     "stylesheets",
     "javascripts",

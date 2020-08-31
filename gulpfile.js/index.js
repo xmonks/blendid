@@ -18,6 +18,7 @@ require("./tasks/browserSync");
 require("./tasks/clean");
 require("./tasks/cloudinary");
 require("./tasks/fonts");
+require("./tasks/generate");
 require("./tasks/html");
 require("./tasks/images");
 require("./tasks/init");
@@ -31,11 +32,12 @@ require("./tasks/rev");
 require("./tasks/workboxBuild");
 
 // Initialize any additional user-provided tasks
-const init = TASK_CONFIG.additionalTasks.initialize || function() {};
+const init = TASK_CONFIG.additionalTasks.initialize || function () {};
 init(gulp, PATH_CONFIG, TASK_CONFIG);
 
-const devTasks = function() {
+const devTasks = function () {
   const { assetTasks, codeTasks } = getEnabledTasks("watch");
+  const generate = TASK_CONFIG.generate ? "generate" : null;
   const staticFiles = TASK_CONFIG.static ? "static" : null;
   const workboxBuild = TASK_CONFIG.workboxBuild ? "workboxBuild" : null;
   const { prebuild, postbuild } = TASK_CONFIG.additionalTasks.development;
@@ -43,20 +45,22 @@ const devTasks = function() {
   return [
     "clean",
     prebuild,
+    generate,
     assetTasks && gulp.parallel(assetTasks),
     codeTasks && gulp.parallel(codeTasks),
     staticFiles,
     postbuild,
     workboxBuild,
-    "watch"
+    "watch",
   ].filter(Boolean);
 };
 
-const prodTasks = function() {
+const prodTasks = function () {
   global.production = true;
 
   const { assetTasks, codeTasks } = getEnabledTasks("production");
   const rev = TASK_CONFIG.production.rev ? "rev" : null;
+  const generate = TASK_CONFIG.generate ? "generate" : null;
   const staticFiles = TASK_CONFIG.static ? "static" : null;
   const workboxBuild = TASK_CONFIG.workboxBuild ? "workboxBuild" : null;
   const { prebuild, postbuild } = TASK_CONFIG.additionalTasks.production;
@@ -64,13 +68,14 @@ const prodTasks = function() {
   return [
     "clean",
     prebuild,
+    generate,
     assetTasks && gulp.parallel(assetTasks),
     codeTasks && gulp.parallel(codeTasks),
     rev,
     staticFiles,
     postbuild,
     workboxBuild,
-    "size-report"
+    "size-report",
   ].filter(Boolean);
 };
 

@@ -78,7 +78,11 @@ module.exports = {
         [sassCloudinaryUrlSignature]: sassCloudinaryUrl
       },
     },
-    extensions: ["sass", "scss", "css"]
+    extensions: ["sass", "scss", "css"],
+  },
+
+  generate: {
+    extensions: ["md", "json"],
   },
 
   html: {
