@@ -110,11 +110,15 @@ function generateHtml(sourcePath, destPath, { template, route }) {
       data: { item },
     });
 
+  let source = require(sourcePath);
+  console.log(sourcePath, source);
   return () =>
     pipeline([
-      streamArray(require(sourcePath)),
+      streamArray(source),
       through.obj(function (item, enc, done) {
-        this.push(createFile(item));
+        let file = createFile(item);
+        console.log(file);
+        this.push(file);
         done();
       }),
       data(dataFunction),
