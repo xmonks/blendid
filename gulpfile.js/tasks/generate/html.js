@@ -104,7 +104,7 @@ function generateHtml(sourcePath, destPath, { template, route }) {
   const createFile = (item) =>
     new File({
       path: route(item),
-      content: fs.readFileSync(
+      contents: fs.readFileSync(
         projectPath(PATH_CONFIG.src, PATH_CONFIG.html.src, template)
       ),
       data: { item },
@@ -121,19 +121,13 @@ function generateHtml(sourcePath, destPath, { template, route }) {
       }),
       data(dataFunction),
       nunjucksRender(config.nunjucksRender),
-      through.obj(function (item, enc, done) {
-        console.dir(item);
-        console.log(item.content.toString("utf-8"));
-        this.push(item);
-        done();
-      }),
-      // gulpif(
-      //   TASK_CONFIG.svgSprite,
-      //   inject(svgs, {
-      //     transform: (_, file) => file.contents.toString(),
-      //   })
-      // ),
-      // gulpif(global.production, htmlmin(config.htmlmin)),
+      gulpif(
+        TASK_CONFIG.svgSprite,
+        inject(svgs, {
+          transform: (_, file) => file.contents.toString(),
+        })
+      ),
+      gulpif(global.production, htmlmin(config.htmlmin)),
       dest(destPath),
     ]);
 }
