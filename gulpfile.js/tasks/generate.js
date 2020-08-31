@@ -6,5 +6,4 @@ const genTasks = [];
 if (TASK_CONFIG.generate.json) {
   genTasks.push(require("./generate/json"));
 }
-
-task("generate", series(genTasks));
+if (genTasks.length) task("generate", series(genTasks));
