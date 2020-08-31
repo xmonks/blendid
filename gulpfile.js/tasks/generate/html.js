@@ -2,7 +2,7 @@ if (!TASK_CONFIG.generate.html) return;
 
 const stream = require("stream");
 const utils = require("util");
-const file = require("file");
+const fs = require("fs");
 const gulp = require("gulp");
 const data = require("gulp-data");
 const gulpif = require("gulp-if");
@@ -98,7 +98,7 @@ function generateHtml(sourcePath, destPath, { template, route }) {
   const createFile = (item) =>
     new File({
       path: route(item),
-      content: file.readFileSync(
+      content: fs.readFileSync(
         projectPath(PATH_CONFIG.src, PATH_CONFIG.html.src, template)
       ),
       data: item,
