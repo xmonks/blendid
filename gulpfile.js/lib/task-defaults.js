@@ -7,7 +7,7 @@ const { minifyHTMLLiterals } = require("minify-html-literals");
 const terserOptions = {
   mangle: false,
   module: true,
-  ecma: 2019
+  ecma: 2019,
 };
 
 function cloudinaryUrl(
@@ -19,7 +19,7 @@ function cloudinaryUrl(
     quality = "auto",
     dpr = 1,
     crop,
-    gravity
+    gravity,
   } = {}
 ) {
   try {
@@ -31,7 +31,7 @@ function cloudinaryUrl(
       height,
       quality,
       secure: true,
-      width
+      width,
     });
   } catch (err) {
     console.error("cloudinaryUrl", err);
@@ -43,15 +43,18 @@ function* pairs(dartMap) {
     yield [dartMap.getKey(i).getValue(), dartMap.getValue(i).getValue()];
   }
 }
-const toJS = dartMap => Object.fromEntries(pairs(dartMap));
+const toJS = (dartMap) => Object.fromEntries(pairs(dartMap));
 const sassCloudinaryUrlSignature = "cloudinaryUrl($publicId, $opts: ())";
-const sassCloudinaryUrl = (publicId, opts) => new sass.types.String(`url(${cloudinaryUrl(publicId.getValue(), toJS(opts))})`);
+const sassCloudinaryUrl = (publicId, opts) =>
+  new sass.types.String(
+    `url(${cloudinaryUrl(publicId.getValue(), toJS(opts))})`
+  );
 
 function minifyJS(text, inline) {
   const litTags = new Set(["html", "svg"]);
   const min = minifyHTMLLiterals(text, {
     fileName: "yolo.js",
-    shouldMinify: ({ tag }) => tag && litTags.has(tag.toLowerCase())
+    shouldMinify: ({ tag }) => tag && litTags.has(tag.toLowerCase()),
   });
   const res = terser.minify(
     min ? min.code : text,
@@ -68,14 +71,14 @@ function minifyJS(text, inline) {
 module.exports = {
   javascripts: {
     terser: terserOptions,
-    extensions: ["js", "mjs", "cjs"]
+    extensions: ["js", "mjs", "cjs"],
   },
 
   stylesheets: {
     sass: {
       fiber,
       functions: {
-        [sassCloudinaryUrlSignature]: sassCloudinaryUrl
+        [sassCloudinaryUrlSignature]: sassCloudinaryUrl,
       },
     },
     extensions: ["sass", "scss", "css"],
@@ -90,11 +93,11 @@ module.exports = {
     nunjucksRender: {
       filters: {
         split: (str, seperator) => str.split(seperator),
-        cloudinaryUrl
+        cloudinaryUrl,
       },
       envOptions: {
-        watch: false
-      }
+        watch: false,
+      },
     },
     htmlmin: {
       collapseWhitespace: true,
@@ -105,50 +108,50 @@ module.exports = {
       removeAttributeQuotes: true,
       removeOptionalTags: true,
       removeRedundantAttributes: true,
-      removeStyleLinkTypeAttributes: true
+      removeStyleLinkTypeAttributes: true,
     },
     excludeFolders: ["layouts", "shared", "macros", "data"],
-    extensions: ["html", "njk", "json"]
+    extensions: ["html", "njk", "json"],
   },
 
   images: {
-    extensions: ["jpg", "jpeg", "png", "svg", "gif"]
+    extensions: ["jpg", "jpeg", "png", "svg", "gif"],
   },
 
   cloudinary: {
     extensions: ["jpg", "jpeg", "png", "gif", "svg"],
-    manifest: "images.json"
+    manifest: "images.json",
   },
 
   fonts: {
-    extensions: ["woff2", "woff", "eot", "ttf", "svg"]
+    extensions: ["woff2", "woff", "eot", "ttf", "svg"],
   },
 
   svgSprite: {
     svgstore: {
-      inlineSvg: true
-    }
+      inlineSvg: true,
+    },
   },
 
   watch: {
-    tasks: []
+    tasks: [],
   },
 
   workboxBuild: {},
 
   production: {
-    rev: true
+    rev: true,
   },
 
   additionalTasks: {
     initialize(gulp, PATH_CONFIG, TASK_CONFIG) {},
     development: {
       prebuild: null,
-      postbuild: null
+      postbuild: null,
     },
     production: {
       prebuild: null,
-      postbuild: null
-    }
-  }
+      postbuild: null,
+    },
+  },
 };

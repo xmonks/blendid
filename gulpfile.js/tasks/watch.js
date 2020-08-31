@@ -1,7 +1,7 @@
 const { task, series, watch } = require("gulp");
 const projectPath = require("../lib/projectPath");
 
-const watchTask = function(done) {
+const watchTask = function (done) {
   const watchableTasks = [
     "fonts",
     "iconFont",
@@ -13,7 +13,7 @@ const watchTask = function(done) {
     "stylesheets",
     "javascripts",
     "static",
-    ...TASK_CONFIG.watch.tasks
+    ...TASK_CONFIG.watch.tasks,
   ];
 
   function getTaskPathFor(taskName) {
@@ -27,7 +27,7 @@ const watchTask = function(done) {
     }
   }
 
-  watchableTasks.forEach(taskName => {
+  watchableTasks.forEach((taskName) => {
     const taskConfig = TASK_CONFIG[taskName];
     const taskPath = getTaskPathFor(taskName);
 

@@ -5,7 +5,7 @@ const isEmpty = require("lodash/isEmpty");
 const assetTasks = ["cloudinary", "fonts", "iconFont", "images"];
 const codeTasks = ["html", "stylesheets", "javascripts"];
 
-module.exports = function(env) {
+module.exports = function (env) {
   function matchFilter(task) {
     if (TASK_CONFIG[task]) {
       return task;
@@ -19,6 +19,6 @@ module.exports = function(env) {
 
   return {
     assetTasks: findExistingTasks(assetTasks),
-    codeTasks: findExistingTasks(codeTasks)
+    codeTasks: findExistingTasks(codeTasks),
   };
 };
