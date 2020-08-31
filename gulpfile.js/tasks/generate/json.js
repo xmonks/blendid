@@ -32,5 +32,5 @@ function* createTasks() {
   }
 }
 
-task("generate-json", parallel(createTasks()));
+task("generate-json", parallel(Array.from(createTasks())));
 module.exports = "generate-json";
