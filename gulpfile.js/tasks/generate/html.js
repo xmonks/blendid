@@ -36,10 +36,13 @@ function generateHtml(sourcePath, destPath, { template, route }) {
   const collectionsDataFunction =
     PATH_CONFIG.data &&
     config.collections &&
-    (() => {
+    ((file) => {
       const cols = config.collections;
       return Promise.all(cols.map(jsonData(PATH_CONFIG))).then((xs) =>
-        cols.reduce((acc, x, i) => Object.assign(acc, { [x]: xs[i] }), {})
+        cols.reduce(
+          (acc, x, i) => Object.assign(acc, { [x]: xs[i] }),
+          file.data || {}
+        )
       );
     });
 
@@ -104,7 +107,7 @@ function generateHtml(sourcePath, destPath, { template, route }) {
       content: fs.readFileSync(
         projectPath(PATH_CONFIG.src, PATH_CONFIG.html.src, template)
       ),
-      data: item,
+      data: { item },
     });
 
   return () =>
