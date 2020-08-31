@@ -15,6 +15,7 @@ const through = require("through2");
 const File = require("vinyl");
 const nunjucksRender = require("gulp-nunjucks-render");
 const projectPath = require("../../lib/projectPath");
+const { getPaths } = require("../html");
 
 const pipeline = utils.promisify(stream.pipeline);
 const { src, dest, task, parallel } = gulp;
@@ -29,6 +30,7 @@ const jsonData = (pathConfig) => (name) =>
 
 function generateHtml(sourcePath, destPath, { template, route }) {
   const config = TASK_CONFIG.html;
+  const paths = getPaths();
 
   const collectionsDataFunction =
     PATH_CONFIG.data &&
