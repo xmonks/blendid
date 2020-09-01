@@ -110,7 +110,6 @@ function generateHtml(sourcePath, destPath, { template, route }) {
       data: { item },
     });
 
-  console.dir(config.nunjucksRender);
   return () =>
     pipeline([
       streamArray(require(sourcePath)),
