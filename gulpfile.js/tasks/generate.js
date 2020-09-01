@@ -9,6 +9,9 @@ if (TASK_CONFIG.generate.json) {
 if (TASK_CONFIG.generate.html) {
   genTasks.push(require("./generate/html"));
 }
+if (TASK_CONFIG.generate.redirects) {
+  genTasks.push(require("./generate/redirect"));
+}
 
 let noop = (done) => {
   done();
