@@ -24,16 +24,18 @@ function generateRedirect(sourcePath, destPath, { host, route }) {
       : originalUrl;
     return new File({
       path,
-      contents: stream.Readable.from([
-        `<!DOCTYPE html>`,
-        `<meta charset=utf-8>`,
-        `<title>This page has been moved</title>`,
-        `<meta name=robots content=noindex>`,
-        `<meta http-equiv=refresh content="0;url={{host}}{{targetUrl}}">`,
-        `<link rel=canonical href="{{host}}{{targetUrl}}">`,
-        `<script>window.location.replace('{{targetUrl}}');</script>`,
-        `<p>This page has been moved to <a href={{targetUrl}}>{{targetUrl}}</a>`,
-      ]),
+      contents: Buffer.from(
+        [
+          `<!DOCTYPE html>`,
+          `<meta charset=utf-8>`,
+          `<title>This page has been moved</title>`,
+          `<meta name=robots content=noindex>`,
+          `<meta http-equiv=refresh content="0;url={{host}}{{targetUrl}}">`,
+          `<link rel=canonical href="{{host}}{{targetUrl}}">`,
+          `<script>window.location.replace('{{targetUrl}}');</script>`,
+          `<p>This page has been moved to <a href={{targetUrl}}>{{targetUrl}}</a>`,
+        ].join("")
+      ),
       data: { host, targetUrl },
     });
   };
