@@ -2,10 +2,7 @@ if (!TASK_CONFIG.generate.redirects) return;
 
 const stream = require("stream");
 const utils = require("util");
-const fs = require("fs");
-const path = require("path");
 const gulp = require("gulp");
-const data = require("gulp-data");
 const gulpif = require("gulp-if");
 const htmlmin = require("gulp-htmlmin");
 const streamArray = require("stream-array");
@@ -13,7 +10,6 @@ const through = require("through2");
 const File = require("vinyl");
 const nunjucksRender = require("gulp-nunjucks-render");
 const projectPath = require("../../lib/projectPath");
-const { getPaths } = require("../html");
 
 const pipeline = utils.promisify(stream.pipeline);
 const { dest, task, parallel } = gulp;
@@ -28,13 +24,16 @@ function generateRedirect(sourcePath, destPath, { host, route }) {
       : originalUrl;
     return new File({
       path,
-      contents: `<!DOCTYPE html>
-        <meta charset=utf-8>
-        <meta name=robots content=noindex>
-        <meta http-equiv=refresh content="0;url={{host}}{{targetUrl}}">
-        <link rel=canonical href="{{host}}{{targetUrl}}">
-        <script>window.location.replace('{{targetUrl}}');</script>
-        <p>This page has been moved to <a href={{targetUrl}}>{{targetUrl}}</a></p>`,
+      contents: stream.Readable.from([
+        `<!DOCTYPE html>`,
+        `<meta charset=utf-8>`,
+        `<title>This page has been moved</title>`,
+        `<meta name=robots content=noindex>`,
+        `<meta http-equiv=refresh content="0;url={{host}}{{targetUrl}}">`,
+        `<link rel=canonical href="{{host}}{{targetUrl}}">`,
+        `<script>window.location.replace('{{targetUrl}}');</script>`,
+        `<p>This page has been moved to <a href={{targetUrl}}>{{targetUrl}}</a>`,
+      ]),
       data: { host, targetUrl },
     });
   };
