@@ -13,7 +13,7 @@ const getEnabledTasks = require("./lib/getEnabledTasks");
 // Globally expose config objects
 global.PATH_CONFIG = require("./lib/get-path-config");
 global.TASK_CONFIG = require("./lib/get-task-config");
-
+x
 require("./tasks/browserSync");
 require("./tasks/clean");
 require("./tasks/cloudinary");
@@ -48,6 +48,7 @@ const devTasks = function () {
     generate,
     assetTasks && gulp.parallel(assetTasks),
     codeTasks && gulp.parallel(codeTasks),
+    "html",
     staticFiles,
     postbuild,
     workboxBuild,

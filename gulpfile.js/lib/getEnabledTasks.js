@@ -3,7 +3,7 @@ const isEmpty = require("lodash/isEmpty");
 
 // Grouped by what can run in parallel
 const assetTasks = ["cloudinary", "fonts", "iconFont", "images"];
-const codeTasks = ["html", "stylesheets", "javascripts"];
+const codeTasks = ["stylesheets", "javascripts"];
 
 module.exports = function (env) {
   function matchFilter(task) {
