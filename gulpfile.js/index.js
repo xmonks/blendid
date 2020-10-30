@@ -72,6 +72,7 @@ const prodTasks = function () {
     generate,
     assetTasks && gulp.parallel(assetTasks),
     codeTasks && gulp.parallel(codeTasks),
+    "html",
     rev,
     staticFiles,
     postbuild,
