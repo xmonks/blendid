@@ -38,7 +38,9 @@ const watchTask = function (done) {
       const globPattern = `**/*${
         taskConfig.extensions ? `.{${taskConfig.extensions.join(",")}}` : ""
       }`;
-      const exclude = `!{${taskConfig.exclude.join(",")}}`;
+      const exclude = taskConfig.exclude
+        ? `!{${taskConfig.exclude.join(",")}}`
+        : "";
       watch([globPattern, exclude], { cwd: srcPath }, task(taskName));
     }
   });
