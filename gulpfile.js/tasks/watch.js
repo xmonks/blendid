@@ -35,12 +35,11 @@ const watchTask = function (done) {
 
     if (taskConfig) {
       const srcPath = projectPath(PATH_CONFIG.src, taskPath.src);
-      const globPattern =
-        "**/*" +
-        (taskConfig.extensions
-          ? ".{" + taskConfig.extensions.join(",") + "}"
-          : "");
-      watch(globPattern, { cwd: srcPath }, task(taskName));
+      const globPattern = `**/*${
+        taskConfig.extensions ? `.{${taskConfig.extensions.join(",")}}` : ""
+      }`;
+      const exclude = `!{${taskConfig.exclude.join(",")}}`;
+      watch([globPattern, exclude], { cwd: srcPath }, task(taskName));
     }
   });
   done();
