@@ -28,7 +28,9 @@ const browserSyncTask = function (cb) {
   browserSync.init(config);
 
   const output = projectPath(PATH_CONFIG.dest, "**/*.{html,js,css}");
-  watch(output, browserSync.reload);
+  watch(output).on("change", () => {
+    browserSync.reload();
+  });
   cb();
 };
 
