@@ -37,21 +37,21 @@ function registerDefaultPlugins(plugins, replacePlugins, terserOptions) {
   const result = [...plugins];
   if (!replacePlugins) {
     const alias = require("@rollup/plugin-alias");
-    const resolve = require("@rollup/plugin-node-resolve");
+    const { nodeResolve } = require("@rollup/plugin-node-resolve");
     result.unshift(
       // Solves common problem with tslib resolution
       alias({
-        entries: [{ find: "tslib", replacement: "tslib/tslib.es6.js" }]
+        entries: [{ find: "tslib", replacement: "tslib/tslib.es6.js" }],
       }),
       // Enable node_modules resolution for browser packages
-      resolve({ browser: true })
+      nodeResolve({ browser: true })
     );
   }
   // Minify production build
   if (global.production) {
     const { terser } = require("rollup-plugin-terser");
     const {
-      default: minifyHtml
+      default: minifyHtml,
     } = require("rollup-plugin-minify-html-literals");
     result.push(
       // minifies lit-html literals
@@ -65,10 +65,10 @@ function registerDefaultPlugins(plugins, replacePlugins, terserOptions) {
 
 const paths = {
   src: projectPath(PATH_CONFIG.src, PATH_CONFIG.javascripts.src),
-  dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.javascripts.dest)
+  dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.javascripts.dest),
 };
 
-const rollupTask = async function() {
+const rollupTask = async function () {
   const {
     modules = {},
     plugins = [],
@@ -84,13 +84,13 @@ const rollupTask = async function() {
   const bundle = await rollup.rollup({
     input: resolveInputPaths(modules, paths.src),
     plugins: registerDefaultPlugins(plugins, replacePlugins, terserOptions),
-    ...rest
+    ...rest,
   });
   const options = {
     entryFileNames: "[name].js",
     dir: paths.dest,
     format: "esm",
-    ...output
+    ...output,
   };
   await writeBundleManifest(bundle, options);
   const result = await bundle.write(options);

@@ -17,7 +17,7 @@ const projectPath = require("../lib/projectPath");
 const pipeline = util.promisify(stream.pipeline);
 const { src, dest, task } = gulp;
 
-const postcssTask = function() {
+const postcssTask = function () {
   const config = TASK_CONFIG.stylesheets;
   const paths = {
     src: projectPath(
@@ -25,17 +25,17 @@ const postcssTask = function() {
       PATH_CONFIG.stylesheets.src,
       "**/[!_]*.{" + config.extensions + "}"
     ),
-    dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.stylesheets.dest)
+    dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.stylesheets.dest),
   };
 
   if (config.sass && config.sass.includePaths) {
     config.sass.includePaths = config.sass.includePaths
       .filter(Boolean)
-      .map(includePath => projectPath(includePath));
+      .map((includePath) => projectPath(includePath));
   }
 
   if (config.sass) {
-    config.sass.importer = function(url) {
+    config.sass.importer = function (url) {
       try {
         // try to resolve with node resolution (yarn pnp support)
         return { file: require.resolve(`${url}.scss`) };
