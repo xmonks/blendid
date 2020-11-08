@@ -40,7 +40,15 @@ const devTasks = function () {
   const generate = TASK_CONFIG.generate ? "generate" : null;
   const staticFiles = TASK_CONFIG.static ? "static" : null;
   const workboxBuild = TASK_CONFIG.workboxBuild ? "workboxBuild" : null;
-  const { prebuild, postbuild } = TASK_CONFIG.additionalTasks.development;
+  const {
+    prebuild,
+    postbuild,
+    code,
+    assets,
+  } = TASK_CONFIG.additionalTasks.development;
+
+  if (assets) assetTasks.push(...assets);
+  if (code) codeTasks.push(...code);
 
   return [
     "clean",
@@ -64,7 +72,15 @@ const prodTasks = function () {
   const generate = TASK_CONFIG.generate ? "generate" : null;
   const staticFiles = TASK_CONFIG.static ? "static" : null;
   const workboxBuild = TASK_CONFIG.workboxBuild ? "workboxBuild" : null;
-  const { prebuild, postbuild } = TASK_CONFIG.additionalTasks.production;
+  const {
+    prebuild,
+    postbuild,
+    code,
+    assets,
+  } = TASK_CONFIG.additionalTasks.production;
+
+  if (assets) assetTasks.push(...assets);
+  if (code) codeTasks.push(...code);
 
   return [
     "clean",
