@@ -4,14 +4,13 @@ const { task, src, dest } = require("gulp");
 const revReplace = require("gulp-rev-replace");
 const projectPath = require("../../lib/projectPath");
 
-const destDir = (PATH_CONFIG.javascripts || PATH_CONFIG.esbuild).dest;
-
+const codeDir = (PATH_CONFIG.javascripts || PATH_CONFIG.esbuild).dest;
 const paths = {
-  src: projectPath(PATH_CONFIG.dest, destDir, "**/*.js"),
-  dest: projectPath(PATH_CONFIG.dest, destDir),
+  src: projectPath(PATH_CONFIG.dest, codeDir, "**/*.js"),
+  dest: projectPath(PATH_CONFIG.dest, codeDir),
 };
 
-const relativePath = (s) => s.replace(destDir, ".");
+const relativePath = (s) => s.replace(codeDir, ".");
 
 task("update-js", function () {
   const manifest = src(projectPath(PATH_CONFIG.dest, "rev-manifest.json"));
