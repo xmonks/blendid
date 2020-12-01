@@ -1,5 +1,4 @@
 const sass = require("sass");
-const fiber = require("fibers");
 const cloudinary = require("cloudinary").v2;
 const terser = require("terser");
 const { minifyHTMLLiterals } = require("minify-html-literals");
@@ -76,7 +75,6 @@ module.exports = {
 
   stylesheets: {
     sass: {
-      fiber,
       functions: {
         [sassCloudinaryUrlSignature]: sassCloudinaryUrl,
       },
