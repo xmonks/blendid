@@ -4,6 +4,7 @@
 
 ## Quick start on a fresh project (empty directory)
 ```bash
+nvm install 15
 yarn init
 yarn add git://github.com/topmonks/blendid.git
 yarn blendid init
