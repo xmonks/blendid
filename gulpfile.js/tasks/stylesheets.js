@@ -10,8 +10,7 @@ const rename = require("gulp-rename");
 const sourcemaps = require("gulp-sourcemaps");
 const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
-const sass = require("gulp-sass");
-sass.compiler = require("sass");
+const sass = require("gulp-dart-sass");
 const projectPath = require("../lib/projectPath");
 
 const pipeline = util.promisify(stream.pipeline);
