@@ -33,7 +33,7 @@ const watchTask = function (done) {
     const taskConfig = TASK_CONFIG[taskName];
     const taskPath = getTaskPathFor(taskName);
 
-    if (taskConfig) {
+    if (taskConfig && taskPath) {
       const srcPath = projectPath(PATH_CONFIG.src, taskPath.src);
       const globPattern = `**/*${
         taskConfig.extensions ? `.{${taskConfig.extensions.join(",")}}` : ""
