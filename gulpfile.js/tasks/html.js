@@ -8,6 +8,7 @@ const gulp = require("gulp");
 const data = require("gulp-data");
 const gulpif = require("gulp-if");
 const htmlmin = require("gulp-htmlmin");
+const postcss = require("gulp-html-postcss");
 const inject = require("gulp-inject");
 const svgmin = require("gulp-svgmin");
 const svgstore = require("gulp-svgstore");
@@ -124,6 +125,7 @@ const htmlTask = function () {
         transform: (_, file) => file.contents.toString(),
       })
     ),
+    postcss(TASK_CONFIG.stylesheets?.postcss),
     gulpif(global.production, htmlmin(config.htmlmin)),
     dest(paths.dest)
   );
