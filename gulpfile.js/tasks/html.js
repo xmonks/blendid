@@ -125,7 +125,7 @@ const htmlTask = function () {
         transform: (_, file) => file.contents.toString(),
       })
     ),
-    postcss(TASK_CONFIG.stylesheets?.postcss),
+    postcss(TASK_CONFIG.stylesheets),
     gulpif(global.production, htmlmin(config.htmlmin)),
     dest(paths.dest)
   );
