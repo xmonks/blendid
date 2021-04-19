@@ -1,37 +1,49 @@
 version: 2.1
 orbs:
-  node: circleci/node@3.0.1
-  github: topmonks/github@1.0.1
-  slack: circleci/slack@3.4.2
+  node: circleci/nodee@4.2.1
+  github: topmonks/github@1.0.2
+  slack: circleci/slack@4.4.0
 jobs:
   build:
     executor:
       name: node/default
-      tag: '14.15.0'
+      tag: '14.16.0'
     steps:
       - checkout
       - node/install-packages:
           pkg-manager: yarn
+          override-ci-command: yarn install --immutable
+          cache-version: v2
+          cache-path: .yarn/cache
       - run:
           name: Build testing site
           command: yarn build
-      - slack/status:
-          fail_only: true
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+          channel: ntf-topmonks-webs
   merge_pr:
     docker:
-      - image: cimg/base:2020.01
+      - image: cimg/base:2020.12
     steps:
       - checkout
       - github/install
       - github/merge_pr:
           rebase: true
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+          channel: ntf-topmonks-webs
 workflows:
   ci:
     jobs:
       - build
       - node/test:
-          version: '14.15.0'
+          version: '14.16.0'
           pkg-manager: yarn
+          override-ci-command: yarn install --immutable
+          cache-version: v2
+          cache-path: .yarn/cache
       - merge_pr:
           context: org-github
           requires:
