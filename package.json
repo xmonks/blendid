@@ -9,24 +9,23 @@
     "type": "git",
     "url": "git://github.com/topmonks/blendid.git"
   },
-  "bin": {
-    "blendid": "bin/blendid.js"
-  },
+  "bin": "bin/blendid.js",
   "scripts": {
     "start": "gulp",
     "build": "gulp build",
-    "test": "mocha ./gulpfile.js/**/*.test.js"
+    "test": "mocha ./gulpfile.js/**/*.test.js",
+    "outdated": "yarn upgrade-interactive"
   },
   "dependencies": {
     "@rollup/plugin-alias": "^3.1.2",
     "@rollup/plugin-node-resolve": "^11.2.1",
     "ansi-colors": "4.1.1",
-    "autoprefixer": "9.8.6",
+    "autoprefixer": "10.2.5",
     "browser-sync": "2.26.14",
     "cloudinary": "^1.25.1",
-    "cssnano": "^4.1.11",
+    "cssnano": "^5.0.1",
     "del": "6.0.0",
-    "fancy-log": "^1.3.2",
+    "fancy-log": "^1.3.3",
     "gulp": "^4.0.2",
     "gulp-changed": "^4.0.2",
     "gulp-cloudinary-upload": "https://github.com/topmonks/gulp-cloudinary-upload.git#50b82e73a9d9cd4b350647b8717e843c1acd201a",
@@ -39,9 +38,9 @@
     "gulp-inject": "^5.0.5",
     "gulp-markdown-to-json": "^1.1.0",
     "gulp-merge-json": "^2.1.1",
-    "gulp-notify": "^3.0.0",
+    "gulp-notify": "^3.2.0",
     "gulp-nunjucks-render": "2.2.3",
-    "gulp-postcss": "^8.0.0",
+    "gulp-postcss": "^9.0.0",
     "gulp-rename": "^2.0.0",
     "gulp-rev": "^9.0.0",
     "gulp-rev-delete-original": "^0.2.3",
@@ -53,16 +52,17 @@
     "lodash": "^4.17.21",
     "marked": "^2.0.3",
     "merge-stream": "^2.0.0",
-    "minify-html-literals": "^1.3.0",
+    "minify-html-literals": "^1.3.5",
     "open": "^8.0.6",
     "plugin-error": "^1.0.1",
+    "postcss": "^8.2.10",
     "pretty-hrtime": "^1.0.3",
     "rollup": "^2.45.2",
     "rollup-plugin-minify-html-literals": "^1.2.6",
     "rollup-plugin-terser": "^7.0.2",
     "sass": "^1.32.10",
     "stream-array": "^1.1.2",
-    "terser": "^4.6.13",
+    "terser": "^5.6.1",
     "through2": "^4.0.2",
     "vinyl": "^2.2.1",
     "workbox-build": "^6.1.5"
@@ -72,9 +72,5 @@
     "chai": "^4.3.4",
     "mocha": "^8.3.2",
     "prettier": "^2.2.1"
-  },
-  "resolutions": {
-    "chokidar": "npm:chokidar@3.4.1",
-    "source-map-resolve": "npm:source-map-resolve@0.6.0"
   }
 }
