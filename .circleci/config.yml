@@ -37,8 +37,10 @@ jobs:
 workflows:
   ci:
     jobs:
-      - build
+      - build:
+          context: org-global
       - node/test:
+          context: org-global
           version: '14.16.0'
           pkg-manager: yarn
           override-ci-command: yarn install --immutable
