@@ -14,6 +14,7 @@ const svgmin = require("gulp-svgmin");
 const svgstore = require("gulp-svgstore");
 const nunjucksRender = require("gulp-nunjucks-render");
 const projectPath = require("../lib/projectPath");
+const getPostCSSPlugins = require("../lib/postCSS");
 
 const { src, dest, task } = gulp;
 const pipeline = util.promisify(stream.pipeline);
@@ -115,6 +116,7 @@ const htmlTask = function () {
     )
     .pipe(svgstore(TASK_CONFIG.svgSprite.svgstore));
 
+  const plugins = getPostCSSPlugins(TASK_CONFIG.stylesheets);
   return pipeline(
     src(paths.src),
     data(dataFunction),
@@ -125,7 +127,7 @@ const htmlTask = function () {
         transform: (_, file) => file.contents.toString(),
       })
     ),
-    postcss(TASK_CONFIG.stylesheets),
+    postcss(plugins, TASK_CONFIG.stylesheets.postcss),
     gulpif(global.production, htmlmin(config.htmlmin)),
     dest(paths.dest)
   );
