@@ -43,7 +43,6 @@ workflows:
           pkg-manager: yarn
           override-ci-command: yarn install --immutable
           cache-version: v2
-          cache-path: .yarn/cache
       - merge_pr:
           context: org-github
           requires:
