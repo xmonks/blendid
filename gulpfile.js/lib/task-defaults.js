@@ -1,13 +1,5 @@
 const sass = require("sass");
 const cloudinary = require("cloudinary").v2;
-const terser = require("terser");
-const { minifyHTMLLiterals } = require("minify-html-literals");
-
-const terserOptions = {
-  mangle: false,
-  module: true,
-  ecma: 2019,
-};
 
 function cloudinaryUrl(
   publicId,
@@ -49,27 +41,8 @@ const sassCloudinaryUrl = (publicId, opts) =>
     `url(${cloudinaryUrl(publicId.getValue(), toJS(opts))})`
   );
 
-function minifyJS(text, inline) {
-  const litTags = new Set(["html", "svg"]);
-  const min = minifyHTMLLiterals(text, {
-    fileName: "yolo.js",
-    shouldMinify: ({ tag }) => tag && litTags.has(tag.toLowerCase()),
-  });
-  const res = terser.minify(
-    min ? min.code : text,
-    Object.assign({}, terserOptions) // create copy because options are mutated
-  );
-  if (res.warnings) console.log(res.warnings);
-  if (res.error) {
-    console.log(text);
-    throw res.error;
-  }
-  return res.code;
-}
-
 module.exports = {
   javascripts: {
-    terser: terserOptions,
     extensions: ["js", "mjs", "cjs"],
   },
 
@@ -102,7 +75,6 @@ module.exports = {
       collapseBooleanAttributes: true,
       decodeEntities: true,
       minifyCSS: true,
-      minifyJS,
       removeAttributeQuotes: true,
       removeOptionalTags: true,
       removeRedundantAttributes: true,

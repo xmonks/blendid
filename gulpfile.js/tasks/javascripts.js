@@ -49,15 +49,12 @@ function registerDefaultPlugins(plugins, replacePlugins, terserOptions) {
   }
   // Minify production build
   if (global.production) {
-    const { terser } = require("rollup-plugin-terser");
     const {
       default: minifyHtml,
     } = require("rollup-plugin-minify-html-literals");
     result.push(
       // minifies lit-html literals
-      minifyHtml(),
-      // minifies EcmaScript code
-      terser(terserOptions)
+      minifyHtml()
     );
   }
   return result;
