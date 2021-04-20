@@ -52,7 +52,7 @@ function generateHtml(sourcePath, destPath, { template, route }) {
     function () {
       const dataPath = projectPath(
         PATH_CONFIG.src,
-        PATH_CONFIG.html.src,
+        PATH_CONFIG.data.src,
         config.dataFile
       );
       return fs.promises.readFile(dataPath, "utf-8").then((x) => JSON.parse(x));
