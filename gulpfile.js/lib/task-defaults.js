@@ -11,6 +11,7 @@ function cloudinaryUrl(
     dpr = 1,
     crop,
     gravity,
+    flags = "progressive",
   } = {}
 ) {
   try {
@@ -23,6 +24,7 @@ function cloudinaryUrl(
       quality,
       secure: true,
       width,
+      flags,
     });
   } catch (err) {
     console.error("cloudinaryUrl", err);
