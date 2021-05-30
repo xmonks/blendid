@@ -7,11 +7,23 @@
 {% extends 'layouts/application.html' %}
 
 {% block content %}
-  <h1 data-module="example">{{ message }}</h1>
+<h1>{{ message }}</h1>
+
+<!-- Some Comment we should get rid of -->
 
 <style>
   h2 {
     width: fit-content;
   }
 </style>
+
+<script>
+  var someTest = {
+    data: "nope"
+  }
+
+  const fn = () => alert(someTest.data);
+</script>
+
+<p>testing the optimizations of this build stack</p>
 {% endblock %}
