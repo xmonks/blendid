@@ -62,7 +62,7 @@ module.exports = {
   },
 
   html: {
-    dataFile: "data/global.json",
+    dataFile: "global.json",
     nunjucksRender: {
       filters: {
         split: (str, seperator) => str.split(seperator),
