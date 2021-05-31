@@ -1515,7 +1515,7 @@ __metadata:
     pretty-hrtime: ^1.0.3
     rollup: ^2.50.4
     rollup-plugin-minify-html-literals: ^1.2.6
-    sass: 1.32.10
+    sass: =1.32.10
     stream-array: ^1.1.2
     through2: ^4.0.2
     vinyl: ^2.2.1
@@ -9121,7 +9121,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"sass@npm:1.32.10, sass@npm:^1.26.3":
+"sass@npm:=1.32.10, sass@npm:^1.26.3":
   version: 1.32.10
   resolution: "sass@npm:1.32.10"
   dependencies:
