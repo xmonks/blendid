@@ -33,7 +33,7 @@ const postcssTask = function () {
   }
 
   if (config.sass && !config.sass.importer) {
-    config.sass.importer(url) {
+    config.sass.importer = function(url) {
       try {
         // try to resolve with node resolution (yarn pnp support)
         return { file: require.resolve(`${url}.scss`) };
