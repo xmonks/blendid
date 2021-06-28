@@ -32,8 +32,8 @@ const postcssTask = function () {
       .map((includePath) => projectPath(includePath));
   }
 
-  if (config.sass) {
-    config.sass.importer = function (url) {
+  if (config.sass && !config.sass.importer) {
+    config.sass.importer(url) {
       try {
         // try to resolve with node resolution (yarn pnp support)
         return { file: require.resolve(`${url}.scss`) };
