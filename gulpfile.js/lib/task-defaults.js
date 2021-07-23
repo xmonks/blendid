@@ -12,6 +12,7 @@ function cloudinaryUrl(
     crop,
     gravity,
     flags = "progressive",
+    ar,
   } = {}
 ) {
   try {
@@ -25,6 +26,7 @@ function cloudinaryUrl(
       secure: true,
       width,
       flags,
+      aspect_ratio: ar,
     });
   } catch (err) {
     console.error("cloudinaryUrl", err);
