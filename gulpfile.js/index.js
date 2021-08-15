@@ -8,6 +8,7 @@
 */
 
 const gulp = require("gulp");
+const logger = require("gulplog");
 const getEnabledTasks = require("./lib/getEnabledTasks");
 
 // Globally expose config objects
@@ -40,12 +41,8 @@ const devTasks = function () {
   const generate = TASK_CONFIG.generate ? "generate" : null;
   const staticFiles = TASK_CONFIG.static ? "static" : null;
   const workboxBuild = TASK_CONFIG.workboxBuild ? "workboxBuild" : null;
-  const {
-    prebuild,
-    postbuild,
-    code,
-    assets,
-  } = TASK_CONFIG.additionalTasks.development;
+  const { prebuild, postbuild, code, assets } =
+    TASK_CONFIG.additionalTasks.development;
 
   if (assets) assetTasks.push(...assets);
   if (code) codeTasks.push(...code);
@@ -67,17 +64,15 @@ const devTasks = function () {
 const prodTasks = function () {
   global.production = true;
 
+  logger.info("Building web", PATH_CONFIG.src);
+
   const { assetTasks, codeTasks } = getEnabledTasks("production");
   const rev = TASK_CONFIG.production.rev ? "rev" : null;
   const generate = TASK_CONFIG.generate ? "generate" : null;
   const staticFiles = TASK_CONFIG.static ? "static" : null;
   const workboxBuild = TASK_CONFIG.workboxBuild ? "workboxBuild" : null;
-  const {
-    prebuild,
-    postbuild,
-    code,
-    assets,
-  } = TASK_CONFIG.additionalTasks.production;
+  const { prebuild, postbuild, code, assets } =
+    TASK_CONFIG.additionalTasks.production;
 
   if (assets) assetTasks.push(...assets);
   if (code) codeTasks.push(...code);
