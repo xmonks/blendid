@@ -32,6 +32,8 @@ require("./tasks/watch");
 require("./tasks/rev");
 require("./tasks/workboxBuild");
 
+logger.info("Building sources", PATH_CONFIG.src);
+
 // Initialize any additional user-provided tasks
 const init = TASK_CONFIG.additionalTasks.initialize || function () {};
 init(gulp, PATH_CONFIG, TASK_CONFIG);
@@ -63,8 +65,6 @@ const devTasks = function () {
 
 const prodTasks = function () {
   global.production = true;
-
-  logger.info("Building web", PATH_CONFIG.src);
 
   const { assetTasks, codeTasks } = getEnabledTasks("production");
   const rev = TASK_CONFIG.production.rev ? "rev" : null;
