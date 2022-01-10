@@ -5,11 +5,12 @@ orbs:
   slack: circleci/slack@4.4.0
 jobs:
   build:
-    executor:
-      name: node/default
-      tag: '16.13'
+    machine:
+      image: ubuntu-2004:202111-02
+    resource_class: arm.medium
     steps:
       - checkout
+      - run: nvm install $(< .nvmrc)
       - node/install-packages:
           pkg-manager: yarn-berry
           cache-version: v2
@@ -22,9 +23,26 @@ jobs:
           event: fail
           template: basic_fail_1
           channel: ntf-topmonks-webs
+  test:
+    machine:
+      image: ubuntu-2004:202111-02
+    resource_class: arm.medium
+    steps:
+      - checkout
+      - run: nvm install $(< .nvmrc)
+      - node/install-packages:
+          pkg-manager: yarn-berry
+          cache-version: v2
+          check-cache: always
+          with-cache: false
+      - run: yarn test
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+          channel: ntf-topmonks-webs
   merge_pr:
     docker:
-      - image: cimg/base:2020.12
+      - image: cimg/base:2022.1
     steps:
       - checkout
       - github/install
@@ -39,13 +57,8 @@ workflows:
     jobs:
       - build:
           context: org-global
-      - node/test:
+      - test:
           context: org-global
-          version: '16.13'
-          pkg-manager: yarn-berry
-          cache-version: v2
-          check-cache: always
-          with-cache: false
       - merge_pr:
           context: org-github
           requires:
