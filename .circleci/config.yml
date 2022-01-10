@@ -11,10 +11,10 @@ jobs:
     steps:
       - checkout
       - node/install-packages:
-          pkg-manager: yarn
-          override-ci-command: yarn install --immutable
+          pkg-manager: yarn-berry
           cache-version: v2
-          cache-path: .yarn/cache
+          check-cache: always
+          with-cache: false
       - run:
           name: Build testing site
           command: yarn build
@@ -44,6 +44,8 @@ workflows:
           version: '16.13'
           pkg-manager: yarn-berry
           cache-version: v2
+          check-cache: always
+          with-cache: false
       - merge_pr:
           context: org-github
           requires:
