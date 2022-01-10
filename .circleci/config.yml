@@ -63,7 +63,7 @@ workflows:
           context: org-github
           requires:
             - build
-            - node/test
+            - test
           filters:
             branches:
               only: /dependabot\/.*/
