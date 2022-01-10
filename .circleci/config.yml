@@ -1,13 +1,13 @@
 version: 2.1
 orbs:
-  node: circleci/node@4.2.1
+  node: circleci/node@5.0.0
   github: topmonks/github@1.0.2
   slack: circleci/slack@4.4.0
 jobs:
   build:
     executor:
       name: node/default
-      tag: '14.16.0'
+      tag: '16.13'
     steps:
       - checkout
       - node/install-packages:
@@ -41,9 +41,8 @@ workflows:
           context: org-global
       - node/test:
           context: org-global
-          version: '14.16.0'
-          pkg-manager: yarn
-          override-ci-command: yarn install --immutable
+          version: '16.13'
+          pkg-manager: yarn-berry
           cache-version: v2
       - merge_pr:
           context: org-github
