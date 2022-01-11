@@ -10,10 +10,10 @@ jobs:
     resource_class: arm.medium
     steps:
       - checkout
-      - run: nvm install $(< .nvmrc)
+      - node/install
       - node/install-packages:
           pkg-manager: yarn-berry
-          cache-version: v2
+          override-ci-command: yarn install --immutable
       - run:
           name: Build testing site
           command: yarn build
@@ -27,10 +27,10 @@ jobs:
     resource_class: arm.medium
     steps:
       - checkout
-      - run: nvm install $(< .nvmrc)
+      - node/install
       - node/install-packages:
           pkg-manager: yarn-berry
-          cache-version: v2
+          override-ci-command: yarn install --immutable
       - run: yarn test
       - slack/notify:
           event: fail
