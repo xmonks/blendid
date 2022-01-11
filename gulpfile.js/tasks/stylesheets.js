@@ -12,6 +12,19 @@ const sass = require("gulp-dart-sass");
 const projectPath = require("../lib/projectPath");
 const getPostCSSPlugins = require("../lib/postCSS");
 
+const sassCompiler = sass.compiler;
+sass.compiler = {
+  render({file, ...opts}, cb) {
+    try {
+      const result = sassCompiler.compile(file, opts);
+      cb(null, {css: Buffer.from(result.css), map: result.sourceMap});
+    }
+    catch (ex) {
+      cb(ex);
+    }
+  }
+}
+
 const pipeline = util.promisify(stream.pipeline);
 const { src, dest, task } = gulp;
 

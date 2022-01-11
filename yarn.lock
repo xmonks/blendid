@@ -1344,6 +1344,7 @@ __metadata:
     ansi-colors: 4.1.1
     autoprefixer: 10.4.2
     browser-sync: 2.27.7
+    browserslist: ^4.19.1
     chai: ^4.3.4
     cloudinary: ^1.28.1
     cssnano: ^5.0.15
@@ -2427,28 +2428,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001208":
-  version: 1.0.30001208
-  resolution: "caniuse-lite@npm:1.0.30001208"
-  checksum: 720c5d7582f08f21a983ccc12a8a32f1d5d08251258862c152ff2c3fa50ef9be5bc5cd34e1bfe35dae1dcaf72248fef75d868b8c3c22ee72a118eef17fae167f
-  languageName: node
-  linkType: hard
-
-"caniuse-lite@npm:^1.0.30001157":
-  version: 1.0.30001173
-  resolution: "caniuse-lite@npm:1.0.30001173"
-  checksum: 8123ea8b2db5f928725930344dda27f0047cdcf5d60dcef191237f4f1d8924ce04fe7d5ca3d31446603e10acbf9d44d7b7dbf04e30b1d12d5060901b900b129a
-  languageName: node
-  linkType: hard
-
-"caniuse-lite@npm:^1.0.30001219":
-  version: 1.0.30001230
-  resolution: "caniuse-lite@npm:1.0.30001230"
-  checksum: 7ad6bf592c272dc62e59eb05b7e8581f6e8e0b0f6cef8e687c82c8306d77dccacdbba86286a4d1e3defebdd358ddc0a236208f08ea8e7b899d7b519c1223399a
-  languageName: node
-  linkType: hard
-
-"caniuse-lite@npm:^1.0.30001286, caniuse-lite@npm:^1.0.30001297":
+"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001157, caniuse-lite@npm:^1.0.30001208, caniuse-lite@npm:^1.0.30001219, caniuse-lite@npm:^1.0.30001286, caniuse-lite@npm:^1.0.30001297":
   version: 1.0.30001298
   resolution: "caniuse-lite@npm:1.0.30001298"
   checksum: 43566732d1b8746e3dfae57f558471c701b26b2c166fb9fc53ad750d83128b2eb680a5e08233717e64055779b408c72d3b2cfad6d4ae33a3e647a11dc1c0d515
@@ -8727,18 +8707,7 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.26.3":
-  version: 1.32.10
-  resolution: "sass@npm:1.32.10"
-  dependencies:
-    chokidar: ">=3.0.0 <4.0.0"
-  bin:
-    sass: sass.js
-  checksum: 5b7b196fab26a50cb07428be5bf3cd4cd2c9a9628e4eb641bb7ac430010cc2f9f5d636177a564b97aa75a0c512220d7ea5bb69662fac526db01f9ef714269a92
-  languageName: node
-  linkType: hard
-
-"sass@npm:^1.47.0":
+"sass@npm:1.47.0":
   version: 1.47.0
   resolution: "sass@npm:1.47.0"
   dependencies:

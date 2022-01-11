@@ -33,17 +33,14 @@ function cloudinaryUrl(
   }
 }
 
-function* pairs(dartMap) {
-  for (let i = 0; i < dartMap.getLength(); i++) {
-    yield [dartMap.getKey(i).getValue(), dartMap.getValue(i).getValue()];
-  }
-}
-const toJS = (dartMap) => Object.fromEntries(pairs(dartMap));
 const sassCloudinaryUrlSignature = "cloudinaryUrl($publicId, $opts: ())";
-const sassCloudinaryUrl = (publicId, opts) =>
-  new sass.types.String(
-    `url(${cloudinaryUrl(publicId.getValue(), toJS(opts))})`
+const sassCloudinaryUrl = (args) => {
+  const publicId = args[0].assertString("publicId").text;
+  const opts = args[1]?.contents?.toJS();
+  return new sass.SassString(
+    `url(${cloudinaryUrl(publicId, opts)})`
   );
+};
 
 module.exports = {
   javascripts: {
