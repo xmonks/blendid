@@ -1,5 +1,13 @@
 const sass = require("sass");
 const cloudinary = require("cloudinary").v2;
+const { pathToFileURL } = require("url");
+
+function resolveInclude(url) {
+  const parts = url.split("/");
+  parts.push("_" + parts.pop());
+  const includeUrl = parts.join("/");
+  return pathToFileURL(require.resolve(`${includeUrl}.scss`));
+}
 
 function cloudinaryUrl(
   publicId,
@@ -49,6 +57,21 @@ module.exports = {
 
   stylesheets: {
     sass: {
+      importers: [
+        {
+          findFileUrl(url) {
+            try {
+              return pathToFileURL(require.resolve(`${url}.scss`));
+            } catch (err) {
+              try {
+                return resolveInclude(url);
+              } catch (e) {
+                return null;
+              }
+            }
+          },
+        },
+      ],
       functions: {
         [sassCloudinaryUrlSignature]: sassCloudinaryUrl,
       },
