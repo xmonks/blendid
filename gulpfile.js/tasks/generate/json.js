@@ -1,7 +1,7 @@
 if (!TASK_CONFIG.generate.json) return;
 
 const gulp = require("gulp");
-const marked = require("marked");
+const {marked} = require("marked");
 const stream = require("stream");
 const utils = require("util");
 const markdownToJSON = require("gulp-markdown-to-json");
@@ -15,7 +15,7 @@ function generateJson(sourcePath, destPath, { collection, mergeOptions }) {
   return () =>
     pipeline([
       src(sourcePath),
-      markdownToJSON(marked),
+      markdownToJSON({renderer: marked}),
       merge({
         fileName: `${collection}.json`,
         ...mergeOptions,
