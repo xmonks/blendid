@@ -30,7 +30,7 @@ const getPaths = (exclude) => ({
     projectPath(
       PATH_CONFIG.src,
       PATH_CONFIG.html.src,
-      "**/*.{" + TASK_CONFIG.html.extensions + "}"
+      `**/*.{${TASK_CONFIG.html.extensions}}`
     ),
     exclude,
   ].filter(Boolean),
@@ -40,13 +40,11 @@ const getPaths = (exclude) => ({
 
 const htmlTask = function () {
   const config = TASK_CONFIG.html;
-  const exclude =
-    "!" +
-    projectPath(
-      PATH_CONFIG.src,
-      PATH_CONFIG.html.src,
-      "**/{" + config.excludeFolders.join(",") + "}/**"
-    );
+  const exclude = `!${projectPath(
+    PATH_CONFIG.src,
+    PATH_CONFIG.html.src,
+    `**/{${config.excludeFolders.join(",")}}/**`
+  )}`;
 
   const paths = getPaths(exclude);
 
@@ -99,11 +97,16 @@ const htmlTask = function () {
         );
         return {
           plugins: [
-            { removeXMLNS: true },
-            { prefixIDs: { prefix } },
+            "preset-default",
+            "removeXMLNS",
             {
-              cleanupIDs: {
-                prefix: prefix + "-",
+              name: "prefixIDs",
+              params: { prefix },
+            },
+            {
+              name: "cleanupIDs",
+              params: {
+                prefix: `${prefix}-`,
                 minify: true,
                 force: true,
               },
