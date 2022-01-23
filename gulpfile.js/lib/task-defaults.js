@@ -1,4 +1,4 @@
-const sass = require("sass");
+const sass = require("sass-embedded");
 const cloudinary = require("cloudinary").v2;
 const { pathToFileURL } = require("url");
 
@@ -45,9 +45,7 @@ const sassCloudinaryUrlSignature = "cloudinaryUrl($publicId, $opts: ())";
 const sassCloudinaryUrl = (args) => {
   const publicId = args[0].assertString("publicId").text;
   const opts = args[1]?.contents?.toJS();
-  return new sass.SassString(
-    `url(${cloudinaryUrl(publicId, opts)})`
-  );
+  return new sass.SassString(`url(${cloudinaryUrl(publicId, opts)})`);
 };
 
 module.exports = {

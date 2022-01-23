@@ -8,22 +8,9 @@ const changed = require("gulp-changed");
 const postcss = require("gulp-postcss");
 const rename = require("gulp-rename");
 const sourcemaps = require("gulp-sourcemaps");
-const sass = require("gulp-dart-sass");
+const sass = require("../packages/gulp-sass-embedded");
 const projectPath = require("../lib/projectPath");
 const getPostCSSPlugins = require("../lib/postCSS");
-
-const sassCompiler = sass.compiler;
-sass.compiler = {
-  render({file, ...opts}, cb) {
-    try {
-      const result = sassCompiler.compile(file, opts);
-      cb(null, {css: Buffer.from(result.css), map: result.sourceMap});
-    }
-    catch (ex) {
-      cb(ex);
-    }
-  }
-}
 
 const pipeline = util.promisify(stream.pipeline);
 const { src, dest, task } = gulp;
@@ -34,7 +21,7 @@ const postcssTask = function () {
     src: projectPath(
       PATH_CONFIG.src,
       PATH_CONFIG.stylesheets.src,
-      "**/[!_]*.{" + config.extensions + "}"
+      `**/[!_]*.{${config.extensions}}`
     ),
     dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.stylesheets.dest),
   };
@@ -46,7 +33,7 @@ const postcssTask = function () {
   }
 
   if (config.sass && !config.sass.importer) {
-    config.sass.importer = function(url) {
+    config.sass.importer = function (url) {
       try {
         // try to resolve with node resolution (yarn pnp support)
         return { file: require.resolve(`${url}.scss`) };
