@@ -45,7 +45,9 @@ const sassCloudinaryUrlSignature = "cloudinaryUrl($publicId, $opts: ())";
 const sassCloudinaryUrl = (args) => {
   const publicId = args[0].assertString("publicId").text;
   const opts = args[1]?.contents?.toJS();
-  return new sass.SassString(`url(${cloudinaryUrl(publicId, opts)})`);
+  return new sass.SassString(`url(${cloudinaryUrl(publicId, opts)})`, {
+    quotes: false,
+  });
 };
 
 module.exports = {
