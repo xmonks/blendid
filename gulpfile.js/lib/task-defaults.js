@@ -25,16 +25,16 @@ function cloudinaryUrl(
 ) {
   try {
     return cloudinary.url(publicId, {
-      crop,
-      dpr,
-      fetch_format: format,
-      gravity,
-      height,
-      quality,
+      crop: crop?.value ?? crop,
+      dpr: dpr?.value ?? dpr,
+      fetch_format: format.value ?? format,
+      gravity: gravity?.value ?? gravity,
+      height: height?.value ?? height,
+      quality: quality?.value ?? quality,
       secure: true,
-      width,
-      flags,
-      aspect_ratio: ar,
+      width: width?.value ?? width,
+      flags: flags?.value ?? flags,
+      aspect_ratio: ar?.value ?? ar,
     });
   } catch (err) {
     console.error("cloudinaryUrl", err);
