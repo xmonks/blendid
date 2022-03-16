@@ -26,21 +26,10 @@ const postcssTask = function () {
     dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.stylesheets.dest),
   };
 
-  if (config.sass && config.sass.includePaths) {
+  if (config.sass?.includePaths) {
     config.sass.includePaths = config.sass.includePaths
       .filter(Boolean)
       .map((includePath) => projectPath(includePath));
-  }
-
-  if (config.sass && !config.sass.importer) {
-    config.sass.importer = function (url) {
-      try {
-        // try to resolve with node resolution (yarn pnp support)
-        return { file: require.resolve(`${url}.scss`) };
-      } catch (err) {
-        return null;
-      }
-    };
   }
 
   const plugins = getPostCSSPlugins(config);
