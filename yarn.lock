@@ -1359,6 +1359,7 @@ __metadata:
     autoprefixer: 10.4.4
     browser-sync: 2.27.9
     browserslist: ^4.20.2
+    caniuse-lite: ^1.0.30001317
     chai: ^4.3.6
     chalk: ^4.1.2
     cloudinary: ^1.28.1

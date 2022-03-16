@@ -22,6 +22,8 @@
     "ansi-colors": "4.1.1",
     "autoprefixer": "10.4.4",
     "browser-sync": "2.27.9",
+    "browserslist": "^4.20.2",
+    "caniuse-lite": "^1.0.30001317",
     "chalk": "^4.1.2",
     "cloudinary": "^1.28.1",
     "cssnano": "^5.1.4",
@@ -70,7 +72,6 @@
   },
   "devDependencies": {
     "@material/layout-grid": "^13.0.0",
-    "browserslist": "^4.20.2",
     "chai": "^4.3.6",
     "mocha": "^9.2.2",
     "prettier": "^2.6.0"
