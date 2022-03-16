@@ -9,35 +9,30 @@ function resolveInclude(url) {
   return pathToFileURL(require.resolve(`${includeUrl}.scss`));
 }
 
-function cloudinaryUrl(
-  publicId,
-  {
-    width = "auto",
-    height,
-    format = "auto",
-    quality = "auto",
-    dpr = 1,
-    crop,
-    gravity,
-    flags = "progressive",
-    ar,
-    effect,
-  } = {}
-) {
+function cloudinaryUrl(publicId, opts = {}) {
   try {
-    return cloudinary.url(publicId, {
-      crop: crop?.value ?? crop,
-      dpr: dpr?.value ?? dpr,
-      fetch_format: format.value ?? format,
-      gravity: gravity?.value ?? gravity,
-      height: height?.value ?? height,
-      quality: quality?.value ?? quality,
-      secure: true,
-      width: width?.value ?? width,
-      flags: flags?.value ?? flags,
-      aspect_ratio: ar?.value ?? ar,
-      effect: effect?.value ?? effect,
-    });
+    const unwrap = (x) => x?.value ?? x?.text ?? x;
+    const customKeys = new Map([
+      ["format", "fetch_format"],
+      ["ar", "aspect_ratio"],
+    ]);
+    const options = Object.assign(
+      {
+        secure: true,
+        width: "auto",
+        fetch_format: "auto",
+        quality: "auto",
+        dpr: 1,
+        flags: "progressive",
+      },
+      Object.fromEntries(
+        Object.entries(opts).map(([k, v]) => [
+          customKeys.has(k) ? customKeys.get(k) : k,
+          unwrap(v),
+        ])
+      )
+    );
+    return cloudinary.url(publicId, options);
   } catch (err) {
     console.error("cloudinaryUrl", err);
   }
