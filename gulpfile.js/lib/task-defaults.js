@@ -21,6 +21,7 @@ function cloudinaryUrl(
     gravity,
     flags = "progressive",
     ar,
+    effect,
   } = {}
 ) {
   try {
@@ -35,6 +36,7 @@ function cloudinaryUrl(
       width: width?.value ?? width,
       flags: flags?.value ?? flags,
       aspect_ratio: ar?.value ?? ar,
+      effect: effect?.value ?? effect,
     });
   } catch (err) {
     console.error("cloudinaryUrl", err);
