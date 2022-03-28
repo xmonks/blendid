@@ -50,17 +50,25 @@ const htmlTask = function () {
 
   const collectionsDataFunction =
     PATH_CONFIG.data &&
-    config.collections &&
+    Array.isArray(config.collections) &&
     (() => {
       const cols = config.collections;
+      const dataPath = projectPath(
+        PATH_CONFIG.src,
+        PATH_CONFIG.data.src,
+        config.dataFile
+      );
+      const data = fs.existsSync(dataPath)
+        ? JSON.parse(fs.readFileSync(dataPath, "utf-8"))
+        : {};
       return Promise.all(cols.map(jsonData(PATH_CONFIG))).then((xs) =>
-        cols.reduce((acc, x, i) => Object.assign(acc, { [x]: xs[i] }), {})
+        cols.reduce((acc, x, i) => Object.assign(acc, { [x]: xs[i] }), data)
       );
     });
 
   const dataFunction =
-    collectionsDataFunction ||
-    config.dataFunction ||
+    config.dataFunction ??
+    collectionsDataFunction ??
     function () {
       const dataPath = projectPath(
         PATH_CONFIG.src,
