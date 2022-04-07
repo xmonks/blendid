@@ -49,22 +49,22 @@ const htmlTask = function () {
   const paths = getPaths(exclude);
 
   const collectionsDataFunction =
-    PATH_CONFIG.data &&
-    Array.isArray(config.collections) &&
-    (() => {
-      const cols = config.collections;
-      const dataPath = projectPath(
-        PATH_CONFIG.src,
-        PATH_CONFIG.data.src,
-        config.dataFile
-      );
-      const data = fs.existsSync(dataPath)
-        ? JSON.parse(fs.readFileSync(dataPath, "utf-8"))
-        : {};
-      return Promise.all(cols.map(jsonData(PATH_CONFIG))).then((xs) =>
-        cols.reduce((acc, x, i) => Object.assign(acc, { [x]: xs[i] }), data)
-      );
-    });
+    PATH_CONFIG.data && Array.isArray(config.collections)
+      ? () => {
+          const cols = config.collections;
+          const dataPath = projectPath(
+            PATH_CONFIG.src,
+            PATH_CONFIG.data.src,
+            config.dataFile
+          );
+          const data = fs.existsSync(dataPath)
+            ? JSON.parse(fs.readFileSync(dataPath, "utf-8"))
+            : {};
+          return Promise.all(cols.map(jsonData(PATH_CONFIG))).then((xs) =>
+            cols.reduce((acc, x, i) => Object.assign(acc, { [x]: xs[i] }), data)
+          );
+        }
+      : null;
 
   const dataFunction =
     config.dataFunction ??
