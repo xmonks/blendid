@@ -1,5 +1,5 @@
 const { task, src, dest } = require("gulp");
-const rev = require("gulp-rev");
+const rev = require("../../packages/gulp-rev");
 const revdel = require("gulp-rev-delete-original");
 const projectPath = require("../../lib/projectPath");
 
