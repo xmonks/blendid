@@ -11,7 +11,7 @@ task("rev-code", () =>
     .pipe(dest(projectPath(PATH_CONFIG.dest)))
     .pipe(revdel())
     .pipe(
-      rev.manifest(projectPath(PATH_CONFIG.dest, "rev-manifest.json"), {
+      rev.importmap(projectPath(PATH_CONFIG.dest, "import-map.importmap"), {
         merge: true,
       })
     )

@@ -14,7 +14,7 @@ task("rev-assets", function () {
     .pipe(dest(projectPath(PATH_CONFIG.dest)))
     .pipe(revdel())
     .pipe(
-      rev.importmap(projectPath(PATH_CONFIG.dest, "import-map.importmap"), {
+      rev.manifest(projectPath(PATH_CONFIG.dest, "rev-manifest.json"), {
         merge: true,
       })
     )
