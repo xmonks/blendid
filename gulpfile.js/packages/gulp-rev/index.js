@@ -45,17 +45,16 @@ function transformFilename(file) {
   });
 }
 
-const getManifestFile = async (options) => {
+async function getManifestFile(options) {
   try {
     return await vinylFile.read(options.path, options);
   } catch (error) {
     if (error.code === "ENOENT") {
       return new Vinyl(options);
     }
-
     throw error;
   }
-};
+}
 
 const plugin = () => {
   const sourcemaps = [];
@@ -121,6 +120,23 @@ const plugin = () => {
   );
 };
 
+async function createManifest(manifest, transform, options) {
+  const manifestFile = await getManifestFile(options);
+
+  if (options.merge && !manifestFile.isNull()) {
+    let oldManifest = {};
+
+    try {
+      oldManifest = options.transformer.parse(manifestFile.contents.toString());
+    } catch (_) {}
+
+    manifest = Object.assign(oldManifest, manifest);
+  }
+
+  manifestFile.contents = Buffer.from(transform(manifest));
+  return manifestFile;
+}
+
 plugin.manifest = (path_, options) => {
   if (typeof path_ === "string") {
     path_ = { path: path_ };
@@ -153,7 +169,6 @@ plugin.manifest = (path_, options) => {
         .replace(/\\/g, "/");
 
       manifest[originalFile] = revisionedFile;
-
       callback();
     },
     function (callback) {
@@ -163,26 +178,48 @@ plugin.manifest = (path_, options) => {
         return;
       }
 
+      const push = (file) => this.push(file);
+      const transformRevManifest = (manifest) =>
+        options.transformer.stringify(sortKeys(manifest), undefined, "  ");
+      const transformImportmap = (manifest) =>
+        options.transformer.stringify(
+          {
+            imports: sortKeys(
+              Object.fromEntries(
+                Object.entries(manifest).map(([key, val]) => [
+                  `/${key}`,
+                  `/${val}`,
+                ])
+              )
+            ),
+          },
+          undefined,
+          2
+        );
+
+      let transformations = [
+        createManifest(manifest, transformRevManifest, options).then((x) =>
+          push(x)
+        ),
+      ];
+
+      if (options.importmap) {
+        const importmapPath = path.join(
+          path.dirname(options.path),
+          "import-map.importmap"
+        );
+        transformations.unshift(
+          createManifest(
+            manifest,
+            transformImportmap,
+            Object.assign({}, options, { path: importmapPath })
+          ).then((x) => push(x))
+        );
+      }
+
       (async () => {
         try {
-          const manifestFile = await getManifestFile(options);
-
-          if (options.merge && !manifestFile.isNull()) {
-            let oldManifest = {};
-
-            try {
-              oldManifest = options.transformer.parse(
-                manifestFile.contents.toString()
-              );
-            } catch (_) {}
-
-            manifest = Object.assign(oldManifest, manifest);
-          }
-
-          manifestFile.contents = Buffer.from(
-            options.transformer.stringify(sortKeys(manifest), undefined, "  ")
-          );
-          this.push(manifestFile);
+          await Promise.all(transformations);
           callback();
         } catch (error) {
           callback(error);
@@ -192,78 +229,4 @@ plugin.manifest = (path_, options) => {
   );
 };
 
-plugin.importmap = (path_, options) => {
-  if (typeof path_ === "string") {
-    path_ = { path: path_ };
-  }
-
-  options = {
-    path: "import-map.importmap",
-    merge: false,
-    transformer: JSON,
-    ...options,
-    ...path_,
-  };
-
-  let manifest = {};
-
-  return through.obj(
-    (file, encoding, callback) => {
-      // Ignore all non-rev'd files
-      if (!file.path || !file.revOrigPath) {
-        callback();
-        return;
-      }
-
-      const revisionedFile = relativePath(
-        path.resolve(file.cwd, file.base),
-        path.resolve(file.cwd, file.path)
-      );
-      const originalFile = path
-        .join(path.dirname(revisionedFile), path.basename(file.revOrigPath))
-        .replace(/\\/g, "/");
-
-      manifest[originalFile] = revisionedFile;
-
-      callback();
-    },
-    function (callback) {
-      // No need to write a manifest file if there's nothing to manifest
-      if (Object.keys(manifest).length === 0) {
-        callback();
-        return;
-      }
-
-      (async () => {
-        try {
-          const manifestFile = await getManifestFile(options);
-
-          if (options.merge && !manifestFile.isNull()) {
-            let oldManifest = {};
-
-            try {
-              oldManifest = options.transformer.parse(
-                manifestFile.contents.toString()
-              );
-            } catch (_) {}
-
-            manifest = Object.assign(oldManifest, manifest);
-          }
-
-          manifestFile.contents = Buffer.from(
-            options.transformer.stringify(
-              { imports: sortKeys(manifest) },
-              undefined,
-              2
-            )
-          );
-          this.push(manifestFile);
-          callback();
-        } catch (error) {
-          callback(error);
-        }
-      })();
-    }
-  );
-};
 module.exports = plugin;

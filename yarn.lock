@@ -1375,7 +1375,6 @@ __metadata:
     gulp-if: ^3.0.0
     gulp-inject: ^5.0.5
     gulp-markdown-to-json: ^1.1.0
-    gulp-merge: ^0.1.1
     gulp-merge-json: ^2.1.2
     gulp-notify: ^4.0.0
     gulp-nunjucks-render: 2.2.3
@@ -4903,15 +4902,6 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"gulp-merge@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "gulp-merge@npm:0.1.1"
-  dependencies:
-    through2: ~1.1.1
-  checksum: 325f66d8c09e9d55ccefa74392e6223dfcb95c761e43091e005559c22c28a67298f32fcee13c835d58ccdae565ef4e32a92fb1ba6dfe38496cb336d7aa60394c
-  languageName: node
-  linkType: hard
-
 "gulp-notify@npm:^4.0.0":
   version: 4.0.0
   resolution: "gulp-notify@npm:4.0.0"
@@ -8236,7 +8226,7 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"readable-stream@npm:1.1.x, readable-stream@npm:>=1.1.13-1 <1.2.0-0":
+"readable-stream@npm:1.1.x":
   version: 1.1.14
   resolution: "readable-stream@npm:1.1.14"
   dependencies:
@@ -9799,16 +9789,6 @@ fsevents@~2.3.2:
   dependencies:
     readable-stream: 3
   checksum: ac7430bd54ccb7920fd094b1c7ff3e1ad6edd94202e5528331253e5fde0cc56ceaa690e8df9895de2e073148c52dfbe6c4db74cacae812477a35660090960cc0
-  languageName: node
-  linkType: hard
-
-"through2@npm:~1.1.1":
-  version: 1.1.1
-  resolution: "through2@npm:1.1.1"
-  dependencies:
-    readable-stream: ">=1.1.13-1 <1.2.0-0"
-    xtend: ">=4.0.0 <4.1.0-0"
-  checksum: f4430720c2be23c71437639e50de5e173693a86e220ab8c1041d27282802bb358479c50f223212125c2df6451c75d4e6548d03663f49fa1f1dc2ba176fd0b313
   languageName: node
   linkType: hard
 

@@ -38,7 +38,6 @@
     "gulp-if": "^3.0.0",
     "gulp-inject": "^5.0.5",
     "gulp-markdown-to-json": "^1.1.0",
-    "gulp-merge": "^0.1.1",
     "gulp-merge-json": "^2.1.2",
     "gulp-notify": "^4.0.0",
     "gulp-nunjucks-render": "2.2.3",
