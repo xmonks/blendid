@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     machine:
-      image: ubuntu-2004:202111-02
+      image: ubuntu-2004:current
     resource_class: arm.medium
     steps:
       - checkout
@@ -23,7 +23,7 @@ jobs:
           channel: ntf-topmonks-webs
   test:
     machine:
-      image: ubuntu-2004:202111-02
+      image: ubuntu-2004:current
     resource_class: arm.medium
     steps:
       - checkout
