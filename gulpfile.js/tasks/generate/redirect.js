@@ -32,8 +32,8 @@ function generateRedirect(sourcePath, destPath, { host, route }) {
           `<meta name=robots content=noindex>`,
           `<meta http-equiv=refresh content="0;url={{host}}{{targetUrl}}">`,
           `<link rel=canonical href="{{host}}{{targetUrl}}">`,
-          `<script>window.location.replace('{{targetUrl}}');</script>`,
-          `<p>This page has been moved to <a href={{targetUrl}}>{{targetUrl}}</a>`,
+          `<script>window.location.replace(new URL("{{targetUrl}}", "{{host}}"));</script>`,
+          `<p>This page has been moved to <a href="{{host}}{{targetUrl}}">{{host}}{{targetUrl}}</a>`,
         ].join("")
       ),
       data: { host, targetUrl },
