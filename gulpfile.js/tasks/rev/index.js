@@ -4,6 +4,7 @@ const { task, series } = require("gulp");
 
 require("./rev-assets.js");
 require("./rev-code.js");
+require("./rev-importmaps-code.js");
 require("./rev-update-references.js");
 require("./update-html.js");
 require("./update-js.js");
@@ -20,6 +21,7 @@ const revTasks = [
   // (this is done after assets, so that if a referenced asset hash changes,
   // the parent hash will change as well
   "rev-code",
+  "rev-importmaps-code",
   // 4) Update asset references in JS
   updateJs,
   // 5) Update asset references in HTML

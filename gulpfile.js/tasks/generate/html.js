@@ -123,6 +123,7 @@ function generateHtml(sourcePath, destPath, { template, route }) {
       gulpif(
         TASK_CONFIG.svgSprite,
         inject(svgs, {
+          removeTags: true,
           transform: (_, file) => file.contents.toString(),
         })
       ),
