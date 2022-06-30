@@ -1,6 +1,6 @@
 const { task, src, dest } = require("gulp");
-const rev = require("../../packages/gulp-rev");
 const revdel = require("gulp-rev-delete-original");
+const rev = require("../../packages/gulp-rev");
 const projectPath = require("../../lib/projectPath");
 
 // 1) Add md5 hashes to assets referenced by CSS and JS files

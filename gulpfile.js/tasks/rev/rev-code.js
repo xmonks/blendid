@@ -1,6 +1,6 @@
 const { task, src, dest } = require("gulp");
-const rev = require("../../packages/gulp-rev");
 const revdel = require("gulp-rev-delete-original");
+const rev = require("../../packages/gulp-rev");
 const projectPath = require("../../lib/projectPath");
 
 // 3) Rev and compress CSS and JS files (this is done after assets, so that if a

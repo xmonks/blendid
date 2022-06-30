@@ -1,5 +1,5 @@
 const { task, src, dest } = require("gulp");
-const revReplace = require("gulp-rev-replace");
+const revReplace = require("gulp-rev-rewrite");
 const projectPath = require("../../lib/projectPath");
 
 // 2) Update asset references with reved filenames in compiled css + js

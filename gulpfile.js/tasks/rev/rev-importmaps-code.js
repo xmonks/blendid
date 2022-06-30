@@ -1,9 +1,9 @@
 const { task, src, dest } = require("gulp");
 const revdel = require("gulp-rev-delete-original");
 const stream = require("stream");
+const util = require("util");
 const rev = require("../../packages/gulp-rev");
 const projectPath = require("../../lib/projectPath");
-const util = require("util");
 
 const pipeline = util.promisify(stream.pipeline);
 
