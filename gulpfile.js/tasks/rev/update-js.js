@@ -20,6 +20,7 @@ task("update-js", function () {
         manifest,
         modifyUnreved: relativePath,
         modifyReved: relativePath,
+        replaceInExtensions: [".js", ".mjs", ".css", ".html", ".hbs"],
       })
     )
     .pipe(dest(paths.dest));
