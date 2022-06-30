@@ -181,15 +181,13 @@ plugin.manifest = (path_, options) => {
       const push = (file) => this.push(file);
       const transformRevManifest = (manifest) =>
         options.transformer.stringify(sortKeys(manifest), undefined, "  ");
+      let toRootRelativePaths = ([key, val]) => [`/${key}`, `/${val}`];
       const transformImportmap = (manifest) =>
         options.transformer.stringify(
           {
             imports: sortKeys(
               Object.fromEntries(
-                Object.entries(manifest).map(([key, val]) => [
-                  `/${key}`,
-                  `/${val}`,
-                ])
+                Object.entries(manifest).map(toRootRelativePaths)
               )
             ),
           },
