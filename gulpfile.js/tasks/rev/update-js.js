@@ -14,9 +14,10 @@ const paths = {
 const relativePath = (s) => s.replace(codeDir, ".");
 
 task("update-js", function () {
-  const manifest = fs.readFileSync(
-    projectPath(PATH_CONFIG.dest, "rev-manifest.json")
-  );
+  const manifestPath = projectPath(PATH_CONFIG.dest, "rev-manifest.json");
+  const manifest = fs.existsSync(manifestPath)
+    ? fs.readFileSync(manifestPath)
+    : null;
   return src(paths.src)
     .pipe(
       revReplace({
