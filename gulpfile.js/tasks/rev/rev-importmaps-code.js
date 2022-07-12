@@ -17,7 +17,7 @@ task("rev-importmaps-code", () =>
     revdel(),
     rev.manifest(projectPath(PATH_CONFIG.dest, "rev-manifest.json"), {
       merge: true,
-      importmap: TASK_CONFIG.rev.importmap,
+      importmap: TASK_CONFIG.production?.rev?.importmap,
     }),
     dest(".")
   )
