@@ -12,6 +12,7 @@ const inject = require("gulp-inject");
 const svgmin = require("gulp-svgmin");
 const svgstore = require("gulp-svgstore");
 const nunjucksRender = require("gulp-nunjucks-render");
+const cloneDeep = require("lodash.clonedeep");
 const projectPath = require("../lib/projectPath");
 
 const { src, dest, task } = gulp;
@@ -39,7 +40,7 @@ const getPaths = (exclude) => ({
 });
 
 const htmlTask = function () {
-  const config = structuredClone(TASK_CONFIG.html);
+  const config = cloneDeep(TASK_CONFIG.html);
   const exclude = `!${projectPath(
     PATH_CONFIG.src,
     PATH_CONFIG.html.src,

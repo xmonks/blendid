@@ -9,13 +9,14 @@ const streamArray = require("stream-array");
 const through = require("through2");
 const File = require("vinyl");
 const nunjucksRender = require("gulp-nunjucks-render");
+const cloneDeep = require("lodash.clonedeep");
 const projectPath = require("../../lib/projectPath");
 
 const pipeline = utils.promisify(stream.pipeline);
 const { dest, task, parallel } = gulp;
 
 function generateRedirect(sourcePath, destPath, { host, route }) {
-  const config = structuredClone(TASK_CONFIG.html);
+  const config = cloneDeep(TASK_CONFIG.html);
 
   const createFile = (item) => {
     const [originalUrl, targetUrl] = route(item);
