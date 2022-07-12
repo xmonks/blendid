@@ -30,7 +30,7 @@ const jsonData = (pathConfig) => (name) =>
     .catch(() => {});
 
 function generateHtml(sourcePath, destPath, { template, route }) {
-  const config = TASK_CONFIG.html;
+  const config = structuredClone(TASK_CONFIG.html);
   const paths = getPaths();
 
   const collectionsDataFunction =

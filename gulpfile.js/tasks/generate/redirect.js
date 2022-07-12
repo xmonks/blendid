@@ -15,7 +15,7 @@ const pipeline = utils.promisify(stream.pipeline);
 const { dest, task, parallel } = gulp;
 
 function generateRedirect(sourcePath, destPath, { host, route }) {
-  const config = TASK_CONFIG.html;
+  const config = structuredClone(TASK_CONFIG.html);
 
   const createFile = (item) => {
     const [originalUrl, targetUrl] = route(item);

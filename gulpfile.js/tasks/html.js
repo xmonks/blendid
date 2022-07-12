@@ -39,7 +39,7 @@ const getPaths = (exclude) => ({
 });
 
 const htmlTask = function () {
-  const config = TASK_CONFIG.html;
+  const config = structuredClone(TASK_CONFIG.html);
   const exclude = `!${projectPath(
     PATH_CONFIG.src,
     PATH_CONFIG.html.src,
