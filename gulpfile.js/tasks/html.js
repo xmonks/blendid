@@ -133,6 +133,8 @@ const htmlTask = function () {
     gulpif(
       TASK_CONFIG.svgSprite,
       inject(svgs, {
+        quiet: true,
+        removeTags: true,
         transform: (_, file) => file.contents.toString(),
       })
     ),

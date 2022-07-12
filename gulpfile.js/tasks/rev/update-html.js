@@ -2,6 +2,7 @@ if (!TASK_CONFIG.html) return false;
 
 const fs = require("fs");
 const { task, src, dest } = require("gulp");
+const when = require("gulp-if");
 const revReplace = require("gulp-rev-rewrite");
 const inject = require("gulp-inject");
 const projectPath = require("../../lib/projectPath");
@@ -12,14 +13,20 @@ task("update-html", function () {
   const manifest = fs.existsSync(manifestPath)
     ? fs.readFileSync(manifestPath)
     : null;
-  const importmap = src(projectPath(PATH_CONFIG.dest, "import-map.importmap"));
+  const importmap = src(projectPath(PATH_CONFIG.dest, "import-map.importmap"), {
+    allowEmpty: true,
+  });
   return src(projectPath(PATH_CONFIG.dest, PATH_CONFIG.html.dest, "**/*.html"))
     .pipe(revReplace({ manifest }))
     .pipe(
-      inject(importmap, {
-        removeTags: true,
-        transform: (_, file) => file.contents.toString(),
-      })
+      when(
+        TASK_CONFIG.production?.rev?.importmap,
+        inject(importmap, {
+          quiet: true,
+          removeTags: true,
+          transform: (_, file) => file.contents.toString(),
+        })
+      )
     )
     .pipe(dest(projectPath(PATH_CONFIG.dest, PATH_CONFIG.html.dest)));
 });
