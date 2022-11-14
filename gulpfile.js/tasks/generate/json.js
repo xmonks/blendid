@@ -12,7 +12,8 @@ const pipeline = utils.promisify(stream.pipeline);
 const { src, dest, task, parallel } = gulp;
 
 function generateJson(sourcePath, destPath, { collection, mergeOptions }) {
-  return task(`generate-json-${collection}`, function generateJsonTask() {
+  return function generateJsonTask() {
+    console.log(`generate-json-${collection}`);
     return pipeline([
       src(sourcePath),
       markdownToJSON({ renderer: marked }),
@@ -22,7 +23,7 @@ function generateJson(sourcePath, destPath, { collection, mergeOptions }) {
       }),
       dest(destPath),
     ]);
-  });
+  };
 }
 
 function* createTasks() {
