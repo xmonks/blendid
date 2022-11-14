@@ -13,7 +13,6 @@ const { src, dest, task, parallel } = gulp;
 
 function generateJson(sourcePath, destPath, { collection, mergeOptions }) {
   const generateJsonTask = () =>
-    //pipeline([
     src(sourcePath)
       .pipe(markdownToJSON({ renderer: marked }))
       .pipe(
@@ -23,7 +22,6 @@ function generateJson(sourcePath, destPath, { collection, mergeOptions }) {
         })
       )
       .pipe(dest(destPath));
-  //]);
   generateJsonTask.displayName = `generate-json-${collection}`;
   return generateJsonTask;
 }
