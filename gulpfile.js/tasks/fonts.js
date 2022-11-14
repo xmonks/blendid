@@ -8,7 +8,7 @@ const projectPath = require("../lib/projectPath");
 
 const pipeline = util.promisify(stream.pipeline);
 
-const fontsTask = function() {
+const fontsTask = function () {
   const config = TASK_CONFIG.fonts;
   const paths = {
     src: projectPath(
@@ -16,7 +16,7 @@ const fontsTask = function() {
       PATH_CONFIG.fonts.src,
       "**/*.{" + config.extensions + "}"
     ),
-    dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.fonts.dest)
+    dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.fonts.dest),
   };
 
   return pipeline(

@@ -4,10 +4,8 @@ const colors = require("ansi-colors");
 const projectPath = require("../lib/projectPath");
 const merge = require("merge-stream");
 
-gulp.task("init", function() {
-  const rootStream = gulp
-    .src("root/*")
-    .pipe(gulp.dest(projectPath()));
+gulp.task("init", function () {
+  const rootStream = gulp.src("root/*").pipe(gulp.dest(projectPath()));
 
   const configStream = gulp
     .src(["gulpfile.js/path-config.json", "gulpfile.js/task-config.js"])

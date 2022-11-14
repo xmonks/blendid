@@ -4,13 +4,13 @@ const colors = require("ansi-colors");
 const prettifyTime = require("./prettifyTime");
 const handleErrors = require("./handleErrors");
 
-module.exports = function(err, stats) {
+module.exports = function (err, stats) {
   if (err) throw new PluginError("webpack", err);
 
   let statColor = stats.compilation.warnings.length < 1 ? "green" : "yellow";
 
   if (stats.compilation.errors.length > 0) {
-    stats.compilation.errors.forEach(function(error) {
+    stats.compilation.errors.forEach(function (error) {
       handleErrors(error);
       statColor = "red";
     });

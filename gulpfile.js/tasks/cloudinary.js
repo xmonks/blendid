@@ -18,13 +18,13 @@ const paths = {
     PATH_CONFIG.src,
     PATH_CONFIG.data.src,
     TASK_CONFIG.cloudinary.manifest
-  )
+  ),
 };
 
 function readManifest(path) {
   return fs.promises
     .readFile(path, "utf-8")
-    .then(x => JSON.parse(x))
+    .then((x) => JSON.parse(x))
     .catch(() => null);
 }
 
@@ -44,7 +44,7 @@ const cloudinaryTask = () =>
     src(
       path.join(paths.src, "**", `*.{${TASK_CONFIG.cloudinary.extensions}}`),
       {
-        since: lastRun(cloudinaryTask)
+        since: lastRun(cloudinaryTask),
       }
     ),
     changed(paths.dest, {
@@ -54,7 +54,7 @@ const cloudinaryTask = () =>
         if (!(manifest && manifest[imagePath])) {
           stream.push(sourceFile);
         }
-      }
+      },
     }),
     cloudinaryUpload({
       folderResolver(filePath) {
@@ -63,11 +63,11 @@ const cloudinaryTask = () =>
       },
       keyResolver(filePath) {
         return path.relative(paths.src, path.resolve(__dirname, filePath));
-      }
+      },
     }),
     cloudinaryUpload.manifest({
       path: paths.manifest,
-      merge: true
+      merge: true,
     }),
     dest(paths.dest)
   );

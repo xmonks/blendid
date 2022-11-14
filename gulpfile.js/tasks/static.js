@@ -9,7 +9,7 @@ const projectPath = require("../lib/projectPath");
 
 const pipeline = util.promisify(stream.pipeline);
 
-const staticTask = function() {
+const staticTask = function () {
   const srcPath = projectPath(PATH_CONFIG.src, PATH_CONFIG.static.src);
   const defaultSrcOptions = { dot: true };
   const options = Object.assign(
@@ -19,7 +19,7 @@ const staticTask = function() {
 
   const paths = {
     src: path.join(srcPath, "**/*"),
-    dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.static.dest)
+    dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.static.dest),
   };
 
   return pipeline(

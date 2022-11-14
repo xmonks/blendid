@@ -17,16 +17,16 @@ const transformConfigPaths = ({ globDirectory, swDest, swSrc, ...config }) => {
   return config;
 };
 
-const workboxBuildTask = function() {
+const workboxBuildTask = function () {
   const config = transformConfigPaths(TASK_CONFIG.workboxBuild);
   const useInjectManifest = typeof config.swSrc === "string";
 
   if (useInjectManifest) {
-    return injectManifest(config).catch(error => {
+    return injectManifest(config).catch((error) => {
       throw error;
     });
   } else {
-    return generateSW(config).catch(error => {
+    return generateSW(config).catch((error) => {
       throw error;
     });
   }

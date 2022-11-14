@@ -8,14 +8,14 @@ const projectPath = require("../lib/projectPath");
 
 const pipeline = util.promisify(stream.pipeline);
 
-const imagesTask = function() {
+const imagesTask = function () {
   const paths = {
     src: projectPath(
       PATH_CONFIG.src,
       PATH_CONFIG.images.src,
       "**/*.{" + TASK_CONFIG.images.extensions + "}"
     ),
-    dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.images.dest)
+    dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.images.dest),
   };
 
   return pipeline(

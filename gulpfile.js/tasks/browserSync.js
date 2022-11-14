@@ -12,13 +12,18 @@ const browserSyncTask = function (cb) {
     };
   }
 
-  const exclude = config.excludeFolders ? `!${projectPath(
-    PATH_CONFIG.dest,
-    `**/{${config.excludeFolders.join(",")}}/**`
-  )}` : null;
+  const exclude = config.excludeFolders
+    ? `!${projectPath(
+        PATH_CONFIG.dest,
+        `**/{${config.excludeFolders.join(",")}}/**`
+      )}`
+    : null;
   delete config.excludeFolders;
 
-  const excludeFiles = config.excludeFiles?.map(glob => `!${projectPath(PATH_CONFIG.dest, glob)}`) ?? [];
+  const excludeFiles =
+    config.excludeFiles?.map(
+      (glob) => `!${projectPath(PATH_CONFIG.dest, glob)}`
+    ) ?? [];
   delete config.excludeFiles;
 
   // Resolve path from project
@@ -37,9 +42,12 @@ const browserSyncTask = function (cb) {
   browserSync.init(config);
 
   const output = projectPath(PATH_CONFIG.dest, "**/*.{html,js,css}");
-  watch([output, exclude].concat(excludeFiles).filter(Boolean)).on("change", () => {
-    browserSync.reload();
-  });
+  watch([output, exclude].concat(excludeFiles).filter(Boolean)).on(
+    "change",
+    () => {
+      browserSync.reload();
+    }
+  );
   cb();
 };
 

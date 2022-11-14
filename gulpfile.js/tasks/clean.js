@@ -2,7 +2,7 @@ const gulp = require("gulp");
 const del = require("del");
 const projectPath = require("../lib/projectPath");
 
-const cleanTask = function() {
+const cleanTask = function () {
   const patterns =
     TASK_CONFIG.clean && TASK_CONFIG.clean.patterns
       ? TASK_CONFIG.clean.patterns
