@@ -23,7 +23,7 @@ function generateJson(sourcePath, destPath, { collection, mergeOptions }) {
       dest(destPath),
     ]);
   };
-  generateJsonTask.name = `generate-json-${collection}`;
+  generateJsonTask.displayName = `generate-json-${collection}`;
   return generateJsonTask;
 }
 
