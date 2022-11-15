@@ -1,9 +1,14 @@
 if (global.production) return;
 
 const browserSync = require("browser-sync").create("blendid");
-const htmlInjector = require("@silvenon/bs-html-injector");
 const { watch, task } = require("gulp");
 const projectPath = require("../lib/projectPath");
+
+function browsersyncReload(cb) {
+  browserSync.reload();
+  cb();
+}
+browsersyncReload.displayName = "browsersync-reload";
 
 const browserSyncTask = function (cb) {
   const config = TASK_CONFIG.browserSync;
@@ -47,29 +52,13 @@ const browserSyncTask = function (cb) {
 
   browserSync.init(config);
 
-  watch(
-    [htmlFiles, exclude].concat(excludeFiles).filter(Boolean),
-    { events: "all" },
-    (cb) => {
-      console.log("Inject HTML");
-      htmlInjector();
-      cb();
-    }
-  );
-
-  const assets = projectPath(PATH_CONFIG.dest, "**/*.{js,css}");
+  const assets = projectPath(PATH_CONFIG.dest, "**/*.{html,js,css}");
   watch(
     [assets, exclude].concat(excludeFiles).filter(Boolean),
     { events: "all" },
-    (cb) => {
-      console.log("Inject Assets");
-      htmlInjector();
-      cb();
-
-      browserSync.reload();
-      cb();
-    }
+    browsersyncReload
   );
+
   cb();
 };
 
