@@ -45,19 +45,11 @@ const browserSyncTask = function (cb) {
   const server = config.proxy ?? config.server;
   server.middleware = server.middleware ?? server.extraMiddlewares ?? [];
 
-  const htmlFiles = projectPath(PATH_CONFIG.dest, "**/*.html");
-  browserSync.use(htmlInjector, {
-    files: htmlFiles,
-  });
-
   browserSync.init(config);
 
   const assets = projectPath(PATH_CONFIG.dest, "**/*.{html,js,css}");
-  watch(
-    [assets, exclude].concat(excludeFiles).filter(Boolean),
-    { events: "all" },
-    browsersyncReload
-  );
+  const assetsGlob = [assets, exclude].concat(excludeFiles).filter(Boolean);
+  watch(assetsGlob, { events: "all" }, browsersyncReload);
 
   cb();
 };
