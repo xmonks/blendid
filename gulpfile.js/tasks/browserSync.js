@@ -47,18 +47,27 @@ const browserSyncTask = function (cb) {
 
   browserSync.init(config);
 
-  watch([htmlFiles, exclude].concat(excludeFiles).filter(Boolean)).on(
-    "change",
-    () => {
+  watch(
+    [htmlFiles, exclude].concat(excludeFiles).filter(Boolean),
+    { events: "all" },
+    (cb) => {
+      console.log("Inject HTML");
       htmlInjector();
+      cb();
     }
   );
 
   const assets = projectPath(PATH_CONFIG.dest, "**/*.{js,css}");
-  watch([assets, exclude].concat(excludeFiles).filter(Boolean)).on(
-    "change",
-    () => {
+  watch(
+    [assets, exclude].concat(excludeFiles).filter(Boolean),
+    { events: "all" },
+    (cb) => {
+      console.log("Inject Assets");
+      htmlInjector();
+      cb();
+
       browserSync.reload();
+      cb();
     }
   );
   cb();
