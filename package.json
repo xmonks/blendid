@@ -57,6 +57,7 @@
     "merge-stream": "^2.0.0",
     "minify-html-literals": "^1.3.5",
     "modify-filename": "=1.1.0",
+    "nunjucks-markdown": "^2.0.1",
     "open": "^8.4.0",
     "plugin-error": "^1.0.1",
     "postcss": "^8.4.19",

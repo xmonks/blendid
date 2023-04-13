@@ -1417,6 +1417,7 @@ __metadata:
     minify-html-literals: ^1.3.5
     mocha: ^10.1.0
     modify-filename: =1.1.0
+    nunjucks-markdown: ^2.0.1
     open: ^8.4.0
     plugin-error: ^1.0.1
     postcss: ^8.4.19
@@ -7121,6 +7122,15 @@ fsevents@~2.3.2:
   version: 1.0.1
   resolution: "number-is-nan@npm:1.0.1"
   checksum: 13656bc9aa771b96cef209ffca31c31a03b507ca6862ba7c3f638a283560620d723d52e626d57892c7fff475f4c36ac07f0600f14544692ff595abff214b9ffb
+  languageName: node
+  linkType: hard
+
+"nunjucks-markdown@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "nunjucks-markdown@npm:2.0.1"
+  peerDependencies:
+    nunjucks: ^2.3.0 || ^3.0.0
+  checksum: c4919ca8332e70ae52720abbc1bb417c4f0a4e794ee20f0061eec48a598f2a0bd2e453f0f92aa1b79df6e6b9a88714dbc67f79fd7491e64908e86d7d34c1f7dd
   languageName: node
   linkType: hard
 

@@ -12,6 +12,8 @@ const inject = require("gulp-inject");
 const svgmin = require("gulp-svgmin");
 const svgstore = require("gulp-svgstore");
 const nunjucksRender = require("gulp-nunjucks-render");
+const nunjucksMarkdown = require("nunjucks-markdown");
+const marked = require("marked");
 const cloneDeep = require("lodash.clonedeep");
 const projectPath = require("../lib/projectPath");
 
@@ -84,19 +86,28 @@ const htmlTask = function () {
   ];
   config.nunjucksRender.path = config.nunjucksRender.path || nunjucksRenderPath;
 
-  const filters = config.nunjucksRender.filters;
-  if (filters) {
-    const origFn = config.nunjucksRender.manageEnv;
-    config.nunjucksRender.manageEnv = (env) => {
+  const origFn = config.nunjucksRender.manageEnv;
+  config.nunjucksRender.manageEnv = (env) => {
+    nunjucksMarkdown.register(env, marked);
+    const filters = config.nunjucksRender.filters;
+    if (filters) {
       for (let filter of Object.keys(filters)) {
         env.addFilter(filter, filters[filter]);
       }
-      if (typeof origFn === "function") {
-        origFn(env);
+      delete config.nunjucksRender.filters;
+    }
+    const globals = config.nunjucksRender.globals;
+    if (globals) {
+      for (let key of Object.keys(globals)) {
+        env.addGlobal(key, globals[key]);
       }
-    };
-    delete config.nunjucksRender.filters;
-  }
+      delete config.nunjucksRender.globals;
+    }
+    if (typeof origFn === "function") {
+      origFn(env);
+    }
+  };
+
   const svgs = src(paths.spritesSrc)
     .pipe(
       svgmin((file) => {
