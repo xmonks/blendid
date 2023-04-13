@@ -88,7 +88,7 @@ const htmlTask = function () {
 
   const origFn = config.nunjucksRender.manageEnv;
   config.nunjucksRender.manageEnv = (env) => {
-    nunjucksMarkdown.register(env, marked);
+    nunjucksMarkdown.register(env, marked.parse);
     const filters = config.nunjucksRender.filters;
     if (filters) {
       for (let filter of Object.keys(filters)) {
