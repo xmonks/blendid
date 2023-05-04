@@ -11,10 +11,12 @@ const gulp = require("gulp");
 const logger = require("gulplog");
 const getEnabledTasks = require("./lib/getEnabledTasks");
 
+// TODO: stop polluting global scope, inject config via registries
 // Globally expose config objects
 global.PATH_CONFIG = require("./lib/get-path-config");
 global.TASK_CONFIG = require("./lib/get-task-config");
 
+// TODO: rework this to REGISTRIES https://gulpjs.com/docs/en/advanced/creating-custom-registries
 require("./tasks/browserSync");
 require("./tasks/clean");
 require("./tasks/cloudinary");
@@ -34,11 +36,23 @@ require("./tasks/workboxBuild");
 
 logger.info("Building sources", PATH_CONFIG.src);
 
-// Initialize any additional user-provided tasks
-const init = TASK_CONFIG.additionalTasks.initialize || function () {};
-init(gulp, PATH_CONFIG, TASK_CONFIG);
+if (Array.isArray(TASK_CONFIG.registries)) {
+  for (const registry of TASK_CONFIG.registries) {
+    gulp.registry(registry);
+  }
+}
 
-const devTasks = function () {
+// TODO: remove additionalTasks in favour of registries
+// Initialize any additional user-provided tasks
+const init = TASK_CONFIG.additionalTasks.initialize;
+if (typeof init === "function") {
+  logger.warn(
+    "Additional tasks feature is deprecated. Please, transition to registries"
+  );
+  init(gulp, PATH_CONFIG, TASK_CONFIG);
+}
+
+function devTasks() {
   const { assetTasks, codeTasks } = getEnabledTasks("watch");
   const generate = TASK_CONFIG.generate ? "generate" : null;
   const staticFiles = TASK_CONFIG.static ? "static" : null;
@@ -61,9 +75,9 @@ const devTasks = function () {
     workboxBuild,
     "watch",
   ].filter(Boolean);
-};
+}
 
-const prodTasks = function () {
+function prodTasks() {
   global.production = true;
 
   const { assetTasks, codeTasks } = getEnabledTasks("production");
@@ -90,7 +104,7 @@ const prodTasks = function () {
     workboxBuild,
     "size-report",
   ].filter(Boolean);
-};
+}
 
 exports.build = gulp.series(prodTasks());
 exports.default = gulp.series(devTasks());
