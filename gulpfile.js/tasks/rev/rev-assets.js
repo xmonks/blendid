@@ -7,7 +7,7 @@ const projectPath = require("../../lib/projectPath");
 task("rev-assets", function () {
   // Ignore files that may reference assets. We'll rev them next.
   const ignoreThese =
-    "!" + projectPath(PATH_CONFIG.dest, "**/*+(css|js|mjs|map|json|html)");
+    "!" + projectPath(PATH_CONFIG.dest, "**/*+(css|js|mjs|map|json|html|txt)");
 
   return src([projectPath(PATH_CONFIG.dest, "**/*"), ignoreThese])
     .pipe(rev())
