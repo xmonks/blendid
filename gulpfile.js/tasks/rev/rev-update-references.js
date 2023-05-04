@@ -9,8 +9,12 @@ task("rev-update-references", function () {
   const manifest = fs.existsSync(manifestPath)
     ? fs.readFileSync(manifestPath)
     : null;
+  const options =
+    typeof TASK_CONFIG.production?.rev === "object"
+      ? TASK_CONFIG.production.rev
+      : {};
 
   return src(projectPath(PATH_CONFIG.dest, "**/**.{css,js,mjs,map}"))
-    .pipe(revReplace({ manifest }))
+    .pipe(revReplace(Object.assign(options, { manifest })))
     .pipe(dest(projectPath(PATH_CONFIG.dest)));
 });
