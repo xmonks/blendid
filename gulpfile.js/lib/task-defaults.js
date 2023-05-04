@@ -136,8 +136,8 @@ module.exports = {
 
   registries: [],
 
-  /** @deprecated */
   additionalTasks: {
+    /** @deprecated */
     initialize(gulp, PATH_CONFIG, TASK_CONFIG) {},
     development: {
       prebuild: null,

@@ -42,7 +42,7 @@ if (Array.isArray(TASK_CONFIG.registries)) {
   }
 }
 
-// TODO: remove additionalTasks in favour of registries
+// TODO: remove additionalTasks.initialize in favour of registries
 // Initialize any additional user-provided tasks
 const init = TASK_CONFIG.additionalTasks.initialize;
 if (typeof init === "function") {
