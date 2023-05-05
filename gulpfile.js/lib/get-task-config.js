@@ -1,7 +1,7 @@
 const fs = require("fs");
-const projectPath = require("./projectPath");
-const taskDefaults = require("./task-defaults");
 const mergeWith = require("lodash/mergeWith");
+const projectPath = require("./projectPath.js");
+const taskDefaults = require("./task-defaults.js");
 
 function getTaskConfig() {
   if (process.env.BLENDID_CONFIG_PATH) {

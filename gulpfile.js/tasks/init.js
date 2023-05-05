@@ -1,29 +1,41 @@
-const gulp = require("gulp");
+const DefaultRegistry = require("undertaker-registry");
 const log = require("fancy-log");
 const colors = require("ansi-colors");
-const projectPath = require("../lib/projectPath");
 const merge = require("merge-stream");
+const projectPath = require("../lib/projectPath");
 
-gulp.task("init", function () {
-  const rootStream = gulp.src("root/*").pipe(gulp.dest(projectPath()));
+class InitRegistry extends DefaultRegistry {
+  constructor(config, pathConfig) {
+    super();
+    this.config = config;
+    this.pathConfig = pathConfig;
+  }
 
-  const configStream = gulp
-    .src(["gulpfile.js/path-config.json", "gulpfile.js/task-config.js"])
-    .pipe(gulp.dest(projectPath("config")));
+  init({ task, src, dest }) {
+    task("init", function () {
+      const rootStream = src("root/*").pipe(dest(projectPath()));
 
-  const srcStream = gulp
-    .src(["src/**/*", "src/**/.gitkeep"])
-    .pipe(gulp.dest(projectPath(PATH_CONFIG.src)));
+      const configStream = src([
+        "gulpfile.js/path-config.json",
+        "gulpfile.js/task-config.js",
+      ]).pipe(dest(projectPath("config")));
 
-  log(colors.green("Generating default Blendid project files"));
-  log(
-    colors.yellow(`
+      const srcStream = src(["src/**/*", "src/**/.gitkeep"])
+        .pipe(dest(projectPath(this.pathConfig.src)));
+
+      log(colors.green("Generating default Blendid project files"));
+      log(
+        colors.yellow(`
 To start the dev server:
 `),
-    colors.magenta(`
+        colors.magenta(`
 yarn blendid
 `)
-  );
+      );
 
-  return merge(rootStream, configStream, srcStream);
-});
+      return merge(rootStream, configStream, srcStream);
+    });
+  }
+}
+
+module.exports = InitRegistry;

@@ -1,14 +1,22 @@
-const gulp = require("gulp");
+const DefaultRegistry = require("undertaker-registry");
 const del = require("del");
 const projectPath = require("../lib/projectPath");
 
-const cleanTask = function () {
-  const patterns =
-    TASK_CONFIG.clean && TASK_CONFIG.clean.patterns
-      ? TASK_CONFIG.clean.patterns
-      : projectPath(PATH_CONFIG.dest);
-  return del(patterns, { force: true });
-};
+class CleanRegistry extends DefaultRegistry {
+  constructor(config, pathConfig) {
+    super();
+    this.config = config;
+    this.pathConfig = pathConfig;
+  }
 
-gulp.task("clean", cleanTask);
-module.exports = cleanTask;
+  init({ task }) {
+    task("clean", () => {
+      const patterns = this.config?.patterns
+        ? this.config.patterns
+        : projectPath(this.pathConfig.dest);
+      return del(patterns, { force: true });
+    });
+  }
+}
+
+module.exports = CleanRegistry;

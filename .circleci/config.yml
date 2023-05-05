@@ -1,8 +1,8 @@
 version: 2.1
 orbs:
   node: circleci/node@5.1.0
-  github: topmonks/github@1.4.0
   slack: circleci/slack@4.12.3
+  
 jobs:
   build:
     machine:
@@ -38,18 +38,6 @@ jobs:
           event: fail
           template: basic_fail_1
           channel: ntf-topmonks-webs
-  merge_pr:
-    docker:
-      - image: cimg/base:2023.04
-    steps:
-      - checkout
-      - github/install
-      - github/merge_pr:
-          rebase: true
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-          channel: ntf-topmonks-webs
 workflows:
   ci:
     jobs:
@@ -57,11 +45,3 @@ workflows:
           context: org-global
       - test:
           context: org-global
-      - merge_pr:
-          context: org-github
-          requires:
-            - build
-            - test
-          filters:
-            branches:
-              only: /dependabot\/.*/

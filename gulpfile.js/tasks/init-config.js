@@ -1,18 +1,31 @@
-const gulp = require("gulp");
+const DefaultRegistry = require("undertaker-registry");
 const log = require("fancy-log");
 const colors = require("ansi-colors");
 const projectPath = require("../lib/projectPath");
 
-gulp.task("init-config", function () {
-  const configStream = gulp
-    .src(["gulpfile.js/path-config.json", "gulpfile.js/task-config.js"])
-    .pipe(gulp.dest(projectPath("config")));
+class InitConfigRegistry extends DefaultRegistry {
+  constructor(config, pathConfig) {
+    super();
+    this.config = config;
+    this.pathConfig = pathConfig;
+  }
 
-  log(
-    colors.green(
-      "Adding default path-config.json and task-config.js files to ./config/"
-    )
-  );
+  init({ task, src, dest }) {
+    task("init-config", () => {
+      const configStream = src([
+        "gulpfile.js/path-config.json",
+        "gulpfile.js/task-config.js",
+      ]).pipe(dest(projectPath("config")));
 
-  return configStream;
-});
+      log(
+        colors.green(
+          "Adding default path-config.json and task-config.js files to ./config/"
+        )
+      );
+
+      return configStream;
+    });
+  }
+}
+
+module.exports = InitConfigRegistry;

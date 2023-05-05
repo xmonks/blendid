@@ -1,8 +1,6 @@
-if (!TASK_CONFIG.workboxBuild) return;
-
-const { task } = require("gulp");
-const projectPath = require("../lib/projectPath");
+const DefaultRegistry = require("undertaker-registry");
 const { generateSW, injectManifest } = require("workbox-build");
+const projectPath = require("../lib/projectPath");
 
 const transformConfigPaths = ({ globDirectory, swDest, swSrc, ...config }) => {
   if (globDirectory) {
@@ -17,20 +15,26 @@ const transformConfigPaths = ({ globDirectory, swDest, swSrc, ...config }) => {
   return config;
 };
 
-const workboxBuildTask = function () {
-  const config = transformConfigPaths(TASK_CONFIG.workboxBuild);
-  const useInjectManifest = typeof config.swSrc === "string";
+class WorkboxBuildRegistry extends DefaultRegistry {
+  constructor(config, pathConfig) {
+    super();
+    this.config = config;
+    this.pathConfig = pathConfig;
+  }
 
-  if (useInjectManifest) {
-    return injectManifest(config).catch((error) => {
-      throw error;
-    });
-  } else {
-    return generateSW(config).catch((error) => {
-      throw error;
+  init({ task }) {
+    if (!this.config) return;
+
+    task("workboxBuild", () => {
+      const config = transformConfigPaths(this.config);
+      const useInjectManifest = typeof config.swSrc === "string";
+
+      if (useInjectManifest) {
+        return injectManifest(config);
+      } else {
+        return generateSW(config);
+      }
     });
   }
-};
-
-task("workboxBuild", workboxBuildTask);
-module.exports = workboxBuildTask;
+}
+module.exports = WorkboxBuildRegistry;

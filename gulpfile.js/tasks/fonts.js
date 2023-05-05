@@ -1,30 +1,29 @@
-if (!TASK_CONFIG.fonts) return;
-
-const stream = require("stream");
-const util = require("util");
+const DefaultRegistry = require("undertaker-registry");
 const changed = require("gulp-changed");
-const { src, dest, task } = require("gulp");
 const projectPath = require("../lib/projectPath");
 
-const pipeline = util.promisify(stream.pipeline);
+class FontsRegistry extends DefaultRegistry {
+  constructor(config, pathConfig) {
+    super();
+    this.config = config;
+    this.paths = {
+      src: projectPath(
+        pathConfig.src,
+        pathConfig.fonts.src,
+        `**/*.{${config.extensions}}`
+      ),
+      dest: projectPath(pathConfig.dest, pathConfig.fonts.dest),
+    };
+  }
+  init({ task, src, dest }) {
+    if (!this.config) return;
 
-const fontsTask = function () {
-  const config = TASK_CONFIG.fonts;
-  const paths = {
-    src: projectPath(
-      PATH_CONFIG.src,
-      PATH_CONFIG.fonts.src,
-      "**/*.{" + config.extensions + "}"
-    ),
-    dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.fonts.dest),
-  };
+    task("fonts", () =>
+      src([this.paths.src, "*!README.md"])
+        .pipe(changed(this.paths.dest))
+        .pipe(dest(this.paths.dest))
+    );
+  }
+}
 
-  return pipeline(
-    src([paths.src, "*!README.md"]),
-    changed(paths.dest), // Ignore unchanged files
-    dest(paths.dest)
-  );
-};
-
-task("fonts", fontsTask);
-module.exports = fontsTask;
+module.exports = FontsRegistry;

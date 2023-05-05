@@ -1,40 +1,57 @@
-if (!TASK_CONFIG.generate.json) return;
-
-const gulp = require("gulp");
+const DefaultRegistry = require("undertaker-registry");
 const { marked } = require("marked");
-const stream = require("stream");
-const utils = require("util");
 const markdownToJSON = require("gulp-markdown-to-json");
 const merge = require("gulp-merge-json");
 const projectPath = require("../../lib/projectPath");
 
-const pipeline = utils.promisify(stream.pipeline);
-const { src, dest, task, parallel } = gulp;
+class GenerateJsonRegistry extends DefaultRegistry {
+  #ownTasks = new Set();
+  constructor(config, pathConfig) {
+    super();
+    this.config = config;
+    this.pathConfig = pathConfig;
+  }
 
-function generateJson(sourcePath, destPath, { collection, mergeOptions }) {
-  const generateJsonTask = () =>
-    src(sourcePath)
-      .pipe(markdownToJSON({ renderer: marked }))
-      .pipe(
-        merge({
-          fileName: `${collection}.json`,
-          ...mergeOptions,
-        })
+  ownTasks() {
+    return Array.from(this.#ownTasks);
+  }
+
+  init({ task, parallel, src, dest }) {
+    if (!this.config.generate.json) return;
+
+    function generateJson(sourcePath, destPath, { collection, mergeOptions }) {
+      const generateJsonTask = () =>
+        src(sourcePath)
+          .pipe(markdownToJSON({ renderer: marked }))
+          .pipe(
+            merge({
+              fileName: `${collection}.json`,
+              ...mergeOptions,
+            })
+          )
+          .pipe(dest(destPath));
+      generateJsonTask.displayName = `generate-json-${collection}`;
+      return generateJsonTask;
+    }
+
+    function* createTasks(collections, pathConfig) {
+      const dataPath = projectPath(pathConfig.src, pathConfig.data.src);
+      for (const col of collections) {
+        const sourcePath = projectPath(
+          dataPath,
+          col.srcGlob ?? `${col.collection}/**/*.md`
+        );
+        yield generateJson(sourcePath, dataPath, col);
+      }
+    }
+
+    task(
+      "generate-json",
+      parallel(
+        Array.from(createTasks(this.config.generate.json, this.pathConfig))
       )
-      .pipe(dest(destPath));
-  generateJsonTask.displayName = `generate-json-${collection}`;
-  return generateJsonTask;
-}
-
-function* createTasks() {
-  const dataPath = projectPath(PATH_CONFIG.src, PATH_CONFIG.data.src);
-  const collections = TASK_CONFIG.generate.json;
-  for (const col of collections) {
-    const sourcePath = col.srcGlob || `${col.collection}/**/*.md`;
-    yield generateJson(projectPath(dataPath, sourcePath), dataPath, col);
+    );
+    this.#ownTasks.add("generate-json");
   }
 }
-
-const taskName = "generate-json";
-task(taskName, parallel(Array.from(createTasks())));
-module.exports = taskName;
+module.exports = GenerateJsonRegistry;

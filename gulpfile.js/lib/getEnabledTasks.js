@@ -1,20 +1,11 @@
-const compact = require("lodash/compact");
-const isEmpty = require("lodash/isEmpty");
-
 // Grouped by what can run in parallel
 const assetTasks = ["cloudinary", "fonts", "iconFont", "images"];
-const codeTasks = ["stylesheets", "javascripts"];
+const codeTasks = ["esbuild", "stylesheets", "javascripts"];
 
-module.exports = function (env) {
-  function matchFilter(task) {
-    if (TASK_CONFIG[task]) {
-      return task;
-    }
-  }
-
+module.exports = function (taskConfig) {
   function findExistingTasks(candidates) {
-    const tasks = compact(candidates.map(matchFilter).filter(Boolean));
-    return isEmpty(tasks) ? null : tasks;
+    const tasks = candidates.filter((x) => taskConfig[x]);
+    return tasks.length ? tasks : null;
   }
 
   return {

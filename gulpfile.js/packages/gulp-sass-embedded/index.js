@@ -11,7 +11,6 @@ const through = require("through2");
 const path = require("path");
 const applySourceMap = require("vinyl-sourcemaps-apply");
 const sass = require("sass-embedded");
-const { dir } = require("fancy-log");
 
 const PLUGIN_NAME = "gulp-sass-embedded";
 

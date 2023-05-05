@@ -1,76 +1,87 @@
-if (!TASK_CONFIG.cloudinary) return;
-
+const path = require("path");
 const fs = require("fs");
-const stream = require("stream");
-const util = require("util");
-const { task, src, dest, lastRun } = require("gulp");
+const DefaultRegistry = require("undertaker-registry");
 const cloudinaryUpload = require("gulp-cloudinary-upload");
 const changed = require("gulp-changed");
-const path = require("path");
 const projectPath = require("../lib/projectPath");
 
-const pipeline = util.promisify(stream.pipeline);
-
-const paths = {
-  src: projectPath(PATH_CONFIG.src, PATH_CONFIG.cloudinary.src),
-  dest: projectPath(PATH_CONFIG.src, PATH_CONFIG.data.src),
-  manifest: projectPath(
-    PATH_CONFIG.src,
-    PATH_CONFIG.data.src,
-    TASK_CONFIG.cloudinary.manifest
-  ),
-};
-
 function readManifest(path) {
+  if (!path) return null;
   return fs.promises
     .readFile(path, "utf-8")
     .then((x) => JSON.parse(x))
     .catch(() => null);
 }
 
-function getRelativePath(filePath) {
-  return path.relative(
-    paths.src,
-    path.resolve(__dirname, path.dirname(filePath))
-  );
-}
+class CloudinaryRegistry extends DefaultRegistry {
+  constructor(config, pathConfig) {
+    super();
+    this.config = config;
+    this.pathConfig = pathConfig;
+    this.paths = {
+      src: projectPath(pathConfig.src, pathConfig.cloudinary.src),
+      dest: projectPath(pathConfig.src, pathConfig.data.src),
+      manifest: config.manifest
+        ? projectPath(pathConfig.src, pathConfig.data.src, config.manifest)
+        : null,
+    };
+  }
 
-function getRelativeFilePath(filePath) {
-  return path.relative(paths.src, path.resolve(__dirname, filePath));
-}
+  init({ task, src, dest, lastRun }) {
+    if (!this.config) return;
+    const paths = this.paths;
+    const pathConfig = this.pathConfig;
 
-const cloudinaryTask = () =>
-  pipeline(
-    src(
-      path.join(paths.src, "**", `*.{${TASK_CONFIG.cloudinary.extensions}}`),
-      {
+    function getRelativePath(filePath) {
+      return path.relative(
+        paths.src,
+        path.resolve(__dirname, path.dirname(filePath))
+      );
+    }
+
+    function getRelativeFilePath(filePath) {
+      return path.relative(paths.src, path.resolve(__dirname, filePath));
+    }
+
+    const cloudinaryTask = () =>
+      src(path.join(paths.src, "**", `*.{${this.config.extensions}}`), {
         since: lastRun(cloudinaryTask),
-      }
-    ),
-    changed(paths.dest, {
-      async hasChanged(stream, sourceFile) {
-        const manifest = await readManifest(paths.manifest);
-        const imagePath = getRelativeFilePath(sourceFile.path);
-        if (!(manifest && manifest[imagePath])) {
-          stream.push(sourceFile);
-        }
-      },
-    }),
-    cloudinaryUpload({
-      folderResolver(filePath) {
-        const relativePath = getRelativePath(filePath);
-        return path.join(PATH_CONFIG.cloudinary.dest, relativePath);
-      },
-      keyResolver(filePath) {
-        return path.relative(paths.src, path.resolve(__dirname, filePath));
-      },
-    }),
-    cloudinaryUpload.manifest({
-      path: paths.manifest,
-      merge: true,
-    }),
-    dest(paths.dest)
-  );
+      })
+        .pipe(
+          changed(paths.dest, {
+            async hasChanged(stream, sourceFile) {
+              const manifest = await readManifest(paths.manifest);
+              const imagePath = getRelativeFilePath(sourceFile.path);
+              if (!manifest?.[imagePath]) {
+                stream.push(sourceFile);
+              }
+            },
+          })
+        )
+        .pipe(
+          cloudinaryUpload({
+            folderResolver(filePath) {
+              const relativePath = getRelativePath(filePath);
+              return path.join(pathConfig.cloudinary.dest, relativePath);
+            },
+            keyResolver(filePath) {
+              return path.relative(
+                paths.src,
+                path.resolve(__dirname, filePath)
+              );
+            },
+          })
+        )
+        .pipe(
+          cloudinaryUpload.manifest({
+            path: paths.manifest,
+            merge: true,
+          })
+        )
+        .pipe(dest(paths.dest));
 
-task("cloudinary", cloudinaryTask);
-module.exports = cloudinaryTask;
+    task("cloudinary", cloudinaryTask);
+  }
+}
+
+module.exports = CloudinaryRegistry;

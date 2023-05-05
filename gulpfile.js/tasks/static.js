@@ -1,33 +1,31 @@
-if (!TASK_CONFIG.static) return;
-
-const stream = require("stream");
-const util = require("util");
-const { src, dest, task } = require("gulp");
+const DefaultRegistry = require("undertaker-registry");
 const changed = require("gulp-changed");
 const path = require("path");
 const projectPath = require("../lib/projectPath");
 
-const pipeline = util.promisify(stream.pipeline);
+class StaticRegistry extends DefaultRegistry {
+  constructor(config, pathConfig) {
+    super();
+    this.config = config;
+    const srcPath = projectPath(pathConfig.src, pathConfig.static.src);
+    this.paths = {
+      src: path.join(srcPath, "**/*"),
+      dest: projectPath(pathConfig.dest, pathConfig.static.dest),
+    };
+  }
 
-const staticTask = function () {
-  const srcPath = projectPath(PATH_CONFIG.src, PATH_CONFIG.static.src);
-  const defaultSrcOptions = { dot: true };
-  const options = Object.assign(
-    defaultSrcOptions,
-    TASK_CONFIG.static.srcOptions || {}
-  );
+  init({ task, src, dest }) {
+    if (!this.config) return;
 
-  const paths = {
-    src: path.join(srcPath, "**/*"),
-    dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.static.dest),
-  };
+    task("static", () =>
+      src(
+        this.paths.src,
+        Object.assign({ dot: true }, this.config.srcOptions || {})
+      )
+        .pipe(changed(this.paths.dest))
+        .pipe(dest(this.paths.dest))
+    );
+  }
+}
 
-  return pipeline(
-    src(paths.src, options),
-    changed(paths.dest),
-    dest(paths.dest)
-  );
-};
-
-task("static", staticTask);
-module.exports = staticTask;
+module.exports = StaticRegistry;

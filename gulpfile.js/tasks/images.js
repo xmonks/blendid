@@ -1,29 +1,30 @@
-if (!TASK_CONFIG.images) return;
-
-const stream = require("stream");
-const util = require("util");
-const { src, dest, task } = require("gulp");
+const DefaultRegistry = require("undertaker-registry");
 const changed = require("gulp-changed");
 const projectPath = require("../lib/projectPath");
 
-const pipeline = util.promisify(stream.pipeline);
+class ImagesRegistry extends DefaultRegistry {
+  constructor(config, pathConfig) {
+    super();
+    this.config = config;
+    this.paths = {
+      src: projectPath(
+        pathConfig.src,
+        pathConfig.images.src,
+        `**/*.{${config.extensions}}`
+      ),
+      dest: projectPath(pathConfig.dest, pathConfig.images.dest),
+    };
+  }
 
-const imagesTask = function () {
-  const paths = {
-    src: projectPath(
-      PATH_CONFIG.src,
-      PATH_CONFIG.images.src,
-      "**/*.{" + TASK_CONFIG.images.extensions + "}"
-    ),
-    dest: projectPath(PATH_CONFIG.dest, PATH_CONFIG.images.dest),
-  };
+  init({ task, src, dest }) {
+    if (!this.config) return;
 
-  return pipeline(
-    src([paths.src, "*!README.md"]),
-    changed(paths.dest), // Ignore unchanged files
-    dest(paths.dest)
-  );
-};
+    task("images", () =>
+      src([this.paths.src, "*!README.md"])
+        .pipe(changed(this.paths.dest))
+        .pipe(dest(this.paths.dest))
+    );
+  }
+}
 
-task("images", imagesTask);
-module.exports = imagesTask;
+module.exports = ImagesRegistry;

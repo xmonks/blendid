@@ -1,32 +1,44 @@
-if (!TASK_CONFIG.html) return false;
-
 const fs = require("fs");
-const { task, src, dest } = require("gulp");
+const DefaultRegistry = require("undertaker-registry");
 const when = require("gulp-if");
 const revReplace = require("gulp-rev-rewrite");
 const inject = require("gulp-inject");
 const projectPath = require("../../lib/projectPath");
 
 // 4) Update asset references in HTML
-task("update-html", function () {
-  const manifestPath = projectPath(PATH_CONFIG.dest, "rev-manifest.json");
-  const manifest = fs.existsSync(manifestPath)
-    ? fs.readFileSync(manifestPath)
-    : null;
-  const importmap = src(projectPath(PATH_CONFIG.dest, "import-map.importmap"), {
-    allowEmpty: true,
-  });
-  return src(projectPath(PATH_CONFIG.dest, PATH_CONFIG.html.dest, "**/*.html"))
-    .pipe(revReplace({ manifest }))
-    .pipe(
-      when(
-        TASK_CONFIG.production?.rev?.importmap,
-        inject(importmap, {
-          quiet: true,
-          removeTags: true,
-          transform: (_, file) => file.contents.toString(),
-        })
-      )
-    )
-    .pipe(dest(projectPath(PATH_CONFIG.dest, PATH_CONFIG.html.dest)));
-});
+
+class RevUpdateHtmlRegistry extends DefaultRegistry {
+  constructor(config, pathConfig) {
+    super();
+    this.config = config;
+    this.pathConfig = pathConfig;
+  }
+
+  init({ task, src, dest }) {
+    if (!this.config.html) return;
+    task("update-html",  () => {
+      const manifestPath = projectPath(this.pathConfig.dest, "rev-manifest.json");
+      const manifest = fs.existsSync(manifestPath)
+        ? fs.readFileSync(manifestPath)
+        : null;
+      const importmap = src(projectPath(this.pathConfig.dest, "import-map.importmap"), {
+        allowEmpty: true,
+      });
+      return src(projectPath(this.pathConfig.dest, this.pathConfig.html.dest, "**/*.html"))
+        .pipe(revReplace({ manifest }))
+        .pipe(
+          when(
+            this.config.production?.rev?.importmap,
+            inject(importmap, {
+              quiet: true,
+              removeTags: true,
+              transform: (_, file) => file.contents.toString(),
+            })
+          )
+        )
+        .pipe(dest(projectPath(this.pathConfig.dest, this.pathConfig.html.dest)));
+    });
+  }
+}
+
+module.exports = RevUpdateHtmlRegistry

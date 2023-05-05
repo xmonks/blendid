@@ -1,20 +1,35 @@
-if (!TASK_CONFIG.generate) return;
+const DefaultRegistry = require("undertaker-registry");
+const GenerateRedirectsRegistry = require("./generate/redirect");
+const GenerateJsonRegistry = require("./generate/json");
+const GenerateHtmlRegistry = require("./generate/html");
 
-const { task, series } = require("gulp");
-
-const genTasks = [];
-if (TASK_CONFIG.generate.json) {
-  genTasks.push(require("./generate/json"));
-}
-if (TASK_CONFIG.generate.html) {
-  genTasks.push(require("./generate/html"));
-}
-if (TASK_CONFIG.generate.redirects) {
-  genTasks.push(require("./generate/redirect"));
-}
-
-let noop = (done) => {
+const noop = (done) => {
   done();
 };
 
-task("generate", genTasks.length ? series(genTasks) : noop);
+class GenerateRegistry extends DefaultRegistry {
+  constructor(config, pathConfig) {
+    super();
+    this.config = config;
+    this.pathConfig = pathConfig;
+  }
+
+  init({ task, series, registry }) {
+    if (!this.config.generate) return;
+
+    const redirect = new GenerateRedirectsRegistry(
+      this.config,
+      this.pathConfig
+    );
+    const json = new GenerateJsonRegistry(this.config, this.pathConfig);
+    const html = new GenerateHtmlRegistry(this.config, this.pathConfig);
+    registry(redirect);
+    registry(json);
+    registry(html);
+
+    const genTasks = [redirect, json, html].flatMap((r) => r.ownTasks());
+    task("generate", genTasks.length ? series(genTasks) : noop);
+  }
+}
+
+module.exports = GenerateRegistry;

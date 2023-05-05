@@ -1,4 +1,5 @@
 const sass = require("sass-embedded");
+const mode = require("gulp-mode")();
 const cloudinary = require("cloudinary").v2;
 const { pathToFileURL } = require("url");
 
@@ -50,6 +51,23 @@ const sassCloudinaryUrl = (args) => {
 module.exports = {
   javascripts: {
     extensions: ["js", "mjs", "cjs"],
+  },
+
+  esbuild: {
+    extensions: ["ts", "js", "mjs"],
+    options: {
+      bundle: true,
+      splitting: true,
+      treeShaking: true,
+      minify: mode.production(),
+      mainFields: ["module", "browser", "main"],
+      sourcemap: true,
+      legalComments: "linked",
+      format: "esm",
+      platform: "browser",
+      target: ["es2021"],
+      charset: "utf8",
+    },
   },
 
   stylesheets: {
@@ -123,6 +141,8 @@ module.exports = {
       inlineSvg: true,
     },
   },
+
+  sizeReport: { gzip: true },
 
   watch: {
     tasks: [],

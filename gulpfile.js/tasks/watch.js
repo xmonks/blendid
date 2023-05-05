@@ -1,56 +1,69 @@
-const { task, series, watch } = require("gulp");
+const DefaultRegistry = require("undertaker-registry");
 const projectPath = require("../lib/projectPath");
 
-const watchTask = function (done) {
-  const watchableTasks = [
-    "fonts",
-    "iconFont",
-    "images",
-    "cloudinary",
-    "svgSprite",
-    "generate",
-    "html",
-    "stylesheets",
-    "javascripts",
-    "static",
-    ...TASK_CONFIG.watch.tasks,
-  ];
+function getTaskPathFor(taskName, pathConfig) {
+  switch (taskName) {
+    case "iconFont":
+      return pathConfig.icons;
+    case "svgSprite":
+      return pathConfig.icons;
+    case "generate":
+      return pathConfig.data;
+    default:
+      return pathConfig[taskName];
+  }
+}
 
-  function getTaskPathFor(taskName) {
-    switch (taskName) {
-      case "iconFont":
-        return PATH_CONFIG.icons;
-      case "svgSprite":
-        return PATH_CONFIG.icons;
-      case "generate":
-        return PATH_CONFIG.data;
-      default:
-        return PATH_CONFIG[taskName];
-    }
+class WatchRegistry extends DefaultRegistry {
+  constructor(config, pathConfig) {
+    super();
+    this.config = config;
+    this.pathConfig = pathConfig;
   }
 
-  watchableTasks.forEach((taskName) => {
-    const taskConfig = TASK_CONFIG[taskName];
-    const taskPath = getTaskPathFor(taskName);
+  init({ task, series, watch }) {
+    task(
+      "watch",
+      // TODO: make BrowserSync optional
+      series("browserSync", (done) => {
+        const watchableTasks = [
+          "fonts",
+          "iconFont",
+          "images",
+          "cloudinary",
+          "svgSprite",
+          "generate",
+          "html",
+          "stylesheets",
+          "javascripts",
+          "esbuild",
+          "static",
+        ].concat(this.config.watch?.tasks);
 
-    if (taskConfig && taskPath) {
-      const srcPath = projectPath(PATH_CONFIG.src, taskPath.src);
-      const globPattern = `**/*${
-        taskConfig.extensions ? `.{${taskConfig.extensions.join(",")}}` : ""
-      }`;
-      const exclude = taskConfig.exclude
-        ? `!{${taskConfig.exclude.join(",")}}`
-        : "";
-      const extraWatch = taskConfig.watch ?? "";
-      watch(
-        [globPattern, exclude, extraWatch],
-        { cwd: srcPath },
-        task(taskName)
-      );
-    }
-  });
-  done();
-};
+        watchableTasks.forEach((taskName) => {
+          const taskConfig = this.config[taskName];
+          const taskPath = getTaskPathFor(taskName, this.pathConfig);
 
-task("watch", series("browserSync", watchTask));
-module.exports = watchTask;
+          if (taskConfig && taskPath) {
+            const srcPath = projectPath(this.pathConfig.src, taskPath.src);
+            const globPattern = `**/*${
+              taskConfig.extensions ? `.{${taskConfig.extensions}}` : ""
+            }`;
+            const exclude = taskConfig.exclude
+              ? `!{${taskConfig.exclude}}`
+              : "";
+            const extraWatch = taskConfig.watch ?? "";
+            watch(
+              [globPattern, exclude, extraWatch],
+              { cwd: srcPath },
+              task(taskName)
+            );
+          }
+        });
+        done();
+      })
+    );
+  }
+}
+
+module.exports = WatchRegistry;

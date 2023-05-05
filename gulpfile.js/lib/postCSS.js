@@ -1,15 +1,17 @@
 const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
+const mode = require("gulp-mode")();
 
 function getPostCSSPlugins(config) {
-  const plugins = [autoprefixer(config.autoprefixer)];
-  if (config.postcss && config.postcss.plugins) {
-    plugins.concat(config.postcss.plugins);
-    delete config.postcss.plugins;
-  }
-  if (global.production) {
-    plugins.push(cssnano(config.cssnano));
-  }
+  const plugins = [
+    autoprefixer(config.autoprefixer),
+    mode.production(cssnano(config.cssnano)),
+  ]
+    .concat(config.postcss?.plugins)
+    .filter(Boolean);
+
+  delete config.postcss?.plugins;
+
   return plugins;
 }
 

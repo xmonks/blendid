@@ -1,5 +1,5 @@
-const projectPath = require("./projectPath");
 const fs = require("fs");
+const projectPath = require("./projectPath.js");
 
 function getPathConfig() {
   if (process.env.BLENDID_CONFIG_PATH) {
