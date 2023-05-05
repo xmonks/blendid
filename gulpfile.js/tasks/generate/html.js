@@ -159,7 +159,7 @@ class GenerateHtmlRegistry extends DefaultRegistry {
           )
           .pipe(mode.production(htmlmin(config.htmlmin)))
           .pipe(dest(destPath));
-      generateHtmlTask.name = `generate-html-${collection}`;
+      generateHtmlTask.displayName = `generate-html-${collection}`;
       return generateHtmlTask;
     }
 

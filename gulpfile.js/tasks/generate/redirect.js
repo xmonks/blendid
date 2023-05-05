@@ -48,7 +48,7 @@ class GenerateRedirectsRegistry extends DefaultRegistry {
 
     const config = cloneDeep(this.config.html);
     function generateRedirect(sourcePath, destPath, col) {
-      let generateRedirectsTask = () =>
+      const generateRedirectsTask = () =>
         streamArray(require(sourcePath))
           .pipe(
             through.obj(function (item, enc, done) {
@@ -60,7 +60,7 @@ class GenerateRedirectsRegistry extends DefaultRegistry {
           .pipe(nunjucksRender(config.nunjucksRender))
           .pipe(mode.production(htmlmin(config.htmlmin)))
           .pipe(dest(destPath));
-      generateRedirectsTask.name = `generate-json-${col.collection}`;
+      generateRedirectsTask.displayName = `generate-json-${col.collection}`;
       return generateRedirectsTask;
     }
 
