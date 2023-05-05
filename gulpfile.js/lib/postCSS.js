@@ -5,7 +5,7 @@ const mode = require("gulp-mode")();
 function getPostCSSPlugins(config) {
   const plugins = [
     autoprefixer(config.autoprefixer),
-    mode.production(cssnano(config.cssnano)),
+    mode.production() ? cssnano(config.cssnano) : null,
   ]
     .concat(config.postcss?.plugins)
     .filter(Boolean);
