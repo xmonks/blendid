@@ -35,7 +35,9 @@ class BrowserSyncRegistry extends DefaultRegistry {
     const exclude = this.config.excludeFolders
       ? `!${projectPath(
           pathConfig.dest,
-          `**/{${this.config.excludeFolders.join(",")}}/**`
+          "**",
+          `{${this.config.excludeFolders}}`,
+          "**"
         )}`
       : null;
     delete this.config.excludeFolders;
@@ -46,10 +48,9 @@ class BrowserSyncRegistry extends DefaultRegistry {
       ) ?? [];
     delete this.config.excludeFiles;
 
-
     const server = this.config.proxy ?? this.config.server;
     server.middleware = server.middleware ?? server.extraMiddlewares ?? [];
-    const assets = projectPath(pathConfig.dest, "**/*.{html,js,css}");
+    const assets = projectPath(pathConfig.dest, "**", "*.{html,js,css}");
     this.assetsGlob = [assets, exclude].concat(excludeFiles).filter(Boolean);
   }
 

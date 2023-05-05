@@ -9,10 +9,11 @@ class ImagesRegistry extends DefaultRegistry {
     this.paths = {
       src: projectPath(
         pathConfig.src,
-        pathConfig.images.src,
-        `**/*.{${config.extensions}}`
+        pathConfig.images?.src,
+        "**",
+        `*.{${config.extensions}}`
       ),
-      dest: projectPath(pathConfig.dest, pathConfig.images.dest),
+      dest: projectPath(pathConfig.dest, pathConfig.images?.dest),
     };
   }
 

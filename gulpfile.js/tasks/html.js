@@ -33,13 +33,18 @@ function getPaths(exclude, taskConfig, pathConfig) {
       projectPath(
         pathConfig.src,
         pathConfig.html.src,
-        `**/*.{${taskConfig.html.extensions}}`
+        "**",
+        `*.{${taskConfig.html.extensions}}`
       ),
       exclude,
     ].filter(Boolean),
     spritesSrc: projectPath(pathConfig.src, pathConfig.icons.src, "*.svg"),
     dataPath: pathConfig.data
-      ? projectPath(pathConfig.src, pathConfig.data.src, taskConfig.html.dataFile)
+      ? projectPath(
+          pathConfig.src,
+          pathConfig.data.src,
+          taskConfig.html.dataFile
+        )
       : null,
     dest: projectPath(pathConfig.dest, pathConfig.html.dest),
   };
@@ -53,7 +58,9 @@ class HtmlRegistry extends DefaultRegistry {
     const exclude = `!${projectPath(
       pathConfig.src,
       pathConfig.html.src,
-      `**/{${config.excludeFolders}}/**`
+      "**",
+      `{${config.excludeFolders}}`,
+      "**"
     )}`;
     this.paths = getPaths(exclude, config, pathConfig);
   }

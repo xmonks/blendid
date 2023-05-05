@@ -12,7 +12,7 @@ class SizeReportRegistry extends DefaultRegistry {
   init({ task, src }) {
     task("size-report", () =>
       src([
-        projectPath(this.pathConfig.dest, "**/*"),
+        projectPath(this.pathConfig.dest, "**", "*"),
         "*!rev-manifest.json",
       ]).pipe(sizereport(this.config))
     );

@@ -16,15 +16,26 @@ class RevUpdateHtmlRegistry extends DefaultRegistry {
 
   init({ task, src, dest }) {
     if (!this.config.html) return;
-    task("update-html",  () => {
-      const manifestPath = projectPath(this.pathConfig.dest, "rev-manifest.json");
+    task("update-html", () => {
+      const manifestPath = projectPath(
+        this.pathConfig.dest,
+        "rev-manifest.json"
+      );
       const manifest = fs.existsSync(manifestPath)
         ? fs.readFileSync(manifestPath)
         : null;
-      const importmap = src(projectPath(this.pathConfig.dest, "import-map.importmap"), {
-        allowEmpty: true,
-      });
-      return src(projectPath(this.pathConfig.dest, this.pathConfig.html.dest, "**/*.html"))
+      const importmap = src(
+        projectPath(this.pathConfig.dest, "import-map.importmap"),
+        { allowEmpty: true }
+      );
+      return src(
+        projectPath(
+          this.pathConfig.dest,
+          this.pathConfig.html.dest,
+          "**",
+          "*.html"
+        )
+      )
         .pipe(revReplace({ manifest }))
         .pipe(
           when(
@@ -36,9 +47,11 @@ class RevUpdateHtmlRegistry extends DefaultRegistry {
             })
           )
         )
-        .pipe(dest(projectPath(this.pathConfig.dest, this.pathConfig.html.dest)));
+        .pipe(
+          dest(projectPath(this.pathConfig.dest, this.pathConfig.html.dest))
+        );
     });
   }
 }
 
-module.exports = RevUpdateHtmlRegistry
+module.exports = RevUpdateHtmlRegistry;

@@ -16,10 +16,11 @@ class RevAssetsRegistry extends DefaultRegistry {
       // Ignore files that may reference assets. We'll rev them next.
       const ignoreThese = `!${projectPath(
         this.pathConfig.dest,
-        "**/*+(css|js|mjs|map|json|html|txt)"
+        "**",
+        "*.{css,js,mjs,map,json,html,txt}"
       )}`;
 
-      return src([projectPath(this.pathConfig.dest, "**/*"), ignoreThese])
+      return src([projectPath(this.pathConfig.dest, "**", "*"), ignoreThese])
         .pipe(rev())
         .pipe(dest(projectPath(this.pathConfig.dest)))
         .pipe(revdel())

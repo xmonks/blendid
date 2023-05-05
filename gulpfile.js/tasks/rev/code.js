@@ -15,7 +15,7 @@ class RevCodeRegistry extends DefaultRegistry {
 
   init({ task, src, dest }) {
     task("rev-code", () =>
-      src([projectPath(this.pathConfig.dest, "**/*.css")])
+      src([projectPath(this.pathConfig.dest, "**", "*.css")])
         .pipe(rev())
         .pipe(dest(projectPath(this.pathConfig.dest)))
         .pipe(revdel())

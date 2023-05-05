@@ -8,10 +8,10 @@ class RevUpdateJsRegistry extends DefaultRegistry {
     super();
     this.config = config;
     this.pathConfig = pathConfig;
-    const codeDir = (pathConfig.javascripts || pathConfig.esbuild).dest;
+    const codeDir = (pathConfig.javascripts || pathConfig.esbuild)?.dest;
     this.paths = {
       codeDir,
-      src: projectPath(pathConfig.dest, codeDir, "**/*.js"),
+      src: projectPath(pathConfig.dest, codeDir, "**", "*.js"),
       dest: projectPath(pathConfig.dest, codeDir),
       manifest: projectPath(pathConfig.dest, "rev-manifest.json"),
     };

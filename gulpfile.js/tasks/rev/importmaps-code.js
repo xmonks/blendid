@@ -15,7 +15,7 @@ class RevImportmapsCodeRegistry extends DefaultRegistry {
 
   init({ task, src, dest }) {
     task("rev-importmaps-code", () =>
-      src([projectPath(this.pathConfig.dest, "**/*.{js,mjs}")])
+      src([projectPath(this.pathConfig.dest, "**", "*.{js,mjs}")])
         .pipe(rev())
         .pipe(dest(projectPath(this.pathConfig.dest)))
         .pipe(revdel())

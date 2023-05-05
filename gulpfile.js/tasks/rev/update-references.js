@@ -13,8 +13,11 @@ class RevUpdateReferencesRegistry extends DefaultRegistry {
   }
 
   init({ task, src, dest }) {
-    task("rev-update-references",  () => {
-      const manifestPath = projectPath(this.pathConfig.dest, "rev-manifest.json");
+    task("rev-update-references", () => {
+      const manifestPath = projectPath(
+        this.pathConfig.dest,
+        "rev-manifest.json"
+      );
       const manifest = fs.existsSync(manifestPath)
         ? fs.readFileSync(manifestPath)
         : null;
@@ -23,7 +26,7 @@ class RevUpdateReferencesRegistry extends DefaultRegistry {
           ? this.config.production.rev
           : {};
 
-      return src(projectPath(this.pathConfig.dest, "**/**.{css,js,mjs,map}"))
+      return src(projectPath(this.pathConfig.dest, "**", "*.{css,js,mjs,map}"))
         .pipe(revReplace(Object.assign(options, { manifest })))
         .pipe(dest(projectPath(this.pathConfig.dest)));
     });
