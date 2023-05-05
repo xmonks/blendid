@@ -4,7 +4,6 @@ const mode = require("gulp-mode")();
 const changed = require("gulp-changed");
 const postcss = require("gulp-postcss");
 const rename = require("gulp-rename");
-const sourcemaps = require("gulp-sourcemaps");
 const sass = require("../packages/gulp-sass-embedded");
 const projectPath = require("../lib/projectPath");
 const getPostCSSPlugins = require("../lib/postCSS");
@@ -38,11 +37,9 @@ class StyleSheetsRegistry extends DefaultRegistry {
       const plugins = getPostCSSPlugins(this.config);
       return src(this.paths.src)
         .pipe(changed(this.paths.dest, { extension: ".css" }))
-        .pipe(mode.development(sourcemaps.init()))
         .pipe(sass(this.config.sass).on("error", done))
         .pipe(postcss(plugins, this.config.postcss).on("error", done))
         .pipe(rename({ extname: ".css" }))
-        .pipe(mode.development(sourcemaps.write()))
         .pipe(dest(this.paths.dest))
         .on("end", done);
     };
