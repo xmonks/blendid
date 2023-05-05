@@ -9,11 +9,11 @@ class FontsRegistry extends DefaultRegistry {
     this.paths = {
       src: projectPath(
         pathConfig.src,
-        pathConfig.fonts?.src,
+        pathConfig.fonts?.src ?? "",
         "**",
         `*.{${config.extensions}}`
       ),
-      dest: projectPath(pathConfig.dest, pathConfig.fonts?.dest),
+      dest: projectPath(pathConfig.dest, pathConfig.fonts?.dest ?? ""),
     };
   }
   init({ task, src, dest }) {

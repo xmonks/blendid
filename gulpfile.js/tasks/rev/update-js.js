@@ -8,7 +8,7 @@ class RevUpdateJsRegistry extends DefaultRegistry {
     super();
     this.config = config;
     this.pathConfig = pathConfig;
-    const codeDir = (pathConfig.javascripts || pathConfig.esbuild)?.dest;
+    const codeDir = (pathConfig.javascripts || pathConfig.esbuild)?.dest ?? "";
     this.paths = {
       codeDir,
       src: projectPath(pathConfig.dest, codeDir, "**", "*.js"),

@@ -7,8 +7,8 @@ class StaticRegistry extends DefaultRegistry {
     super();
     this.config = config;
     this.paths = {
-      src: projectPath(pathConfig.src, pathConfig.static?.src, "**", "*"),
-      dest: projectPath(pathConfig.dest, pathConfig.static?.dest),
+      src: projectPath(pathConfig.src, pathConfig.static?.src ?? "", "**", "*"),
+      dest: projectPath(pathConfig.dest, pathConfig.static?.dest ?? ""),
     };
   }
 

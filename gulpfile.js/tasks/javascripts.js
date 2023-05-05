@@ -66,8 +66,8 @@ class JavaScriptsRegistry extends DefaultRegistry {
     this.config = config;
     this.pathConfig = pathConfig;
     this.paths = {
-      src: projectPath(pathConfig.src, pathConfig.javascripts?.src),
-      dest: projectPath(pathConfig.dest, pathConfig.javascripts?.dest),
+      src: projectPath(pathConfig.src, pathConfig.javascripts?.src ?? ""),
+      dest: projectPath(pathConfig.dest, pathConfig.javascripts?.dest ?? ""),
     };
   }
   init({ task }) {

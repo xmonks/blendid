@@ -19,10 +19,10 @@ class CloudinaryRegistry extends DefaultRegistry {
     this.config = config;
     this.pathConfig = pathConfig;
     this.paths = {
-      src: projectPath(pathConfig.src, pathConfig.cloudinary?.src),
-      dest: projectPath(pathConfig.src, pathConfig.data?.src),
+      src: projectPath(pathConfig.src, pathConfig.cloudinary?.src ?? ""),
+      dest: projectPath(pathConfig.src, pathConfig.data?.src ?? ""),
       manifest: config.manifest
-        ? projectPath(pathConfig.src, pathConfig.data?.src, config.manifest)
+        ? projectPath(pathConfig.src, pathConfig.data?.src ?? "", config.manifest)
         : null,
     };
   }

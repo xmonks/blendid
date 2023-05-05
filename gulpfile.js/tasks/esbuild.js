@@ -10,10 +10,10 @@ class ESBuildRegistry extends DefaultRegistry {
     this.paths = {
       src: projectPath(
         pathConfig.src,
-        pathConfig.esbuild?.src,
+        pathConfig.esbuild?.src ?? ""
         `*.{${config.extensions}}`
       ),
-      dest: projectPath(pathConfig.dest, pathConfig.esbuild?.dest),
+      dest: projectPath(pathConfig.dest, pathConfig.esbuild?.dest ?? ""),
     };
   }
 
