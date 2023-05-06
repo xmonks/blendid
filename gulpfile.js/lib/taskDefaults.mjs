@@ -106,7 +106,9 @@ export default {
     dataFile: "global.json",
     nunjucksRender: {
       filters: {
-        split: (str, seperator) => str.split(seperator),
+        split(str, seperator) {
+          return str.split(seperator);
+        },
         cloudinaryUrl,
       },
       envOptions: {
