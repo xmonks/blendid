@@ -27,7 +27,7 @@ export class GenerateRegistry extends DefaultRegistry {
     registry(json);
     registry(html);
 
-    const genTasks = [redirect, json, html].flatMap((r) => r.ownTasks());
+    const genTasks = [json, html, redirect].flatMap((r) => r.ownTasks());
     task("generate", genTasks.length ? series(genTasks) : noop);
   }
 }
