@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import module from "node:module";
 import path from "node:path";
 import DefaultRegistry from "undertaker-registry";
 import gulp_mode from "gulp-mode";
@@ -6,6 +7,7 @@ import { rollup } from "rollup";
 import projectPath from "../lib/projectPath.mjs";
 
 const mode = gulp_mode();
+const require = module.createRequire(import.meta.url);
 
 /**
  * Generates `data/assets.json` for later use in collections
