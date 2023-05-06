@@ -45,7 +45,7 @@ export function getPaths(exclude, taskConfig, pathConfig) {
       ? projectPath(
           pathConfig.src,
           pathConfig.data.src,
-          taskConfig.html.dataFile
+          taskConfig.html?.dataFile ?? ""
         )
       : null,
     dest: projectPath(pathConfig.dest, pathConfig.html.dest),

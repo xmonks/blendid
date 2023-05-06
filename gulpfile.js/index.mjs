@@ -76,6 +76,7 @@ function devTasks() {
   gulp.registry(new WatchRegistry(taskConfig, pathConfig));
 
   const { assetTasks, codeTasks } = getEnabledTasks(taskConfig);
+  const html = taskConfig.html ? "html" : null;
   const generate = taskConfig.generate ? "generate" : null;
   const staticFiles = taskConfig.static ? "static" : null;
   const workboxBuild = taskConfig.workboxBuild ? "workboxBuild" : null;
@@ -91,7 +92,7 @@ function devTasks() {
     generate,
     assetTasks && gulp.parallel(assetTasks),
     codeTasks && gulp.parallel(codeTasks),
-    "html",
+    html,
     staticFiles,
     postbuild,
     workboxBuild,
@@ -105,6 +106,7 @@ function prodTasks() {
 
   const { assetTasks, codeTasks } = getEnabledTasks(taskConfig);
   const rev = taskConfig.production.rev ? "rev" : null;
+  const html = taskConfig.html ? "html" : null;
   const generate = taskConfig.generate ? "generate" : null;
   const staticFiles = taskConfig.static ? "static" : null;
   const workboxBuild = taskConfig.workboxBuild ? "workboxBuild" : null;
@@ -120,7 +122,7 @@ function prodTasks() {
     generate,
     assetTasks && gulp.parallel(assetTasks),
     codeTasks && gulp.parallel(codeTasks),
-    "html",
+    html,
     rev,
     staticFiles,
     postbuild,
