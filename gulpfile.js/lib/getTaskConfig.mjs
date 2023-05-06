@@ -6,16 +6,20 @@ import taskDefaults from "./taskDefaults.mjs";
 
 const require = module.createRequire(import.meta.url);
 
-function getTaskConfig() {
+async function getTaskConfigInternal() {
   if (process.env.BLENDID_CONFIG_PATH) {
+    const esm = projectPath(process.env.BLENDID_CONFIG_PATH, "task-config.mjs");
+    if (fs.existsSync(esm)) return import(esm);
     return require(projectPath(
       process.env.BLENDID_CONFIG_PATH,
       "task-config.js"
     ));
   }
 
-  const defaultConfigPath = projectPath("config/task-config.js");
+  const defaultEsm = projectPath("config/task-config.mjs");
+  if (fs.existsSync(defaultEsm)) return import(defaultEsm);
 
+  const defaultConfigPath = projectPath("config/task-config.js");
   if (fs.existsSync(defaultConfigPath)) {
     return require(defaultConfigPath);
   }
@@ -44,6 +48,7 @@ function replaceArrays(objValue, srcValue) {
   }
 }
 
-const taskConfig = withDefaults(getTaskConfig());
-
-export default taskConfig;
+export async function getTaskConfig() {
+  const config = await getTaskConfigInternal()
+  return withDefaults(config)
+}

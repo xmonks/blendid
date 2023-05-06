@@ -11,7 +11,7 @@ import gulp from "gulp";
 import logger from "gulplog";
 import getEnabledTasks from "./lib/getEnabledTasks.mjs";
 import pathConfig from "./lib/getPathConfig.mjs";
-import taskConfig from "./lib/getTaskConfig.mjs";
+import { getTaskConfig } from "./lib/getTaskConfig.mjs";
 import { BrowserSyncRegistry } from "./tasks/browserSync.mjs";
 import { CleanRegistry } from "./tasks/clean.mjs";
 import { CloudinaryRegistry } from "./tasks/cloudinary.mjs";
@@ -31,6 +31,8 @@ import { WorkboxBuildRegistry } from "./tasks/workboxBuild.mjs";
 import { RevRegistry } from "./tasks/rev.mjs";
 
 logger.info("Building sources", pathConfig.src);
+
+const taskConfig = await getTaskConfig();
 
 gulp.registry(new CleanRegistry(taskConfig.clean, pathConfig));
 gulp.registry(new CloudinaryRegistry(taskConfig.cloudinary, pathConfig));
