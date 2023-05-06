@@ -3,14 +3,14 @@
  * @copyright Copyright (c) 2013 David Manning
  * @see https://github.com/dlmanning/gulp-sass
  */
-const chalk = require("chalk");
-const PluginError = require("plugin-error");
-const replaceExtension = require("replace-ext");
-const stripAnsi = require("strip-ansi");
-const through = require("through2");
-const path = require("path");
-const applySourceMap = require("vinyl-sourcemaps-apply");
-const sass = require("sass-embedded");
+import chalk from "chalk";
+import PluginError from "plugin-error";
+import replaceExtension from "replace-ext";
+import stripAnsi from "strip-ansi";
+import through from "through2";
+import path from "path";
+import applySourceMap from "vinyl-sourcemaps-apply";
+import sass from "sass-embedded";
 
 const PLUGIN_NAME = "gulp-sass-embedded";
 
@@ -144,4 +144,4 @@ gulpSass.logError = function logError(error) {
   this.emit("end");
 };
 
-module.exports = gulpSass;
+export default gulpSass;

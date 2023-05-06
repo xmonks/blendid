@@ -1,5 +1,5 @@
 import DefaultRegistry from "undertaker-registry";
-import del from "del";
+import { deleteAsync } from "del";
 import projectPath from "../lib/projectPath.mjs";
 
 export class CleanRegistry extends DefaultRegistry {
@@ -14,7 +14,7 @@ export class CleanRegistry extends DefaultRegistry {
       const patterns = this.config?.patterns
         ? this.config.patterns
         : projectPath(this.pathConfig.dest);
-      return del(patterns, { force: true });
+      return deleteAsync(patterns, { force: true });
     });
   }
 }

@@ -1,13 +1,12 @@
-"use strict";
-const path = require("path");
-const through = require("through2");
-const vinylFile = require("vinyl-file");
-const revHash = require("rev-hash");
-const revPath = require("rev-path");
-const sortKeys = require("sort-keys");
-const modifyFilename = require("modify-filename");
-const Vinyl = require("vinyl");
-const PluginError = require("plugin-error");
+import path from "path";
+import through from "through2";
+import { vinylFile } from "vinyl-file";
+import revHash from "rev-hash";
+import { revPath } from "rev-path";
+import sortKeys from "sort-keys";
+import modifyFilename from "modify-filename";
+import Vinyl from "vinyl";
+import PluginError from "plugin-error";
 
 function relativePath(base, filePath) {
   filePath = filePath.replace(/\\/g, "/");
@@ -47,7 +46,7 @@ function transformFilename(file) {
 
 async function getManifestFile(options) {
   try {
-    return await vinylFile.read(options.path, options);
+    return await vinylFile(options.path, options);
   } catch (error) {
     if (error.code === "ENOENT") {
       return new Vinyl(options);
@@ -227,4 +226,4 @@ plugin.manifest = (path_, options) => {
   );
 };
 
-module.exports = plugin;
+export default plugin;

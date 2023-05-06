@@ -3,7 +3,7 @@ import gulp from "gulp";
 import changed from "gulp-changed";
 import postcss from "gulp-postcss";
 import rename from "gulp-rename";
-import sass from "../packages/gulp-sass-embedded/index.js";
+import sass from "../packages/gulp-sass-embedded/index.mjs";
 import projectPath from "../lib/projectPath.mjs";
 import getPostCSSPlugins from "../lib/postCSS.mjs";
 

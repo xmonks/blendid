@@ -1,6 +1,6 @@
 import DefaultRegistry from "undertaker-registry";
 import revdel from "gulp-rev-delete-original";
-import rev from "../../packages/gulp-rev/index.js";
+import rev from "../../packages/gulp-rev/index.mjs";
 import projectPath from "../../lib/projectPath.mjs";
 
 export class RevAssetsRegistry extends DefaultRegistry {

@@ -1,6 +1,6 @@
 import DefaultRegistry from "undertaker-registry";
 import revdel from "gulp-rev-delete-original";
-import rev from "../../packages/gulp-rev/index.js";
+import rev from "../../packages/gulp-rev/index.mjs";
 import projectPath from "../../lib/projectPath.mjs";
 // 3) Rev and compress CSS and JS files (this is done after assets, so that if a
 //    referenced asset hash changes, the parent hash will change as well
