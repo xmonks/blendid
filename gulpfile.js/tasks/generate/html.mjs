@@ -74,7 +74,7 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
         projectPath(pathConfig.src, pathConfig.html.src),
       ];
       config.nunjucksRender.path =
-        config.nunjucksRender.path || nunjucksRenderPath;
+        config.nunjucksRender.path ?? nunjucksRenderPath;
 
       const origFn = config.nunjucksRender.manageEnv;
       config.nunjucksRender.manageEnv = (env) => {
@@ -107,7 +107,7 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
             );
             return {
               plugins: [
-                { removeXMLNS: true },
+                "preset-default",
                 { prefixIDs: { prefix } },
                 {
                   cleanupIDs: {
@@ -116,6 +116,7 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
                     force: true,
                   },
                 },
+                "removeXMLNS",
               ],
             };
           })

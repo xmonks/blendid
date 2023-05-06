@@ -134,7 +134,6 @@ export class HtmlRegistry extends DefaultRegistry {
             return {
               plugins: [
                 "preset-default",
-                "removeXMLNS",
                 {
                   name: "prefixIDs",
                   params: { prefix },
@@ -147,6 +146,7 @@ export class HtmlRegistry extends DefaultRegistry {
                     force: true,
                   },
                 },
+                "removeXMLNS",
               ],
             };
           })
