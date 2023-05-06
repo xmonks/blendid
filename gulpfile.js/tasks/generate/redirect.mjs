@@ -1,3 +1,4 @@
+import module from "node:module";
 import DefaultRegistry from "undertaker-registry";
 import File from "vinyl";
 import gulp_mode from "gulp-mode";
@@ -9,6 +10,7 @@ import cloneDeep from "lodash-es/cloneDeep.js";
 import projectPath from "../../lib/projectPath.mjs";
 
 const mode = gulp_mode();
+const require = module.createRequire(import.meta.url);
 
 function createFile(item, { host, route }) {
   const [originalUrl, targetUrl] = route(item);

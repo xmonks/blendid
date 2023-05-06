@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import module from "node:module";
 import data from "gulp-data";
 import gulp_mode from "gulp-mode";
 import gulpif from "gulp-if";
@@ -19,6 +20,7 @@ import { marked } from "../../lib/markdown.mjs";
 import projectPath from "../../lib/projectPath.mjs";
 
 const mode = gulp_mode();
+const require = module.createRequire(import.meta.url);
 
 export class GenerateHtmlRegistry extends DefaultRegistry {
   #ownTasks = new Set();
