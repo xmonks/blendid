@@ -90,7 +90,7 @@ export class JavaScriptsRegistry extends DefaultRegistry {
       // Rollup resolves imports relative to working directory. Gulp restores it per task
       const origWd = process.cwd();
       process.chdir(this.paths.src);
-      const bundle = await rollup.rollup({
+      const bundle = await rollup({
         input: resolveInputPaths(modules, this.paths.src),
         plugins: registerDefaultPlugins(plugins, replacePlugins, minify),
         ...rest,
