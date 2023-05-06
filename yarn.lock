@@ -1549,9 +1549,11 @@ __metadata:
     gulp-svgmin: 4.1.0
     gulp-svgstore: 9.0.0
     gulplog: 2.0.1
-    lodash: 4.17.21
-    lodash.clonedeep: 4.5.0
+    lodash-es: ^4.17.21
     marked: 5.0.0
+    marked-gfm-heading-id: 3.0.1
+    marked-highlight: 1.0.1
+    marked-mangle: 1.0.1
     merge-stream: 2.0.0
     minify-html-literals: 1.3.5
     mocha: 10.2.0
@@ -4804,6 +4806,13 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
+"github-slugger@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "github-slugger@npm:2.0.0"
+  checksum: 250375cde2058f21454872c2c79f72c4637340c30c51ff158ca4ec71cbc478f33d54477d787a662f9207aeb095a2060f155bc01f15329ba8a5fb6698e0fc81f8
+  languageName: node
+  linkType: hard
+
 "glob-parent@npm:^3.1.0":
   version: 3.1.0
   resolution: "glob-parent@npm:3.1.0"
@@ -6595,6 +6604,13 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
+"lodash-es@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash-es@npm:4.17.21"
+  checksum: 05cbffad6e2adbb331a4e16fbd826e7faee403a1a04873b82b42c0f22090f280839f85b95393f487c1303c8a3d2a010048bf06151a6cbe03eee4d388fb0a12d2
+  languageName: node
+  linkType: hard
+
 "lodash._reinterpolate@npm:^3.0.0":
   version: 3.0.0
   resolution: "lodash._reinterpolate@npm:3.0.0"
@@ -6609,7 +6625,7 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"lodash.clonedeep@npm:4.5.0, lodash.clonedeep@npm:^4.5.0":
+"lodash.clonedeep@npm:^4.5.0":
   version: 4.5.0
   resolution: "lodash.clonedeep@npm:4.5.0"
   checksum: 92c46f094b064e876a23c97f57f81fbffd5d760bf2d8a1c61d85db6d1e488c66b0384c943abee4f6af7debf5ad4e4282e74ff83177c9e63d8ff081a4837c3489
@@ -6805,6 +6821,35 @@ fsevents@~2.3.2:
   dependencies:
     object-visit: ^1.0.0
   checksum: c27045a5021c344fc19b9132eb30313e441863b2951029f8f8b66f79d3d8c1e7e5091578075a996f74e417479506fe9ede28c44ca7bc351a61c9d8073daec36a
+  languageName: node
+  linkType: hard
+
+"marked-gfm-heading-id@npm:3.0.1":
+  version: 3.0.1
+  resolution: "marked-gfm-heading-id@npm:3.0.1"
+  dependencies:
+    github-slugger: ^2.0.0
+  peerDependencies:
+    marked: ^4 || ^5
+  checksum: cdee873c3ff7efe1f1f4d59b676f1a5a8b766d9b8b3dc3c98dc52f874d7867171cae4ab8915712a157560cab89898fd333936478cd094a35397475eceba0a836
+  languageName: node
+  linkType: hard
+
+"marked-highlight@npm:1.0.1":
+  version: 1.0.1
+  resolution: "marked-highlight@npm:1.0.1"
+  peerDependencies:
+    marked: ^4 || ^5
+  checksum: 7e420da52dbee4cee8011d6650604ee1b8eaaab06cf2edf127c5590ba1d6c786e5f47e7579f15514b2f87ff2ea096a6b6e75c44f4c658604b15673a6d01a94d8
+  languageName: node
+  linkType: hard
+
+"marked-mangle@npm:1.0.1":
+  version: 1.0.1
+  resolution: "marked-mangle@npm:1.0.1"
+  peerDependencies:
+    marked: ^4 || ^5
+  checksum: 7ebdd69eb41907a865141e7cce1cd8c5c24dd6955c63aaf5299710aba2935abdfbca1b1ea0ff30cf527ff20a940c3b5a9311fca9abb84f4d294767b0435213fe
   languageName: node
   linkType: hard
 
