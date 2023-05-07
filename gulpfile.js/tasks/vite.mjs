@@ -22,6 +22,7 @@ export class ViteRegistry extends DefaultRegistry {
         build: false,
         configFile: false,
         envFile: false,
+        optimizeDeps: { include: [] },
         mode: "development",
         root,
         plugins,
@@ -32,7 +33,11 @@ export class ViteRegistry extends DefaultRegistry {
       logger(`${chalk.cyan("[vite]")} ${chalk.bold("dev server running at:")}`);
       server.printUrls();
       logger(`${chalk.cyan("[vite]")} serving files from: ${root}`);
-      logger(`${chalk.cyan("[vite]")} opening the browser... ${browser ?? ""} ${browserArgs ?? ""}`);
+      logger(
+        `${chalk.cyan("[vite]")} opening the browser... ${browser ?? ""} ${
+          browserArgs ?? ""
+        }`
+      );
     });
   }
 }
