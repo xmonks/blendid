@@ -1528,7 +1528,6 @@ __metadata:
     fancy-log: 2.0.0
     gulp: 4.0.2
     gulp-changed: 4.0.3
-    gulp-cloudinary-upload: "https://github.com/topmonks/gulp-cloudinary-upload.git#50b82e73a9d9cd4b350647b8717e843c1acd201a"
     gulp-data: 1.3.1
     gulp-debug: 4.0.0
     gulp-esbuild: 0.11.1
@@ -2949,15 +2948,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cloudinary-core@npm:^2.10.2":
-  version: 2.11.3
-  resolution: "cloudinary-core@npm:2.11.3"
-  peerDependencies:
-    lodash: ">=4.0"
-  checksum: ae4bac3105ee5d0fb314e3f0f66eb0548189868870320a17925c9976dbc3ef42cc9153ac19a632f260572a0caa1cc377a824c77adc9a33f6f147559ac3316e48
-  languageName: node
-  linkType: hard
-
 "cloudinary@npm:1.36.4":
   version: 1.36.4
   resolution: "cloudinary@npm:1.36.4"
@@ -2971,18 +2961,6 @@ __metadata:
     proxy-agent:
       optional: true
   checksum: 2655237d901283c4a4a9a7c1cb59d6c7e9b03defc2126a9577be59267ddc372b9706a32350d357bd54a2967e42e80d8d0ec51ed41dfd3da44c1a991583c9ea9f
-  languageName: node
-  linkType: hard
-
-"cloudinary@npm:^1.13.1":
-  version: 1.25.1
-  resolution: "cloudinary@npm:1.25.1"
-  dependencies:
-    cloudinary-core: ^2.10.2
-    core-js: 3.6.5
-    lodash: ^4.17.11
-    q: ^1.5.1
-  checksum: 98ff10b668eb8576be7bd71f07dc99d7537df4a2d4b8b46dd62572715cf1f46776397483ed3c4e8a2a12477a352517f606339dae7cc7441e4b7fb604455e008b
   languageName: node
   linkType: hard
 
@@ -3203,13 +3181,6 @@ __metadata:
   version: 3.30.1
   resolution: "core-js@npm:3.30.1"
   checksum: 6d4a00b488694d4c715c424e15dfef31433ac7aa395c39c518a0cfacec918ada1c716fed74682033197e0164e23bbf38bfd598ee9a239c4aaa590ab1ba862ac8
-  languageName: node
-  linkType: hard
-
-"core-js@npm:3.6.5":
-  version: 3.6.5
-  resolution: "core-js@npm:3.6.5"
-  checksum: b7fcf92f888bfe40f3f005e3f729e66aa49a3a9a797e8fb4d09d429c6abcd505781b2c03836858f0dc0159249d4b7a035fc763052c9c34adbc93b6f8a6a86305
   languageName: node
   linkType: hard
 
@@ -4611,15 +4582,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"first-chunk-stream@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "first-chunk-stream@npm:2.0.0"
-  dependencies:
-    readable-stream: ^2.0.2
-  checksum: 2fa86f93a455eac09a9dd1339464f06510183fb4f1062b936d10605bce5728ec5c564a268318efd7f2b55a1ce3ff4dc795585a99fe5dd1940caf28afeb284b47
-  languageName: node
-  linkType: hard
-
 "first-chunk-stream@npm:^5.0.0":
   version: 5.0.0
   resolution: "first-chunk-stream@npm:5.0.0"
@@ -5211,19 +5173,6 @@ fsevents@~2.3.2:
   bin:
     gulp: bin/gulp.js
   checksum: 42e3ca1374a82dea7f2aab775a5db2a67718d42e858438c497336a4db35def7b8c14933d7be3ec99178b78e5c49665058fde1fd0de067a8f8dd8caafcee4faa2
-  languageName: node
-  linkType: hard
-
-"gulp-cloudinary-upload@https://github.com/topmonks/gulp-cloudinary-upload.git#50b82e73a9d9cd4b350647b8717e843c1acd201a":
-  version: 0.0.0-development
-  resolution: "gulp-cloudinary-upload@https://github.com/topmonks/gulp-cloudinary-upload.git#commit=50b82e73a9d9cd4b350647b8717e843c1acd201a"
-  dependencies:
-    cloudinary: ^1.13.1
-    plugin-error: ^1.0.1
-    through2: ^3.0.0
-    vinyl: ^2.1.0
-    vinyl-file: ^3.0.0
-  checksum: 23b7ee34af72db595671a46b2630fad022cad31bc99883cd00eec2f2af7fe06ea2532df0c76af5f29e6e584c0edfdcddac996efbf656e113c82e0ab5ae60c897
   languageName: node
   linkType: hard
 
@@ -8199,7 +8148,7 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"pify@npm:^2.0.0, pify@npm:^2.3.0":
+"pify@npm:^2.0.0":
   version: 2.3.0
   resolution: "pify@npm:2.3.0"
   checksum: 9503aaeaf4577acc58642ad1d25c45c6d90288596238fb68f82811c08104c800e5a7870398e9f015d82b44ecbcbef3dc3d4251a1cbb582f6e5959fe09884b2ba
@@ -8771,7 +8720,7 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"q@npm:1.5.1, q@npm:^1.5.1":
+"q@npm:1.5.1":
   version: 1.5.1
   resolution: "q@npm:1.5.1"
   checksum: 147baa93c805bc1200ed698bdf9c72e9e42c05f96d007e33a558b5fdfd63e5ea130e99313f28efc1783e90e6bdb4e48b67a36fcc026b7b09202437ae88a1fb12
@@ -8890,7 +8839,7 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"readable-stream@npm:^2.0.0, readable-stream@npm:^2.0.1, readable-stream@npm:^2.0.2, readable-stream@npm:^2.0.5, readable-stream@npm:^2.0.6, readable-stream@npm:^2.1.5, readable-stream@npm:^2.2.2, readable-stream@npm:^2.3.3, readable-stream@npm:^2.3.5, readable-stream@npm:^2.3.6, readable-stream@npm:~2.3.6":
+"readable-stream@npm:^2.0.0, readable-stream@npm:^2.0.1, readable-stream@npm:^2.0.5, readable-stream@npm:^2.0.6, readable-stream@npm:^2.1.5, readable-stream@npm:^2.2.2, readable-stream@npm:^2.3.3, readable-stream@npm:^2.3.5, readable-stream@npm:^2.3.6, readable-stream@npm:~2.3.6":
   version: 2.3.7
   resolution: "readable-stream@npm:2.3.7"
   dependencies:
@@ -10283,31 +10232,12 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"strip-bom-buf@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "strip-bom-buf@npm:1.0.0"
-  dependencies:
-    is-utf8: ^0.2.1
-  checksum: 246665fa1c50eb0852ed174fdbd7da34edb444165e7dda2cd58e66b49a2900707d9f8d3f94bcc8542fe1f46ae7b4274a3411b8ab9e43cd1dcf1b77416e324cfb
-  languageName: node
-  linkType: hard
-
 "strip-bom-buf@npm:^3.0.0, strip-bom-buf@npm:^3.0.1":
   version: 3.0.1
   resolution: "strip-bom-buf@npm:3.0.1"
   dependencies:
     is-utf8: ^0.2.1
   checksum: eeee3d7bfdeec5ad901b61675145d3f0b3c5df95dfb50c3cffd0e38afa897ded90ccbd61949cf66507ec4b56d747d90cd10874b39b63affe61310c48d4f47ebf
-  languageName: node
-  linkType: hard
-
-"strip-bom-stream@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "strip-bom-stream@npm:2.0.0"
-  dependencies:
-    first-chunk-stream: ^2.0.0
-    strip-bom: ^2.0.0
-  checksum: 3e2ff494d9181537ceee35c7bb662fee9dfcebba0779f004e7c1455278f2616c0915b66d8d5432a6cb7e23c792c199717b4661a12e8fa2728a18961dd0203a2e
   languageName: node
   linkType: hard
 
@@ -10560,7 +10490,7 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"through2@npm:^3.0.0, through2@npm:^3.0.1":
+"through2@npm:^3.0.1":
   version: 3.0.2
   resolution: "through2@npm:3.0.2"
   dependencies:
@@ -11120,19 +11050,6 @@ typescript@^2.9.2 || ^3.0.0 || ^4.0.0:
   languageName: node
   linkType: hard
 
-"vinyl-file@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "vinyl-file@npm:3.0.0"
-  dependencies:
-    graceful-fs: ^4.1.2
-    pify: ^2.3.0
-    strip-bom-buf: ^1.0.0
-    strip-bom-stream: ^2.0.0
-    vinyl: ^2.0.1
-  checksum: e187a74d41f45d22e8faa17b5552a795aca7c4084034dd9683086ace3752651f164c42aee1961081005f8299388b0a62ad1e3eea991a8d3747db58502f900ff4
-  languageName: node
-  linkType: hard
-
 "vinyl-fs@npm:^3.0.0":
   version: 3.0.3
   resolution: "vinyl-fs@npm:3.0.3"
@@ -11195,7 +11112,7 @@ typescript@^2.9.2 || ^3.0.0 || ^4.0.0:
   languageName: node
   linkType: hard
 
-"vinyl@npm:^2.0.0, vinyl@npm:^2.0.1, vinyl@npm:^2.1.0, vinyl@npm:^2.2.1":
+"vinyl@npm:^2.0.0, vinyl@npm:^2.1.0, vinyl@npm:^2.2.1":
   version: 2.2.1
   resolution: "vinyl@npm:2.2.1"
   dependencies:

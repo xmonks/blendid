@@ -2,8 +2,10 @@ import fs from "node:fs";
 import path from "node:path";
 import url from "node:url";
 import DefaultRegistry from "undertaker-registry";
-import cloudinaryUpload from "gulp-cloudinary-upload";
 import changed from "gulp-changed";
+import cloudinaryUpload, {
+  manifest,
+} from "../packages/gulp-cloudinary-upload/index.mjs";
 import projectPath from "../lib/projectPath.mjs";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
@@ -80,7 +82,7 @@ export class CloudinaryRegistry extends DefaultRegistry {
           })
         )
         .pipe(
-          cloudinaryUpload.manifest({
+          manifest({
             path: paths.manifest,
             merge: true,
           })
