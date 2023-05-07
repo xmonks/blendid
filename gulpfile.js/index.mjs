@@ -104,6 +104,7 @@ function devTasks() {
 }
 
 function prodTasks() {
+  process.env.NODE_ENV = "production";
   gulp.registry(new SizeReportRegistry(taskConfig.sizeReport, pathConfig));
   gulp.registry(new RevRegistry(taskConfig, pathConfig));
 

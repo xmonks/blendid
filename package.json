@@ -12,7 +12,7 @@
   "bin": "bin/blendid.js",
   "scripts": {
     "start": "gulp -f gulpfile.js/index.mjs",
-    "build": "gulp build --production -f gulpfile.js/index.mjs",
+    "build": "gulp build -f gulpfile.js/index.mjs",
     "test": "mocha ./gulpfile.js/**/*.test.mjs",
     "outdated": "yarn upgrade-interactive"
   },
