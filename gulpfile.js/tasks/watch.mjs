@@ -22,10 +22,10 @@ export class WatchRegistry extends DefaultRegistry {
   }
 
   init({ task, series, watch }) {
+    const server = this.config.vite ? "vite" : "browserSync";
     task(
       "watch",
-      // TODO: make BrowserSync optional
-      series("browserSync", (done) => {
+      series(server, (done) => {
         const watchableTasks = [
           "fonts",
           "iconFont",

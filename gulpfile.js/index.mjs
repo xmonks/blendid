@@ -8,7 +8,7 @@
 */
 
 import gulp from "gulp";
-import logger from "gulplog";
+import logger from "fancy-log";
 import getEnabledTasks from "./lib/getEnabledTasks.mjs";
 import pathConfig from "./lib/getPathConfig.mjs";
 import { getTaskConfig } from "./lib/getTaskConfig.mjs";
@@ -26,11 +26,13 @@ import { JavaScriptsRegistry } from "./tasks/javascripts.mjs";
 import { SizeReportRegistry } from "./tasks/sizereport.mjs";
 import { StaticRegistry } from "./tasks/static.mjs";
 import { StyleSheetsRegistry } from "./tasks/stylesheets.mjs";
+import { ViteRegistry } from "./tasks/vite.mjs";
 import { WatchRegistry } from "./tasks/watch.mjs";
 import { WorkboxBuildRegistry } from "./tasks/workboxBuild.mjs";
 import { RevRegistry } from "./tasks/rev.mjs";
+import projectPath from "./lib/projectPath.mjs";
 
-logger.info("Building sources", pathConfig.src);
+logger.info("Building sources", projectPath(pathConfig.src));
 
 const taskConfig = await getTaskConfig();
 
@@ -73,6 +75,7 @@ if (typeof init === "function") {
 
 function devTasks() {
   gulp.registry(new BrowserSyncRegistry(taskConfig.browserSync, pathConfig));
+  gulp.registry(new ViteRegistry(taskConfig.vite, pathConfig));
   gulp.registry(new WatchRegistry(taskConfig, pathConfig));
 
   const { assetTasks, codeTasks } = getEnabledTasks(taskConfig);

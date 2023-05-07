@@ -163,8 +163,6 @@ export default {
   registries: [],
 
   additionalTasks: {
-    /** @deprecated */
-    initialize(gulp, PATH_CONFIG, TASK_CONFIG) {},
     development: {
       prebuild: null,
       postbuild: null,
@@ -173,5 +171,14 @@ export default {
       prebuild: null,
       postbuild: null,
     },
+  },
+
+  vite: {
+    appType: "mpa",
+    server: {
+      open: '/',
+      host: true,
+      port: 3000,
+    }
   },
 };

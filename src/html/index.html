@@ -22,6 +22,8 @@ Some markdown with john.doe@example.com and https://example.com
 
   const fn = () => alert(someTest.data);
 ```
+
+Very nice beautiful markdown
 {% endmarkdown %}
 
 <style>
@@ -32,11 +34,19 @@ Some markdown with john.doe@example.com and https://example.com
 
 <script>
   var someTest = {
-    data: "nope"
-  }
+    data: "nope",
+  };
 
   const fn = () => alert(someTest.data);
 </script>
 
 <p>testing the optimizations of this build stack</p>
+{% endblock %}
+
+{% block javascript %}
+<script type="module">
+  import { helloWorld } from "/assets/esm/index.js";
+
+  helloWorld();
+</script>
 {% endblock %}

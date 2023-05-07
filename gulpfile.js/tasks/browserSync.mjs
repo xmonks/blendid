@@ -32,6 +32,7 @@ function normalizeConfig(config) {
 export class BrowserSyncRegistry extends DefaultRegistry {
   constructor(config, pathConfig) {
     super();
+    if (!config) return;
     this.config = normalizeConfig(config);
 
     const exclude = this.config.excludeFolders
@@ -57,6 +58,7 @@ export class BrowserSyncRegistry extends DefaultRegistry {
   }
 
   init({ task, watch }) {
+    if (!this.config) return;
     task("browserSync", (done) => {
       browserSync.init(this.config);
       watch(this.assetsGlob, { events: "all" }, browsersyncReload);

@@ -61,7 +61,7 @@ export class HtmlRegistry extends DefaultRegistry {
       pathConfig.src,
       pathConfig.html.src,
       "**",
-      `{${config.excludeFolders}}`,
+      `{${config.html.excludeFolders}}`,
       "**"
     )}`;
     this.paths = getPaths(exclude, config, pathConfig);
