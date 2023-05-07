@@ -75,6 +75,10 @@ export default {
   },
 
   stylesheets: {
+    presetEnv: {
+      stage: 3,
+      minimumVendorImplementations: 2,
+    },
     sass: {
       importers: [
         {
