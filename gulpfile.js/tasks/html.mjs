@@ -37,9 +37,7 @@ export async function loadDataFile(dataFile) {
 
 export function createDataFunction(collections, pathConfig, paths) {
   return async () => {
-    console.log({collections, pathConfig, paths})
     const data = (await loadDataFile(paths.dataPath)) ?? {};
-    console.log({data})
     if (!(Array.isArray(collections) && pathConfig.data)) {
       return data;
     }
