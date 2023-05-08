@@ -15,7 +15,7 @@ import nunjucksRender from "gulp-nunjucks-render";
 import DefaultRegistry from "undertaker-registry";
 import nunjucksMarkdown from "nunjucks-markdown";
 import cloneDeep from "lodash-es/cloneDeep.js";
-import { getPaths, dataFile, jsonData } from "../html.mjs";
+import { getPaths, createDataFunction } from "../html.mjs";
 import { marked } from "../../lib/markdown.mjs";
 import projectPath from "../../lib/projectPath.mjs";
 
@@ -48,27 +48,9 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
     ) {
       const paths = getPaths(null, taskConfig, pathConfig);
 
-      const collectionsDataFunction =
-        pathConfig.data &&
-        config.collections &&
-        ((file) => {
-          const cols = config.collections;
-          return Promise.all(cols.map(jsonData(pathConfig))).then((xs) =>
-            cols.reduce(
-              (acc, x, i) => Object.assign({}, acc, { [x]: xs[i] }),
-              file.data || {}
-            )
-          );
-        });
-
       const dataFunction =
-        collectionsDataFunction ||
-        config.dataFunction ||
-        function () {
-          return fs.promises
-            .readFile(paths.dataPath, "utf-8")
-            .then((x) => JSON.parse(x));
-        };
+        config.dataFunction ??
+        createDataFunction(config.collections, pathConfig, paths);
 
       const nunjucksRenderPath = [
         projectPath(pathConfig.src, pathConfig.html.src),

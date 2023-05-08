@@ -22,11 +22,33 @@ export function dataFile(pathConfig, name) {
 }
 
 export function jsonData(pathConfig) {
-  return (name) =>
-    fs.promises
-      .readFile(dataFile(pathConfig, name), "utf8")
-      .then((f) => JSON.parse(f))
-      .catch(() => {});
+  return (name) => loadDataFile(dataFile(pathConfig, name));
+}
+
+export async function loadDataFile(dataFile) {
+  if (!fs.existsSync(dataFile)) return null;
+  const isJSON = path.extname(dataFile) === ".json";
+  const dataModule = await import(
+    dataFile,
+    isJSON ? { assert: { type: "json" } } : undefined
+  );
+  return dataModule.default;
+}
+
+export function createDataFunction(collections, pathConfig, paths) {
+  return async () => {
+    console.log({collections, pathConfig, paths})
+    const data = (await loadDataFile(paths.dataPath)) ?? {};
+    console.log({data})
+    if (!(Array.isArray(collections) && pathConfig.data)) {
+      return data;
+    }
+    const colsData = await Promise.all(collections.map(jsonData(pathConfig)));
+    return collections.reduce(
+      (acc, key, i) => Object.assign(acc, { [key]: colsData[i] }),
+      data
+    );
+  };
 }
 
 export function getPaths(exclude, taskConfig, pathConfig) {
@@ -69,32 +91,11 @@ export class HtmlRegistry extends DefaultRegistry {
   init({ task, src, dest }) {
     if (!this.config.html) return;
     const config = cloneDeep(this.config.html);
+
     const htmlTask = () => {
-      const collectionsDataFunction =
-        this.pathConfig.data && Array.isArray(config.collections)
-          ? () => {
-              const cols = config.collections;
-              const data = fs.existsSync(this.paths.dataPath)
-                ? JSON.parse(fs.readFileSync(this.paths.dataPath, "utf-8"))
-                : {};
-              return Promise.all(cols.map(jsonData(this.pathConfig))).then(
-                (xs) =>
-                  cols.reduce(
-                    (acc, x, i) => Object.assign(acc, { [x]: xs[i] }),
-                    data
-                  )
-              );
-            }
-          : null;
-
-      const dataFileFunction = () => {
-        return fs.promises
-          .readFile(this.paths.dataPath, "utf-8")
-          .then((x) => JSON.parse(x));
-      };
-
       const dataFunction =
-        config.dataFunction ?? collectionsDataFunction ?? dataFileFunction;
+        config.dataFunction ??
+        createDataFunction(config.collections, this.pathConfig, this.paths);
 
       const nunjucksRenderPath = [
         projectPath(this.pathConfig.src, this.pathConfig.html.src),
