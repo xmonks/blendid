@@ -1,8 +1,10 @@
 import DefaultRegistry from "undertaker-registry";
 import markdownToJSON from "gulp-markdown-to-json";
 import merge from "gulp-merge-json";
+import changed from "gulp-changed";
 import { marked } from "../../lib/markdown.mjs";
 import projectPath from "../../lib/projectPath.mjs";
+import handleErrors from "../../lib/handleErrors.mjs";
 
 export class GenerateJsonRegistry extends DefaultRegistry {
   #ownTasks = new Set();
@@ -22,7 +24,9 @@ export class GenerateJsonRegistry extends DefaultRegistry {
     function generateJson(sourcePath, destPath, { collection, mergeOptions }) {
       const generateJsonTask = () =>
         src(sourcePath)
+          .pipe(changed(destPath))
           .pipe(markdownToJSON({ renderer: marked }))
+          .on("error", handleErrors)
           .pipe(
             merge({
               fileName: `${collection}.json`,
