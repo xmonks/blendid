@@ -19,6 +19,7 @@ import {
   getNunjucksRenderOptions,
 } from "../html.mjs";
 import projectPath from "../../lib/projectPath.mjs";
+import handleErrors from "../../lib/handleErrors.mjs";
 
 const mode = gulp_mode();
 const require = module.createRequire(import.meta.url);
@@ -102,7 +103,9 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
             })
           )
           .pipe(data(dataFunction))
+          .on("error", handleErrors)
           .pipe(nunjucksRender(nunjucksRenderOptions))
+          .on("error", handleErrors)
           .pipe(
             gulpif(
               taskConfig.svgSprite,
@@ -113,6 +116,7 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
               })
             )
           )
+          .on("error", handleErrors)
           .pipe(mode.production(htmlmin(config.htmlmin)))
           .pipe(dest(destPath));
       generateHtmlTask.displayName = `generate-html-${collection}`;

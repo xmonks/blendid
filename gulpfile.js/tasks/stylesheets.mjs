@@ -1,11 +1,11 @@
 import DefaultRegistry from "undertaker-registry";
 import gulp from "gulp";
-import changed from "gulp-changed";
 import postcss from "gulp-postcss";
 import rename from "gulp-rename";
 import sass from "../packages/gulp-sass-embedded/index.mjs";
 import projectPath from "../lib/projectPath.mjs";
 import getPostCSSPlugins from "../lib/postCSS.mjs";
+import handleErrors from "../lib/handleErrors.mjs";
 
 export class StyleSheetsRegistry extends DefaultRegistry {
   constructor(config, pathConfig) {
@@ -29,7 +29,7 @@ export class StyleSheetsRegistry extends DefaultRegistry {
     const config = this.config;
     const paths = this.paths;
 
-    const postcssTask = (done) => {
+    const postcssTask = () => {
       if (config.sass?.includePaths) {
         config.sass.includePaths = config.sass.includePaths
           .filter(Boolean)
@@ -38,12 +38,12 @@ export class StyleSheetsRegistry extends DefaultRegistry {
       const { plugins: userPlugins, ...postCssConfig } = config.postcss ?? {};
       const plugins = getPostCSSPlugins(config, userPlugins);
       return src(paths.src)
-        .pipe(changed(paths.dest, { extension: ".css" }))
-        .pipe(sass(config.sass).on("error", done))
-        .pipe(postcss(plugins, postCssConfig).on("error", done))
+        .pipe(sass(config.sass))
+        .on("error", handleErrors)
+        .pipe(postcss(plugins, postCssConfig))
+        .on("error", handleErrors)
         .pipe(rename({ extname: ".css" }))
-        .pipe(dest(paths.dest))
-        .on("end", done);
+        .pipe(dest(paths.dest));
     };
 
     const { alternateTask = () => postcssTask } = config;

@@ -7,6 +7,7 @@ import cloudinaryUpload, {
   manifest,
 } from "../packages/gulp-cloudinary-upload/index.mjs";
 import projectPath from "../lib/projectPath.mjs";
+import handleErrors from "../lib/handleErrors.mjs";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
@@ -81,6 +82,7 @@ export class CloudinaryRegistry extends DefaultRegistry {
             },
           })
         )
+        .on("error", handleErrors)
         .pipe(
           manifest({
             path: paths.manifest,

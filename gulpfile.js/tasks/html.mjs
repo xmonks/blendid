@@ -13,6 +13,7 @@ import nunjucksRender from "gulp-nunjucks-render";
 import nunjucksMarkdown from "nunjucks-markdown";
 import { marked } from "../lib/markdown.mjs";
 import projectPath from "../lib/projectPath.mjs";
+import handleErrors from "../lib/handleErrors.mjs";
 
 /** @typedef {import("@types/nunjucks").Environment} Environment */
 
@@ -160,7 +161,9 @@ export class HtmlRegistry extends DefaultRegistry {
 
       return src(this.paths.src)
         .pipe(data(dataFunction))
+        .on("error", handleErrors)
         .pipe(nunjucksRender(nunjucksRenderOptions))
+        .on("error", handleErrors)
         .pipe(
           gulpif(
             this.config.svgSprite,
@@ -171,6 +174,7 @@ export class HtmlRegistry extends DefaultRegistry {
             })
           )
         )
+        .on("error", handleErrors)
         .pipe(mode.production(htmlmin(config.htmlmin)))
         .pipe(dest(this.paths.dest));
     };

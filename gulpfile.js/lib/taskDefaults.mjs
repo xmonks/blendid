@@ -109,6 +109,8 @@ export default {
 
   html: {
     dataFile: "global.json",
+    excludeFolders: ["layouts", "shared", "macros", "data"],
+    extensions: ["html", "njk", "json"],
     nunjucksRender: {
       filters: {
         split(str, seperator) {
@@ -130,8 +132,6 @@ export default {
       removeRedundantAttributes: true,
       removeStyleLinkTypeAttributes: true,
     },
-    excludeFolders: ["layouts", "shared", "macros", "data"],
-    extensions: ["html", "njk", "json"],
   },
 
   images: {
