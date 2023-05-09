@@ -60,6 +60,11 @@ export class WatchRegistry extends DefaultRegistry {
             );
           }
         });
+        watch(
+          ["**/*.{json,mjs}"],
+          { cwd: projectPath(this.pathConfig.src, this.pathConfig.data.src) },
+          task("html")
+        );
         done();
       })
     );
