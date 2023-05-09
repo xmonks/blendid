@@ -1,6 +1,4 @@
 import { assert } from "chai";
-import forEach from "lodash-es/forEach.js";
-import keys from "lodash-es/keys.js";
 import getEnabledTasks from "../getEnabledTasks.mjs";
 
 var ENV = "development";
@@ -41,7 +39,7 @@ describe("getEnabledTasks", function () {
       });
 
       it("returns false when all disabled", function () {
-        forEach(keys(taskConfig), function (key) {
+        Object.keys(taskConfig).forEach((key) => {
           taskConfig[key] = false;
         });
 
@@ -72,7 +70,7 @@ describe("getEnabledTasks", function () {
       });
 
       it("returns false when all disabled", function () {
-        forEach(keys(taskConfig), function (key) {
+        Object.keys(taskConfig).forEach((key) => {
           taskConfig[key] = false;
         });
 
@@ -115,7 +113,7 @@ describe("getEnabledTasks", function () {
       });
 
       it("returns false when all disabled", function () {
-        forEach(keys(taskConfig), function (key) {
+        Object.keys(taskConfig).forEach((key) => {
           taskConfig[key] = false;
         });
 
@@ -153,7 +151,7 @@ describe("getEnabledTasks", function () {
       });
 
       it("returns false when all disabled", function () {
-        forEach(keys(taskConfig), function (key) {
+        Object.keys(taskConfig).forEach((key) => {
           taskConfig[key] = false;
         });
 

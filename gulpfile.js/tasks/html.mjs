@@ -13,7 +13,8 @@ import nunjucksRender from "gulp-nunjucks-render";
 import nunjucksMarkdown from "nunjucks-markdown";
 import { marked } from "../lib/markdown.mjs";
 import projectPath from "../lib/projectPath.mjs";
-import cloneDeep from "lodash-es/cloneDeep.js";
+
+/** @typedef {import("@types/nunjucks").Environment} Environment */
 
 const mode = gulp_mode();
 
@@ -72,6 +73,34 @@ export function getPaths(exclude, taskConfig, pathConfig) {
   };
 }
 
+export function getNunjucksRenderOptions(config, pathConfig) {
+  const { manageEnv, filters, globals, path, ...nunjucksRenderOptions } =
+    config.nunjucksRender;
+  nunjucksRenderOptions.path = path ?? [
+    projectPath(pathConfig.src, pathConfig.html.src),
+  ];
+  /**
+   * @param {Environment} env
+   */
+  nunjucksRenderOptions.manageEnv = (env) => {
+    nunjucksMarkdown.register(env, marked.parse);
+    if (globals) {
+      for (const key of Object.keys(globals)) {
+        env.addGlobal(key, globals[key]);
+      }
+    }
+    if (filters) {
+      for (const filter of Object.keys(filters)) {
+        env.addFilter(filter, filters[filter]);
+      }
+    }
+    if (typeof manageEnv === "function") {
+      manageEnv(env);
+    }
+  };
+  return nunjucksRenderOptions;
+}
+
 export class HtmlRegistry extends DefaultRegistry {
   constructor(config, pathConfig) {
     super();
@@ -88,40 +117,17 @@ export class HtmlRegistry extends DefaultRegistry {
   }
   init({ task, src, dest }) {
     if (!this.config.html) return;
-    const config = cloneDeep(this.config.html);
+    const config = this.config.html;
 
     const htmlTask = () => {
+      let pathConfig = this.pathConfig;
       const dataFunction =
         config.dataFunction ??
-        createDataFunction(config.collections, this.pathConfig, this.paths);
-
-      const nunjucksRenderPath = [
-        projectPath(this.pathConfig.src, this.pathConfig.html.src),
-      ];
-      config.nunjucksRender.path =
-        config.nunjucksRender.path ?? nunjucksRenderPath;
-
-      const origFn = config.nunjucksRender.manageEnv;
-      config.nunjucksRender.manageEnv = (env) => {
-        nunjucksMarkdown.register(env, marked.parse);
-        const filters = config.nunjucksRender.filters;
-        if (filters) {
-          for (const filter of Object.keys(filters)) {
-            env.addFilter(filter, filters[filter]);
-          }
-          delete config.nunjucksRender.filters;
-        }
-        const globals = config.nunjucksRender.globals;
-        if (globals) {
-          for (const key of Object.keys(globals)) {
-            env.addGlobal(key, globals[key]);
-          }
-          delete config.nunjucksRender.globals;
-        }
-        if (typeof origFn === "function") {
-          origFn(env);
-        }
-      };
+        createDataFunction(config.collections, pathConfig, this.paths);
+      const nunjucksRenderOptions = getNunjucksRenderOptions(
+        config,
+        pathConfig
+      );
 
       const svgs = src(this.paths.spritesSrc)
         .pipe(
@@ -154,7 +160,7 @@ export class HtmlRegistry extends DefaultRegistry {
 
       return src(this.paths.src)
         .pipe(data(dataFunction))
-        .pipe(nunjucksRender(config.nunjucksRender))
+        .pipe(nunjucksRender(nunjucksRenderOptions))
         .pipe(
           gulpif(
             this.config.svgSprite,

@@ -83,6 +83,7 @@
   },
   "devDependencies": {
     "@material/layout-grid": "14.0.0",
+    "@types/nunjucks": "^3.2.2",
     "chai": "4.3.7",
     "mocha": "10.2.0",
     "prettier": "2.8.8"

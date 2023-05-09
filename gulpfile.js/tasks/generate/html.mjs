@@ -13,10 +13,11 @@ import through from "through2";
 import File from "vinyl";
 import nunjucksRender from "gulp-nunjucks-render";
 import DefaultRegistry from "undertaker-registry";
-import nunjucksMarkdown from "nunjucks-markdown";
-import cloneDeep from "lodash-es/cloneDeep.js";
-import { getPaths, createDataFunction } from "../html.mjs";
-import { marked } from "../../lib/markdown.mjs";
+import {
+  getPaths,
+  createDataFunction,
+  getNunjucksRenderOptions,
+} from "../html.mjs";
 import projectPath from "../../lib/projectPath.mjs";
 
 const mode = gulp_mode();
@@ -38,7 +39,7 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
   init({ task, parallel, src, dest }) {
     if (!this.config.generate.html) return;
 
-    const config = cloneDeep(this.config.html);
+    const config = this.config.html;
     const taskConfig = this.config;
     const pathConfig = this.pathConfig;
     function generateHtml(
@@ -52,33 +53,10 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
         config.dataFunction ??
         createDataFunction(config.collections, pathConfig, paths);
 
-      const nunjucksRenderPath = [
-        projectPath(pathConfig.src, pathConfig.html.src),
-      ];
-      config.nunjucksRender.path =
-        config.nunjucksRender.path ?? nunjucksRenderPath;
-
-      const origFn = config.nunjucksRender.manageEnv;
-      config.nunjucksRender.manageEnv = (env) => {
-        nunjucksMarkdown.register(env, marked.parse);
-        const filters = config.nunjucksRender.filters;
-        if (filters) {
-          for (const filter of Object.keys(filters)) {
-            env.addFilter(filter, filters[filter]);
-          }
-          delete config.nunjucksRender.filters;
-        }
-        const globals = config.nunjucksRender.globals;
-        if (globals) {
-          for (const key of Object.keys(globals)) {
-            env.addGlobal(key, globals[key]);
-          }
-          delete config.nunjucksRender.globals;
-        }
-        if (typeof origFn === "function") {
-          origFn(env);
-        }
-      };
+      const nunjucksRenderOptions = getNunjucksRenderOptions(
+        config,
+        pathConfig
+      );
 
       const svgs = src(paths.spritesSrc)
         .pipe(
@@ -124,7 +102,7 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
             })
           )
           .pipe(data(dataFunction))
-          .pipe(nunjucksRender(config.nunjucksRender))
+          .pipe(nunjucksRender(nunjucksRenderOptions))
           .pipe(
             gulpif(
               taskConfig.svgSprite,

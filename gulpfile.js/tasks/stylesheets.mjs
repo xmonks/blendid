@@ -26,25 +26,28 @@ export class StyleSheetsRegistry extends DefaultRegistry {
   init({ task, src, dest }) {
     if (!this.config) return;
 
+    const config = this.config;
+    const paths = this.paths;
+
     const postcssTask = (done) => {
-      if (this.config.sass?.includePaths) {
-        this.config.sass.includePaths = this.config.sass.includePaths
+      if (config.sass?.includePaths) {
+        config.sass.includePaths = config.sass.includePaths
           .filter(Boolean)
           .map((includePath) => projectPath(includePath));
       }
-
-      const plugins = getPostCSSPlugins(this.config);
-      return src(this.paths.src)
-        .pipe(changed(this.paths.dest, { extension: ".css" }))
-        .pipe(sass(this.config.sass).on("error", done))
-        .pipe(postcss(plugins, this.config.postcss).on("error", done))
+      const { plugins: userPlugins, ...postCssConfig } = config.postcss ?? {};
+      const plugins = getPostCSSPlugins(config, userPlugins);
+      return src(paths.src)
+        .pipe(changed(paths.dest, { extension: ".css" }))
+        .pipe(sass(config.sass).on("error", done))
+        .pipe(postcss(plugins, postCssConfig).on("error", done))
         .pipe(rename({ extname: ".css" }))
-        .pipe(dest(this.paths.dest))
+        .pipe(dest(paths.dest))
         .on("end", done);
     };
 
-    const { alternateTask = () => postcssTask } = this.config;
-    const stylesheetsTask = alternateTask(gulp, this.pathConfig, this.config);
+    const { alternateTask = () => postcssTask } = config;
+    const stylesheetsTask = alternateTask(gulp, this.pathConfig, config);
 
     task("stylesheets", stylesheetsTask);
   }

@@ -1,5 +1,5 @@
 import DefaultRegistry from "undertaker-registry";
-import {create} from "browser-sync";
+import { create } from "browser-sync";
 import projectPath from "../lib/projectPath.mjs";
 
 const browserSync = create("blendid");
@@ -33,28 +33,24 @@ export class BrowserSyncRegistry extends DefaultRegistry {
   constructor(config, pathConfig) {
     super();
     if (!config) return;
-    this.config = normalizeConfig(config);
 
-    const exclude = this.config.excludeFolders
-      ? `!${projectPath(
-          pathConfig.dest,
-          "**",
-          `{${this.config.excludeFolders}}`,
-          "**"
-        )}`
+    const { excludeFolders, excludeFiles = [], ...rest } = config;
+    this.config = normalizeConfig(rest);
+
+    const excludeFoldersGlob = excludeFolders
+      ? `!${projectPath(pathConfig.dest, "**", `{${excludeFolders}}`, "**")}`
       : null;
-    delete this.config.excludeFolders;
 
-    const excludeFiles =
-      this.config.excludeFiles?.map(
-        (glob) => `!${projectPath(pathConfig.dest, glob)}`
-      ) ?? [];
-    delete this.config.excludeFiles;
+    const excludeFilesGlobs = excludeFiles?.map(
+      (glob) => `!${projectPath(pathConfig.dest, glob)}`
+    );
 
     const server = this.config.proxy ?? this.config.server;
     server.middleware = server.middleware ?? server.extraMiddlewares ?? [];
     const assets = projectPath(pathConfig.dest, "**", "*.{html,js,css}");
-    this.assetsGlob = [assets, exclude].concat(excludeFiles).filter(Boolean);
+    this.assetsGlob = [assets, excludeFoldersGlob]
+      .concat(excludeFilesGlobs)
+      .filter(Boolean);
   }
 
   init({ task, watch }) {

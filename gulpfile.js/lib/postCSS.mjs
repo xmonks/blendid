@@ -12,12 +12,10 @@ function getPresetEnvConfig(config) {
   return options;
 }
 
-function getPostCSSPlugins(config) {
+function getPostCSSPlugins(config, userPlugins) {
   const plugins = [presetEnv(getPresetEnvConfig(config))]
-    .concat(config.postcss?.plugins)
+    .concat(userPlugins)
     .filter(Boolean);
-
-  delete config.postcss?.plugins;
 
   if (mode.production()) {
     plugins.push(cssnano(config.cssnano));
