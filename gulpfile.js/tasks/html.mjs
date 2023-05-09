@@ -14,6 +14,7 @@ import nunjucksMarkdown from "nunjucks-markdown";
 import { marked } from "../lib/markdown.mjs";
 import projectPath from "../lib/projectPath.mjs";
 import handleErrors from "../lib/handleErrors.mjs";
+import cloneDeep from "lodash-es/cloneDeep.js";
 
 /** @typedef {import("@types/nunjucks").Environment} Environment */
 
@@ -75,9 +76,9 @@ export function getPaths(exclude, taskConfig, pathConfig) {
 }
 
 export function getNunjucksRenderOptions(config, pathConfig) {
-  const { manageEnv, filters, globals, path, ...nunjucksRenderOptions } =
+  const { manageEnv, filters, globals, path: customPath, ...nunjucksRenderOptions } =
     config.nunjucksRender;
-  nunjucksRenderOptions.path = path ?? [
+  nunjucksRenderOptions.path = customPath ?? [
     projectPath(pathConfig.src, pathConfig.html.src),
   ];
   /**
@@ -118,7 +119,8 @@ export class HtmlRegistry extends DefaultRegistry {
   }
   init({ task, src, dest }) {
     if (!this.config.html) return;
-    const config = this.config.html;
+
+    const config = cloneDeep(this.config.html);
 
     const htmlTask = () => {
       let pathConfig = this.pathConfig;

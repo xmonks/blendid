@@ -11,6 +11,7 @@ import svgstore from "gulp-svgstore";
 import streamArray from "stream-array";
 import through from "through2";
 import File from "vinyl";
+import cloneDeep from "lodash-es/cloneDeep.js";
 import nunjucksRender from "gulp-nunjucks-render";
 import DefaultRegistry from "undertaker-registry";
 import {
@@ -40,7 +41,7 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
   init({ task, parallel, src, dest }) {
     if (!this.config.generate.html) return;
 
-    const config = this.config.html;
+    const config = cloneDeep(this.config.html);
     const taskConfig = this.config;
     const pathConfig = this.pathConfig;
     function generateHtml(

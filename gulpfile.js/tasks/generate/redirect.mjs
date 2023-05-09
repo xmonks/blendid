@@ -7,6 +7,7 @@ import streamArray from "stream-array";
 import through from "through2";
 import nunjucksRender from "gulp-nunjucks-render";
 import projectPath from "../../lib/projectPath.mjs";
+import cloneDeep from "lodash-es/cloneDeep.js";
 
 const mode = gulp_mode();
 const require = module.createRequire(import.meta.url);
@@ -49,7 +50,8 @@ export class GenerateRedirectsRegistry extends DefaultRegistry {
   init({ task, parallel, dest }) {
     if (!this.config.generate.redirects) return;
 
-    const config = this.config.html;
+    const config = cloneDeep(this.config.html);
+
     function generateRedirect(sourcePath, destPath, col) {
       const generateRedirectsTask = () =>
         streamArray(require(sourcePath))
