@@ -32,7 +32,7 @@ export async function loadDataFile(dataFile) {
   if (!fs.existsSync(dataFile)) return null;
   const isJSON = path.extname(dataFile) === ".json";
   const dataModule = await import(
-    dataFile,
+    `${dataFile}?${Date.now()}`,
     isJSON ? { assert: { type: "json" } } : undefined
   );
   return dataModule.default;
@@ -76,8 +76,13 @@ export function getPaths(exclude, taskConfig, pathConfig) {
 }
 
 export function getNunjucksRenderOptions(config, pathConfig) {
-  const { manageEnv, filters, globals, path: customPath, ...nunjucksRenderOptions } =
-    config.nunjucksRender;
+  const {
+    manageEnv,
+    filters,
+    globals,
+    path: customPath,
+    ...nunjucksRenderOptions
+  } = config.nunjucksRender;
   nunjucksRenderOptions.path = customPath ?? [
     projectPath(pathConfig.src, pathConfig.html.src),
   ];
