@@ -8,6 +8,7 @@ import through from "through2";
 import nunjucksRender from "gulp-nunjucks-render";
 import projectPath from "../../lib/projectPath.mjs";
 import cloneDeep from "lodash-es/cloneDeep.js";
+import handleErrors from "../../lib/handleErrors.mjs";
 
 const mode = gulp_mode();
 const require = module.createRequire(import.meta.url);
@@ -63,9 +64,10 @@ export class GenerateRedirectsRegistry extends DefaultRegistry {
             })
           )
           .pipe(nunjucksRender(config.nunjucksRender))
+          .on("error", handleErrors)
           .pipe(mode.production(htmlmin(config.htmlmin)))
           .pipe(dest(destPath));
-      generateRedirectsTask.displayName = `generate-json-${col.collection}`;
+      generateRedirectsTask.displayName = `generate-redirects-${col.collection}`;
       return generateRedirectsTask;
     }
 

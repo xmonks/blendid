@@ -15,15 +15,28 @@ import cloneDeep from "lodash-es/cloneDeep.js";
 import nunjucksRender from "gulp-nunjucks-render";
 import DefaultRegistry from "undertaker-registry";
 import {
-  getPaths,
   createDataFunction,
   getNunjucksRenderOptions,
+  getPaths,
 } from "../html.mjs";
 import projectPath from "../../lib/projectPath.mjs";
 import handleErrors from "../../lib/handleErrors.mjs";
 
 const mode = gulp_mode();
 const require = module.createRequire(import.meta.url);
+
+function generateHtmlFile(route, template) {
+  return through.obj(function (item, enc, done) {
+    this.push(
+      new File({
+        path: route(item),
+        contents: fs.readFileSync(template),
+        data: { item },
+      })
+    );
+    done();
+  });
+}
 
 export class GenerateHtmlRegistry extends DefaultRegistry {
   #ownTasks = new Set();
@@ -50,6 +63,11 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
       { template, route, collection }
     ) {
       const paths = getPaths(null, taskConfig, pathConfig);
+      const templatePath = projectPath(
+        pathConfig.src,
+        pathConfig.html.src,
+        template
+      );
 
       const dataFunction =
         config.dataFunction ??
@@ -85,24 +103,10 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
         )
         .pipe(svgstore(taskConfig.svgSprite.svgstore));
 
-      const createFile = (item) =>
-        new File({
-          path: route(item),
-          contents: fs.readFileSync(
-            projectPath(pathConfig.src, pathConfig.html.src, template)
-          ),
-          data: { item },
-        });
-
-      let generateHtmlTask = () =>
+      const generateHtmlTask = () =>
         streamArray(require(sourcePath))
-          .pipe(
-            through.obj(function (item, enc, done) {
-              let file = createFile(item);
-              this.push(file);
-              done();
-            })
-          )
+          .pipe(generateHtmlFile(route, templatePath))
+          .on("error", handleErrors)
           .pipe(data(dataFunction))
           .on("error", handleErrors)
           .pipe(nunjucksRender(nunjucksRenderOptions))

@@ -104,7 +104,7 @@ export default {
   },
 
   generate: {
-    extensions: ["md", "json"],
+    extensions: ["md", "json", "mjs"],
   },
 
   html: {
