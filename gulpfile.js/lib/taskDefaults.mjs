@@ -2,7 +2,7 @@ import { pathToFileURL } from "node:url";
 import module from "node:module";
 import logger from "fancy-log";
 import gulp_mode from "gulp-mode";
-import sass from "sass-embedded";
+import * as sass from "sass-embedded";
 import { v2 as cloudinary } from "cloudinary";
 
 const mode = gulp_mode();

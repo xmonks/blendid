@@ -10,7 +10,7 @@ import stripAnsi from "strip-ansi";
 import through from "through2";
 import path from "path";
 import applySourceMap from "vinyl-sourcemaps-apply";
-import sass from "sass-embedded";
+import * as sass from "sass-embedded";
 
 const PLUGIN_NAME = "gulp-sass-embedded";
 
