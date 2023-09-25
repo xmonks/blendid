@@ -21,7 +21,7 @@ export class RevImportmapsCodeRegistry extends DefaultRegistry {
         .pipe(
           rev.manifest(projectPath(this.pathConfig.dest, "rev-manifest.json"), {
             merge: true,
-            importmap: this.config.production?.rev?.importmap,
+            importmap: this.config.production?.rev?.importmap
           })
         )
         .pipe(dest("."))

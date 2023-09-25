@@ -154,7 +154,7 @@ Example:
 
 ```js
 params: {
-  tags: ['cat', 'British Longhair', 'animal', '2018']
+  tags: ["cat", "British Longhair", "animal", "2018"];
 }
 ```
 

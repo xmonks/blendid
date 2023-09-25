@@ -26,7 +26,7 @@ export class ViteRegistry extends DefaultRegistry {
         mode: "development",
         root,
         plugins,
-        ...config,
+        ...config
       });
       await server.listen();
       logger(`${chalk.cyan("[vite]")} ${chalk.blue(`v${version}`)}`);

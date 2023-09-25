@@ -69,7 +69,7 @@ function createFlushFile(file, flush) {
       null,
       Object.assign(file, {
         contents: sassObj.css,
-        path: replaceExtension(file.path, ".css"),
+        path: replaceExtension(file.path, ".css")
       })
     );
   };
@@ -80,7 +80,7 @@ function generateSourceMapsIfEnabled(file) {
   return {
     sourceMap: file.path,
     omitSourceMapUrl: true,
-    sourceMapContents: true,
+    sourceMapContents: true
   };
 }
 
@@ -92,7 +92,7 @@ const gulpSass = (options) =>
       return flush(
         new PluginError({
           plugin: PLUGIN_NAME,
-          message: "Streaming not supported",
+          message: "Streaming not supported"
         })
       );
 
@@ -132,7 +132,7 @@ const gulpSass = (options) =>
       const result = sass.compile(file.path, opts);
       return flushFile({
         css: Buffer.from(result.css),
-        map: result.sourceMap,
+        map: result.sourceMap
       });
     } catch (error) {
       return errorMessage(error);

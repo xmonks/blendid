@@ -20,7 +20,7 @@ function cloudinaryUrl(publicId, opts = {}) {
     const unwrap = (x) => x?.value ?? x?.text ?? x;
     const customKeys = new Map([
       ["format", "fetch_format"],
-      ["ar", "aspect_ratio"],
+      ["ar", "aspect_ratio"]
     ]);
     const options = Object.assign(
       {
@@ -29,12 +29,12 @@ function cloudinaryUrl(publicId, opts = {}) {
         fetch_format: "auto",
         quality: "auto",
         dpr: 1,
-        flags: "progressive",
+        flags: "progressive"
       },
       Object.fromEntries(
         Object.entries(opts).map(([k, v]) => [
           customKeys.has(k) ? customKeys.get(k) : k,
-          unwrap(v),
+          unwrap(v)
         ])
       )
     );
@@ -49,13 +49,13 @@ const sassCloudinaryUrl = (args) => {
   const publicId = args[0].assertString("publicId").text;
   const opts = args[1]?.contents?.toJS();
   return new sass.SassString(`url(${cloudinaryUrl(publicId, opts)})`, {
-    quotes: false,
+    quotes: false
   });
 };
 
 export default {
   javascripts: {
-    extensions: ["js", "mjs", "cjs"],
+    extensions: ["js", "mjs", "cjs"]
   },
 
   esbuild: {
@@ -71,14 +71,14 @@ export default {
       format: "esm",
       platform: "browser",
       target: ["es2021"],
-      charset: "utf8",
-    },
+      charset: "utf8"
+    }
   },
 
   stylesheets: {
     presetEnv: {
       stage: 3,
-      minimumVendorImplementations: 2,
+      minimumVendorImplementations: 2
     },
     sass: {
       importers: [
@@ -93,18 +93,18 @@ export default {
                 return null;
               }
             }
-          },
-        },
+          }
+        }
       ],
       functions: {
-        [sassCloudinaryUrlSignature]: sassCloudinaryUrl,
-      },
+        [sassCloudinaryUrlSignature]: sassCloudinaryUrl
+      }
     },
-    extensions: ["sass", "scss", "css"],
+    extensions: ["sass", "scss", "css"]
   },
 
   generate: {
-    extensions: ["md", "json", "mjs"],
+    extensions: ["md", "json", "mjs"]
   },
 
   html: {
@@ -116,11 +116,11 @@ export default {
         split(str, seperator) {
           return str.split(seperator);
         },
-        cloudinaryUrl,
+        cloudinaryUrl
       },
       envOptions: {
-        watch: false,
-      },
+        watch: false
+      }
     },
     htmlmin: {
       collapseWhitespace: true,
@@ -130,39 +130,39 @@ export default {
       removeAttributeQuotes: true,
       removeOptionalTags: true,
       removeRedundantAttributes: true,
-      removeStyleLinkTypeAttributes: true,
-    },
+      removeStyleLinkTypeAttributes: true
+    }
   },
 
   images: {
-    extensions: ["jpg", "jpeg", "png", "svg", "gif"],
+    extensions: ["jpg", "jpeg", "png", "svg", "gif"]
   },
 
   cloudinary: {
     extensions: ["jpg", "jpeg", "png", "gif", "svg"],
-    manifest: "images.json",
+    manifest: "images.json"
   },
 
   fonts: {
-    extensions: ["woff2", "woff", "eot", "ttf", "svg"],
+    extensions: ["woff2", "woff", "eot", "ttf", "svg"]
   },
 
   svgSprite: {
     svgstore: {
-      inlineSvg: true,
-    },
+      inlineSvg: true
+    }
   },
 
   sizeReport: { gzip: true },
 
   watch: {
-    tasks: [],
+    tasks: []
   },
 
   workboxBuild: {},
 
   production: {
-    rev: true,
+    rev: true
   },
 
   registries: [],
@@ -170,20 +170,20 @@ export default {
   additionalTasks: {
     development: {
       prebuild: null,
-      postbuild: null,
+      postbuild: null
     },
     production: {
       prebuild: null,
-      postbuild: null,
-    },
+      postbuild: null
+    }
   },
 
   vite: {
     appType: "mpa",
     server: {
-      open: '/',
+      open: "/",
       host: true,
-      port: 3000,
+      port: 3000
     }
-  },
+  }
 };

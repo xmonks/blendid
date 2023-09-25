@@ -99,7 +99,7 @@ function devTasks() {
     staticFiles,
     postbuild,
     workboxBuild,
-    "watch",
+    "watch"
   ].filter(Boolean);
 }
 
@@ -131,7 +131,7 @@ function prodTasks() {
     staticFiles,
     postbuild,
     workboxBuild,
-    "size-report",
+    "size-report"
   ].filter(Boolean);
 }
 

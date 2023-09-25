@@ -38,7 +38,7 @@ export class RevRegistry extends DefaultRegistry {
       // 4) Update asset references in JS
       updateJs,
       // 5) Update asset references in HTML
-      updateHtml,
+      updateHtml
     ].filter(Boolean);
     task("rev", series(revTasks));
   }

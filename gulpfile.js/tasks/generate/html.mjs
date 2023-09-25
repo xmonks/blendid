@@ -17,7 +17,7 @@ import DefaultRegistry from "undertaker-registry";
 import {
   createDataFunction,
   getNunjucksRenderOptions,
-  getPaths,
+  getPaths
 } from "../html.mjs";
 import projectPath from "../../lib/projectPath.mjs";
 import handleErrors from "../../lib/handleErrors.mjs";
@@ -31,7 +31,7 @@ function generateHtmlFile(route, template) {
       new File({
         path: route(item),
         contents: fs.readFileSync(template),
-        data: { item },
+        data: { item }
       })
     );
     done();
@@ -93,11 +93,11 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
                   cleanupIDs: {
                     prefix: prefix + "-",
                     minify: true,
-                    force: true,
-                  },
+                    force: true
+                  }
                 },
-                "removeXMLNS",
-              ],
+                "removeXMLNS"
+              ]
             };
           })
         )
@@ -117,7 +117,7 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
               inject(svgs, {
                 quiet: true,
                 removeTags: true,
-                transform: (_, file) => file.contents.toString(),
+                transform: (_, file) => file.contents.toString()
               })
             )
           )

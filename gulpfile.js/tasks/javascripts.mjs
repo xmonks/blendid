@@ -45,7 +45,7 @@ function registerDefaultPlugins(plugins, replacePlugins, minifiOptions) {
     result.unshift(
       // Solves common problem with tslib resolution
       alias({
-        entries: [{ find: "tslib", replacement: "tslib/tslib.es6.js" }],
+        entries: [{ find: "tslib", replacement: "tslib/tslib.es6.js" }]
       }),
       // Enable node_modules resolution for browser packages
       nodeResolve({ browser: true })
@@ -54,7 +54,7 @@ function registerDefaultPlugins(plugins, replacePlugins, minifiOptions) {
   // Minify production build
   if (mode.production()) {
     const {
-      default: minifyHtml,
+      default: minifyHtml
     } = require("rollup-plugin-minify-html-literals");
     result.push(
       // minifies lit-html literals
@@ -71,7 +71,7 @@ export class JavaScriptsRegistry extends DefaultRegistry {
     this.pathConfig = pathConfig;
     this.paths = {
       src: projectPath(pathConfig.src, pathConfig.javascripts?.src ?? ""),
-      dest: projectPath(pathConfig.dest, pathConfig.javascripts?.dest ?? ""),
+      dest: projectPath(pathConfig.dest, pathConfig.javascripts?.dest ?? "")
     };
   }
   init({ task }) {
@@ -93,13 +93,13 @@ export class JavaScriptsRegistry extends DefaultRegistry {
       const bundle = await rollup({
         input: resolveInputPaths(modules, this.paths.src),
         plugins: registerDefaultPlugins(plugins, replacePlugins, minify),
-        ...rest,
+        ...rest
       });
       const options = {
         entryFileNames: "[name].js",
         dir: this.paths.dest,
         format: "esm",
-        ...output,
+        ...output
       };
       await writeBundleManifest(bundle, options, this.pathConfig);
       const result = await bundle.write(options);

@@ -4,7 +4,7 @@ import url from "node:url";
 import DefaultRegistry from "undertaker-registry";
 import changed from "gulp-changed";
 import cloudinaryUpload, {
-  manifest,
+  manifest
 } from "../packages/gulp-cloudinary-upload/index.mjs";
 import projectPath from "../lib/projectPath.mjs";
 import handleErrors from "../lib/handleErrors.mjs";
@@ -33,7 +33,7 @@ export class CloudinaryRegistry extends DefaultRegistry {
             pathConfig.data?.src ?? "",
             config.manifest
           )
-        : null,
+        : null
     };
   }
 
@@ -55,7 +55,7 @@ export class CloudinaryRegistry extends DefaultRegistry {
 
     const cloudinaryTask = () =>
       src(path.join(paths.src, "**", `*.{${this.config.extensions}}`), {
-        since: lastRun(cloudinaryTask),
+        since: lastRun(cloudinaryTask)
       })
         .pipe(
           changed(paths.dest, {
@@ -65,7 +65,7 @@ export class CloudinaryRegistry extends DefaultRegistry {
               if (!manifest?.[imagePath]) {
                 stream.push(sourceFile);
               }
-            },
+            }
           })
         )
         .pipe(
@@ -79,14 +79,14 @@ export class CloudinaryRegistry extends DefaultRegistry {
                 paths.src,
                 path.resolve(__dirname, filePath)
               );
-            },
+            }
           })
         )
         .on("error", handleErrors)
         .pipe(
           manifest({
             path: paths.manifest,
-            merge: true,
+            merge: true
           })
         )
         .pipe(dest(paths.dest));

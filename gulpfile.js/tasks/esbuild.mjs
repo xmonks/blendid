@@ -16,7 +16,7 @@ export class ESBuildRegistry extends DefaultRegistry {
         pathConfig.esbuild?.src ?? "",
         `*.{${config.extensions}}`
       ),
-      dest: projectPath(pathConfig.dest, pathConfig.esbuild?.dest ?? ""),
+      dest: projectPath(pathConfig.dest, pathConfig.esbuild?.dest ?? "")
     };
   }
 

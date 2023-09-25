@@ -61,7 +61,7 @@ export function getPaths(exclude, taskConfig, pathConfig) {
         "**",
         `*.{${taskConfig.html.extensions}}`
       ),
-      exclude,
+      exclude
     ].filter(Boolean),
     spritesSrc: projectPath(pathConfig.src, pathConfig.icons.src, "*.svg"),
     dataPath: pathConfig.data
@@ -71,7 +71,7 @@ export function getPaths(exclude, taskConfig, pathConfig) {
           taskConfig.html?.dataFile ?? ""
         )
       : null,
-    dest: projectPath(pathConfig.dest, pathConfig.html.dest),
+    dest: projectPath(pathConfig.dest, pathConfig.html.dest)
   };
 }
 
@@ -84,7 +84,7 @@ export function getNunjucksRenderOptions(config, pathConfig) {
     ...nunjucksRenderOptions
   } = config.nunjucksRender;
   nunjucksRenderOptions.path = customPath ?? [
-    projectPath(pathConfig.src, pathConfig.html.src),
+    projectPath(pathConfig.src, pathConfig.html.src)
   ];
   /**
    * @param {Environment} env
@@ -149,18 +149,18 @@ export class HtmlRegistry extends DefaultRegistry {
                 "preset-default",
                 {
                   name: "prefixIDs",
-                  params: { prefix },
+                  params: { prefix }
                 },
                 {
                   name: "cleanupIDs",
                   params: {
                     prefix: `${prefix}-`,
                     minify: true,
-                    force: true,
-                  },
+                    force: true
+                  }
                 },
-                "removeXMLNS",
-              ],
+                "removeXMLNS"
+              ]
             };
           })
         )
@@ -177,7 +177,7 @@ export class HtmlRegistry extends DefaultRegistry {
             inject(svgs, {
               quiet: true,
               removeTags: true,
-              transform: (_, file) => file.contents.toString(),
+              transform: (_, file) => file.contents.toString()
             })
           )
         )

@@ -13,7 +13,7 @@ browsersyncReload.displayName = "browsersync-reload";
 function normalizeConfig(config) {
   if (typeof config.proxy === "string") {
     config.proxy = {
-      target: config.proxy,
+      target: config.proxy
     };
   }
 

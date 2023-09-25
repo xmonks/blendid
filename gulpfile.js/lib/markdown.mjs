@@ -5,7 +5,7 @@ import { gfmHeadingId } from "marked-gfm-heading-id";
 
 marked.use({
   headerIds: undefined,
-  headerPrefix: undefined,
+  headerPrefix: undefined
 });
 marked.use(gfmHeadingId());
 marked.use(
@@ -13,7 +13,7 @@ marked.use(
     langPrefix: "language-",
     highlight(code, lang) {
       return code;
-    },
+    }
   })
 );
 marked.use(mangle());

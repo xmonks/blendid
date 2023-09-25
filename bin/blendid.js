@@ -8,5 +8,5 @@ const gulpBinaryFile = path.join(gulpModulePath, "/bin/gulp");
 require("child_process").fork(gulpBinaryFile, [
   "--gulpfile",
   blendidEntryDir,
-  ...process.argv.slice(2),
+  ...process.argv.slice(2)
 ]);

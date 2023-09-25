@@ -43,7 +43,7 @@ export class RevUpdateHtmlRegistry extends DefaultRegistry {
             inject(importmap, {
               quiet: true,
               removeTags: true,
-              transform: (_, file) => file.contents.toString(),
+              transform: (_, file) => file.contents.toString()
             })
           )
         )

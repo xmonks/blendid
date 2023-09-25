@@ -17,7 +17,7 @@ describe("getEnabledTasks", function () {
           fonts: true,
           iconFont: true,
           images: true,
-          svgSprite: true,
+          svgSprite: true
         };
       });
 
@@ -27,7 +27,7 @@ describe("getEnabledTasks", function () {
           "cloudinary",
           "fonts",
           "iconFont",
-          "images",
+          "images"
         ]);
       });
 
@@ -53,7 +53,7 @@ describe("getEnabledTasks", function () {
         taskConfig = {
           html: true,
           stylesheets: true,
-          javascripts: true,
+          javascripts: true
         };
       });
 
@@ -91,7 +91,7 @@ describe("getEnabledTasks", function () {
           cloudinary: true,
           fonts: true,
           iconFont: true,
-          images: true,
+          images: true
         };
       });
 
@@ -101,7 +101,7 @@ describe("getEnabledTasks", function () {
           "cloudinary",
           "fonts",
           "iconFont",
-          "images",
+          "images"
         ]);
       });
 
@@ -127,7 +127,7 @@ describe("getEnabledTasks", function () {
         taskConfig = {
           html: true,
           stylesheets: true,
-          javascripts: true,
+          javascripts: true
         };
       });
 

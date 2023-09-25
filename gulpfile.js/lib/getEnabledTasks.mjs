@@ -10,6 +10,6 @@ export default function (taskConfig) {
 
   return {
     assetTasks: findExistingTasks(assetTasks),
-    codeTasks: findExistingTasks(codeTasks),
+    codeTasks: findExistingTasks(codeTasks)
   };
 }

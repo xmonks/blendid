@@ -13,7 +13,7 @@ export class RevUpdateJsRegistry extends DefaultRegistry {
       codeDir,
       src: projectPath(pathConfig.dest, codeDir, "**", "*.js"),
       dest: projectPath(pathConfig.dest, codeDir),
-      manifest: projectPath(pathConfig.dest, "rev-manifest.json"),
+      manifest: projectPath(pathConfig.dest, "rev-manifest.json")
     };
   }
   init({ task, src, dest }) {
@@ -28,7 +28,7 @@ export class RevUpdateJsRegistry extends DefaultRegistry {
           revReplace({
             manifest,
             modifyUnreved: relativePath,
-            modifyReved: relativePath,
+            modifyReved: relativePath
           })
         )
         .pipe(dest(this.paths.dest));

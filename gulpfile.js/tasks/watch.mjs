@@ -37,7 +37,7 @@ export class WatchRegistry extends DefaultRegistry {
           "stylesheets",
           "javascripts",
           "esbuild",
-          "static",
+          "static"
         ].concat(this.config.watch?.tasks);
 
         watchableTasks.forEach((taskName) => {

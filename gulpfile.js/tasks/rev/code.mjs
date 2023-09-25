@@ -20,7 +20,7 @@ export class RevCodeRegistry extends DefaultRegistry {
         .pipe(revdel())
         .pipe(
           rev.manifest(projectPath(this.pathConfig.dest, "rev-manifest.json"), {
-            merge: true,
+            merge: true
           })
         )
         .pipe(dest("."))

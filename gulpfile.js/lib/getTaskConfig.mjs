@@ -13,10 +13,9 @@ async function getTaskConfigInternal() {
       const module = await import(esm);
       return module.default;
     }
-    return require(projectPath(
-      process.env.BLENDID_CONFIG_PATH,
-      "task-config.js"
-    ));
+    return require(
+      projectPath(process.env.BLENDID_CONFIG_PATH, "task-config.js")
+    );
   }
 
   const defaultEsm = projectPath("config/task-config.mjs");

@@ -13,7 +13,7 @@ export class SizeReportRegistry extends DefaultRegistry {
     task("size-report", () =>
       src([
         projectPath(this.pathConfig.dest, "**", "*"),
-        "*!rev-manifest.json",
+        "*!rev-manifest.json"
       ]).pipe(sizereport(this.config))
     );
   }

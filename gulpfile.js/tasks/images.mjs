@@ -13,7 +13,7 @@ export class ImagesRegistry extends DefaultRegistry {
         "**",
         `*.{${config.extensions}}`
       ),
-      dest: projectPath(pathConfig.dest, pathConfig.images?.dest ?? ""),
+      dest: projectPath(pathConfig.dest, pathConfig.images?.dest ?? "")
     };
   }
 

@@ -146,7 +146,7 @@ plugin.manifest = (path_, options) => {
     merge: false,
     transformer: JSON,
     ...options,
-    ...path_,
+    ...path_
   };
 
   let manifest = {};
@@ -188,7 +188,7 @@ plugin.manifest = (path_, options) => {
               Object.fromEntries(
                 Object.entries(manifest).map(toRootRelativePaths)
               )
-            ),
+            )
           },
           undefined,
           2
@@ -197,7 +197,7 @@ plugin.manifest = (path_, options) => {
       let transformations = [
         createManifest(manifest, transformRevManifest, options).then((x) =>
           push(x)
-        ),
+        )
       ];
 
       if (options.importmap) {

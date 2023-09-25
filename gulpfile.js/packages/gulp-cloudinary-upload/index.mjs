@@ -24,7 +24,7 @@ export default function (options) {
 
   return through.obj((file, enc, cb) => {
     const uploadParams = Object.assign({ overwrite: false }, options.params, {
-      public_id: path.basename(file.path, path.extname(file.path)),
+      public_id: path.basename(file.path, path.extname(file.path))
     });
 
     const manifestKey = options.keyResolver(file.path);
@@ -49,7 +49,7 @@ export default function (options) {
               file.path,
               path.extname(file.path)
             ),
-            manifest_key: manifestKey,
+            manifest_key: manifestKey
           });
           return cb(null, file);
         })
@@ -68,7 +68,7 @@ export default function (options) {
               file.path,
               path.extname(file.path)
             ),
-            manifest_key: manifestKey,
+            manifest_key: manifestKey
           });
           return cb(null, file);
         })
@@ -90,7 +90,7 @@ export function manifest(options) {
   options = Object.assign(
     {
       path: "cloudinary-manifest.json",
-      merge: false,
+      merge: false
     },
     options
   );

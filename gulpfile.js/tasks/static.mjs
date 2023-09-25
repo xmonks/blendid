@@ -8,7 +8,7 @@ export class StaticRegistry extends DefaultRegistry {
     this.config = config;
     this.paths = {
       src: projectPath(pathConfig.src, pathConfig.static?.src ?? "", "**", "*"),
-      dest: projectPath(pathConfig.dest, pathConfig.static?.dest ?? ""),
+      dest: projectPath(pathConfig.dest, pathConfig.static?.dest ?? "")
     };
   }
 

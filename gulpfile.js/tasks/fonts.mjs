@@ -13,7 +13,7 @@ export class FontsRegistry extends DefaultRegistry {
         "**",
         `*.{${config.extensions}}`
       ),
-      dest: projectPath(pathConfig.dest, pathConfig.fonts?.dest ?? ""),
+      dest: projectPath(pathConfig.dest, pathConfig.fonts?.dest ?? "")
     };
   }
   init({ task, src, dest }) {

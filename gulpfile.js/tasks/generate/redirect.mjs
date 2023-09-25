@@ -29,10 +29,10 @@ function createFile(item, { host, route }) {
         `<meta http-equiv=refresh content="0;url={{host}}{{targetUrl}}">`,
         `<link rel=canonical href="{{host}}{{targetUrl}}">`,
         `<script>window.location.replace(new URL("{{targetUrl}}", "{{host}}"));</script>`,
-        `<p>This page has been moved to <a href="{{host}}{{targetUrl}}">{{host}}{{targetUrl}}</a>`,
+        `<p>This page has been moved to <a href="{{host}}{{targetUrl}}">{{host}}{{targetUrl}}</a>`
       ].join("")
     ),
-    data: { host, targetUrl },
+    data: { host, targetUrl }
   });
 }
 

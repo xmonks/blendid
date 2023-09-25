@@ -14,7 +14,7 @@ export class InitConfigRegistry extends DefaultRegistry {
     task("init-config", () => {
       const configStream = src([
         "gulpfile.js/path-config.json",
-        "gulpfile.js/task-config.js",
+        "gulpfile.js/task-config.js"
       ]).pipe(dest(projectPath("config")));
 
       log(
