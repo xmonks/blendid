@@ -1,9 +1,11 @@
 import { pathToFileURL } from "node:url";
+import * as path from "node:path";
 import module from "node:module";
 import logger from "fancy-log";
 import gulp_mode from "gulp-mode";
 import * as sass from "sass-embedded";
 import { v2 as cloudinary } from "cloudinary";
+import { getPathConfig } from "./getPathConfig.mjs";
 
 const mode = gulp_mode();
 const require = module.createRequire(import.meta.url);
@@ -15,6 +17,10 @@ function resolveInclude(url) {
   return pathToFileURL(require.resolve(`${includeUrl}.scss`));
 }
 
+/**
+ * @param {string} publicId Public ID of cloudinary resource
+ * @param {Object} [opts]
+ */
 function cloudinaryUrl(publicId, opts = {}) {
   try {
     const unwrap = (x) => x?.value ?? x?.text ?? x;
@@ -45,13 +51,36 @@ function cloudinaryUrl(publicId, opts = {}) {
 }
 
 const sassCloudinaryUrlSignature = "cloudinaryUrl($publicId, $opts: ())";
-const sassCloudinaryUrl = (args) => {
+function sassCloudinaryUrl(args) {
   const publicId = args[0].assertString("publicId").text;
   const opts = args[1]?.contents?.toJS();
   return new sass.SassString(`url(${cloudinaryUrl(publicId, opts)})`, {
     quotes: false
   });
-};
+}
+
+/**
+ * @param {string} assetPath Asset path
+ * @param {"stylesheets"|"javascripts"|"esm"|"fonts"|"icons"|"images"|"html"|"static"} assetType Key in path-config.json map
+ * @param {Object} [options]
+ * @param {string} [options.base] Optional base path to prefix the resolved asset URL. Default is / - root absolute URL.
+ * @returns {string}
+ */
+function assetUrl(assetPath, assetType, options) {
+  const pathConfig = getPathConfig();
+  const destPath = pathConfig[assetType].dest;
+  return path.join(options?.base ?? "/", destPath, assetPath);
+}
+
+const sassAssetUrlSignature = "assetUrl($assetType, $assetPath, $opts: ())";
+function sassAssetUrl(args) {
+  const assetType = args[0].assertString("assetType").text;
+  const assetPath = args[1].assertString("assetPath").text;
+  const opts = args[2]?.contents?.toJS();
+  return new sass.SassString(`url(${assetUrl(assetPath, assetType, opts)})`, {
+    quotes: false
+  });
+}
 
 export default {
   javascripts: {
@@ -97,6 +126,7 @@ export default {
         }
       ],
       functions: {
+        [sassAssetUrlSignature]: sassAssetUrl,
         [sassCloudinaryUrlSignature]: sassCloudinaryUrl
       }
     },
@@ -116,6 +146,7 @@ export default {
         split(str, seperator) {
           return str.split(seperator);
         },
+        assetUrl,
         cloudinaryUrl
       },
       envOptions: {

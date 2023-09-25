@@ -9,14 +9,15 @@ const mode = gulp_mode();
 export class ESBuildRegistry extends DefaultRegistry {
   constructor(config, pathConfig) {
     super();
+    const modulePathConfig = pathConfig.esm ?? pathConfig.esbuild;
     this.config = config;
     this.paths = {
       src: projectPath(
         pathConfig.src,
-        pathConfig.esbuild?.src ?? "",
+        modulePathConfig?.src ?? "",
         `*.{${config.extensions}}`
       ),
-      dest: projectPath(pathConfig.dest, pathConfig.esbuild?.dest ?? "")
+      dest: projectPath(pathConfig.dest, modulePathConfig?.dest ?? "")
     };
   }
 

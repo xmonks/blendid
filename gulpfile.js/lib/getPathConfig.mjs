@@ -4,7 +4,7 @@ import projectPath from "./projectPath.mjs";
 
 const require = module.createRequire(import.meta.url);
 
-function getPathConfig() {
+export function getPathConfig() {
   if (process.env.BLENDID_CONFIG_PATH) {
     return require(
       projectPath(process.env.BLENDID_CONFIG_PATH, "path-config.json")
