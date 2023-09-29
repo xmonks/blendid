@@ -10,6 +10,11 @@
     "url": "git://github.com/xmonks/blendid.git"
   },
   "bin": "bin/blendid.js",
+  "exports": {
+    ".": "./gulpfile.js/index.js",
+    "./lib/*.js": "./gulpfile.js/lib/*.js",
+    "./tasks/*.js": "./gulpfile.js/tasks/*.js"
+  },
   "scripts": {
     "start": "gulp -f gulpfile.js/index.mjs",
     "build": "gulp build -f gulpfile.js/index.mjs",

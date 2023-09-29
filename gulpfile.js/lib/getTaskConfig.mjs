@@ -19,7 +19,10 @@ async function getTaskConfigInternal() {
   }
 
   const defaultEsm = projectPath("config/task-config.mjs");
-  if (fs.existsSync(defaultEsm)) return import(defaultEsm);
+  if (fs.existsSync(defaultEsm)) {
+    const module = await import(defaultEsm);
+    return module.default;
+  }
 
   const defaultConfigPath = projectPath("config/task-config.js");
   if (fs.existsSync(defaultConfigPath)) {
@@ -30,18 +33,15 @@ async function getTaskConfigInternal() {
 }
 
 function withDefaults(taskConfig) {
-  Object.keys(taskDefaults).reduce((config, key) => {
-    if (taskConfig[key] !== false) {
-      // if true, use default, else merge objects
-      config[key] =
-        taskDefaults[key] === true
-          ? taskDefaults[key]
-          : mergeWith(taskDefaults[key], config[key] || {}, replaceArrays);
-    }
-    return config;
-  }, taskConfig);
-
-  return taskConfig;
+  const result = Object.assign({}, taskConfig);
+  for (const key of Object.keys(taskDefaults)) {
+    if (taskConfig[key] === false) continue;
+    result[key] =
+      taskConfig[key] === true
+        ? taskDefaults[key]
+        : mergeWith(taskDefaults[key], taskConfig[key] ?? {}, replaceArrays);
+  }
+  return result;
 }
 
 function replaceArrays(objValue, srcValue) {
