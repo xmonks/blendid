@@ -12,7 +12,7 @@ export class InitRegistry extends DefaultRegistry {
   }
 
   init({ task, src, dest }) {
-    task("init", function () {
+    task("init", () => {
       const rootStream = src("root/*").pipe(dest(projectPath()));
 
       const configStream = src([
