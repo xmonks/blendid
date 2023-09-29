@@ -6,7 +6,7 @@
 ```bash
 nvm install 15
 yarn init
-yarn add git://github.com/topmonks/blendid.git
+yarn add git://github.com/xmonks/blendid.git
 yarn blendid init
 yarn blendid
 ```
