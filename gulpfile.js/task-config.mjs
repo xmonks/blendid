@@ -1,6 +1,6 @@
-const pathConfig = require("./path-config.json");
+import pathConfig from "./path-config.json" assert { type: "json" };
 
-module.exports = {
+export default {
   html: true,
   images: true,
   cloudinary: false,
