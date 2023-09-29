@@ -15,10 +15,9 @@ export class InitRegistry extends DefaultRegistry {
     task("init", () => {
       const rootStream = src("root/*").pipe(dest(projectPath()));
 
-      const configStream = src([
-        "gulpfile.js/path-config.json",
-        "gulpfile.js/task-config.js"
-      ]).pipe(dest(projectPath("config")));
+      const configStream = src(["path-config.json", "task-config.js"]).pipe(
+        dest(projectPath("config"))
+      );
 
       const srcStream = src(["src/**/*", "src/**/.gitkeep"]).pipe(
         dest(projectPath(this.pathConfig.src))
