@@ -13,13 +13,11 @@ export class InitRegistry extends DefaultRegistry {
 
   init({ task, src, dest }) {
     task("init", () => {
-      const rootStream = src("root/*").pipe(dest(projectPath()));
-
       const configStream = src(["path-config.json", "task-config.js"]).pipe(
         dest(projectPath("config"))
       );
 
-      const srcStream = src(["src/**/*", "src/**/.gitkeep"]).pipe(
+      const srcStream = src(["../src/**/*", "../src/**/.gitkeep"]).pipe(
         dest(projectPath(this.pathConfig.src))
       );
 
@@ -33,7 +31,7 @@ yarn blendid
 `)
       );
 
-      return merge(rootStream, configStream, srcStream);
+      return merge(configStream, srcStream);
     });
   }
 }
