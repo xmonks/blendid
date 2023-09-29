@@ -4,7 +4,7 @@
 
 ## Quick start on a fresh project (empty directory)
 ```bash
-nvm install 15
+nvm install 10
 yarn init
 yarn add git://github.com/xmonks/blendid.git
 yarn blendid init
@@ -13,7 +13,4 @@ yarn blendid
 
 This will create default src and config files in your directory and start compiling and live-updating files! Try editing them and watch your browser auto-update!
 
-## Documentation
-
-[Full documentation is available on the Wiki](https://github.com/topmonks/blendid/wiki)
 
