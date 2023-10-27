@@ -11,9 +11,9 @@
   },
   "bin": "bin/blendid.js",
   "exports": {
-    ".": "./gulpfile.js/index.js",
-    "./lib/*.js": "./gulpfile.js/lib/*.js",
-    "./tasks/*.js": "./gulpfile.js/tasks/*.js"
+    ".": "./gulpfile.js/index.mjs",
+    "./lib/*.mjs": "./gulpfile.js/lib/*.mjs",
+    "./tasks/*.mjs": "./gulpfile.js/tasks/*.mjs"
   },
   "scripts": {
     "start": "gulp -f gulpfile.js/index.mjs",
