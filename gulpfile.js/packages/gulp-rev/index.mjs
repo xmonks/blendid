@@ -1,11 +1,11 @@
-import path from "path";
+import path from "node:path";
 import through from "through2";
-import { vinylFile } from "vinyl-file";
 import revHash from "rev-hash";
 import { revPath } from "rev-path";
 import sortKeys from "sort-keys";
 import modifyFilename from "modify-filename";
 import Vinyl from "vinyl";
+import { vinylFile } from "vinyl-file";
 import PluginError from "plugin-error";
 
 function relativePath(base, filePath) {

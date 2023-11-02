@@ -3,12 +3,12 @@
  * @copyright Copyright (c) 2013 David Manning
  * @see https://github.com/dlmanning/gulp-sass
  */
+import path from "node:path";
 import chalk from "chalk";
 import PluginError from "plugin-error";
 import replaceExtension from "replace-ext";
 import stripAnsi from "strip-ansi";
 import through from "through2";
-import path from "path";
 import applySourceMap from "vinyl-sourcemaps-apply";
 import * as sass from "sass-embedded";
 
