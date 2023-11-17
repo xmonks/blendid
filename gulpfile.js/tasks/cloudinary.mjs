@@ -59,11 +59,11 @@ export class CloudinaryRegistry extends DefaultRegistry {
       })
         .pipe(
           changed(paths.dest, {
-            async hasChanged(stream, sourceFile) {
+            async hasChanged(sourceFile, targetPath) {
               const manifest = await readManifest(paths.manifest);
               const imagePath = getRelativeFilePath(sourceFile.path);
               if (!manifest?.[imagePath]) {
-                stream.push(sourceFile);
+                return sourceFile;
               }
             }
           })

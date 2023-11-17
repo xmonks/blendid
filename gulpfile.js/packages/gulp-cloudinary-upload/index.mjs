@@ -78,7 +78,7 @@ export default function (options) {
 }
 
 const getManifestFile = (options) =>
-  vinylFile.read(options.path, options).catch((error) => {
+  vinylFile(options.path, options).catch((error) => {
     if (error.code === "ENOENT") {
       return new Vinyl(options);
     }
