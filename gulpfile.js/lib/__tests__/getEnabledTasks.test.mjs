@@ -53,20 +53,20 @@ describe("getEnabledTasks", function () {
         taskConfig = {
           html: true,
           stylesheets: true,
-          javascripts: true
+          esbuild: true
         };
       });
 
-      it("returns all except javascripts when none disabled", function () {
+      it("returns all when none disabled", function () {
         const tasks = getEnabledTasks(taskConfig);
-        assert.deepEqual(tasks.codeTasks, ["stylesheets", "javascripts"]);
+        assert.deepEqual(tasks.codeTasks, ["esbuild", "stylesheets"]);
       });
 
-      it("returns only enabled except javascripts task when some disabled", function () {
+      it("returns only enabled except esbuild task when some disabled", function () {
         taskConfig["stylesheets"] = false;
 
         const tasks = getEnabledTasks(taskConfig);
-        assert.deepEqual(tasks.codeTasks, ["javascripts"]);
+        assert.deepEqual(tasks.codeTasks, ["esbuild"]);
       });
 
       it("returns false when all disabled", function () {
@@ -127,24 +127,24 @@ describe("getEnabledTasks", function () {
         taskConfig = {
           html: true,
           stylesheets: true,
-          javascripts: true
+          esbuild: true
         };
       });
 
       it("returns all and convert javascripts task when none disabled", function () {
         const tasks = getEnabledTasks(taskConfig);
-        assert.deepEqual(tasks.codeTasks, ["stylesheets", "javascripts"]);
+        assert.deepEqual(tasks.codeTasks, ["esbuild", "stylesheets"]);
       });
 
       it("returns only enabled and convert javascripts task when some disabled", function () {
         taskConfig["stylesheets"] = false;
 
         const tasks = getEnabledTasks(taskConfig);
-        assert.deepEqual(tasks.codeTasks, ["javascripts"]);
+        assert.deepEqual(tasks.codeTasks, ["esbuild"]);
       });
 
-      it("still correctly disable javascripts task when disabled", function () {
-        taskConfig["javascripts"] = false;
+      it("still correctly disable esbuild task when disabled", function () {
+        taskConfig["esbuild"] = false;
 
         const tasks = getEnabledTasks(taskConfig);
         assert.deepEqual(tasks.codeTasks, ["stylesheets"]);

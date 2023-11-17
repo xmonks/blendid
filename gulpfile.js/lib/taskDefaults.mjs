@@ -61,7 +61,7 @@ function sassCloudinaryUrl(args) {
 
 /**
  * @param {string} assetPath Asset path
- * @param {"stylesheets"|"javascripts"|"esm"|"fonts"|"icons"|"images"|"html"|"static"} assetType Key in path-config.json map
+ * @param {"stylesheets"|"esm"|"fonts"|"icons"|"images"|"html"|"static"} assetType Key in path-config.json map
  * @param {Object} [options]
  * @param {string} [options.base] Optional base path to prefix the resolved asset URL. Default is / - root absolute URL.
  * @returns {string}
@@ -83,10 +83,6 @@ function sassAssetUrl(args) {
 }
 
 export default {
-  javascripts: {
-    extensions: ["js", "mjs", "cjs"]
-  },
-
   esbuild: {
     extensions: ["ts", "js", "mjs"],
     options: {

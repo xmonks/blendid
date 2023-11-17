@@ -35,7 +35,6 @@ export class WatchRegistry extends DefaultRegistry {
           "generate",
           "html",
           "stylesheets",
-          "javascripts",
           "esbuild",
           "static"
         ].concat(this.config.watch?.tasks);

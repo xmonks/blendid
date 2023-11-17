@@ -1,6 +1,6 @@
 // Grouped by what can run in parallel
 const assetTasks = ["cloudinary", "fonts", "iconFont", "images"];
-const codeTasks = ["esbuild", "stylesheets", "javascripts"];
+const codeTasks = ["esbuild", "stylesheets"];
 
 export default function (taskConfig) {
   function findExistingTasks(candidates) {

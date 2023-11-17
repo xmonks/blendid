@@ -12,11 +12,6 @@
     "dest": "./"
   },
 
-  "javascripts": {
-    "src": "javascripts",
-    "dest": "assets/js"
-  },
-
   "esm": {
     "src": "esm",
     "dest": "assets/esm"

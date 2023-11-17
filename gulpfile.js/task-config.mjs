@@ -8,7 +8,6 @@ export default {
   static: true,
   svgSprite: true,
   stylesheets: true,
-  javascripts: false,
   esbuild: true,
 
   browserSync: {

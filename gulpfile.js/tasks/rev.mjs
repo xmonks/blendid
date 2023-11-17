@@ -23,8 +23,7 @@ export class RevRegistry extends DefaultRegistry {
     registry(new RevUpdateJsRegistry(this.config, this.pathConfig));
 
     const updateHtml = this.config.html ? "update-html" : false;
-    const updateJs =
-      this.config.javascripts || this.config.esbuild ? "update-js" : false;
+    const updateJs = this.config.esbuild ? "update-js" : false;
     const revTasks = [
       // 1) Add md5 hashes to assets referenced by CSS and JS files
       "rev-assets",

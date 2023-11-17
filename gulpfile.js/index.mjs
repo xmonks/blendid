@@ -21,7 +21,6 @@ import { HtmlRegistry } from "./tasks/html.mjs";
 import { ImagesRegistry } from "./tasks/images.mjs";
 import { InitRegistry } from "./tasks/init.mjs";
 import { InitConfigRegistry } from "./tasks/init-config.mjs";
-import { JavaScriptsRegistry } from "./tasks/javascripts.mjs";
 import { SizeReportRegistry } from "./tasks/sizereport.mjs";
 import { StaticRegistry } from "./tasks/static.mjs";
 import { StyleSheetsRegistry } from "./tasks/stylesheets.mjs";
@@ -44,7 +43,6 @@ gulp.registry(new HtmlRegistry(taskConfig, pathConfig));
 gulp.registry(new ImagesRegistry(taskConfig.images, pathConfig));
 gulp.registry(new InitRegistry(taskConfig, pathConfig));
 gulp.registry(new InitConfigRegistry(taskConfig, pathConfig));
-gulp.registry(new JavaScriptsRegistry(taskConfig.javascripts, pathConfig));
 gulp.registry(new StaticRegistry(taskConfig.static, pathConfig));
 gulp.registry(new StyleSheetsRegistry(taskConfig.stylesheets, pathConfig));
 gulp.registry(new WorkboxBuildRegistry(taskConfig.workboxBuild, pathConfig));
@@ -53,23 +51,6 @@ if (Array.isArray(taskConfig.registries)) {
   for (const registry of taskConfig.registries) {
     gulp.registry(registry);
   }
-}
-
-// TODO: stop polluting global scope, inject config via registries
-// Globally expose config objects
-/** @deprecated */
-global.PATH_CONFIG = pathConfig;
-/** @deprecated */
-global.TASK_CONFIG = taskConfig;
-
-// TODO: remove additionalTasks.initialize in favour of registries
-// Initialize any additional user-provided tasks
-const init = taskConfig.additionalTasks?.initialize;
-if (typeof init === "function") {
-  logger.warn(
-    "Initialize additional tasks feature is deprecated. Please, transition to registries."
-  );
-  init(gulp, pathConfig, taskConfig);
 }
 
 function devTasks() {

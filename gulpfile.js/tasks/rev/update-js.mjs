@@ -8,7 +8,7 @@ export class RevUpdateJsRegistry extends DefaultRegistry {
     super();
     this.config = config;
     this.pathConfig = pathConfig;
-    const codeDir = (pathConfig.javascripts || pathConfig.esbuild)?.dest ?? "";
+    const codeDir = pathConfig.esbuild?.dest ?? "";
     this.paths = {
       codeDir,
       src: projectPath(pathConfig.dest, codeDir, "**", "*.js"),
@@ -17,7 +17,7 @@ export class RevUpdateJsRegistry extends DefaultRegistry {
     };
   }
   init({ task, src, dest }) {
-    if (!(this.config.javascripts || this.config.esbuild)) return;
+    if (!this.config.esbuild) return;
     task("update-js", () => {
       const relativePath = (s) => s.replace(this.paths.codeDir, ".");
       const manifest = fs.existsSync(this.paths.manifest)
