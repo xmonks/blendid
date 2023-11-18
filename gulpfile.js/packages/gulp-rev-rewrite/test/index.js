@@ -1,6 +1,6 @@
 import test from "ava";
 import { pEvent, pEventIterator } from "p-event";
-import revRewrite from "../index.js";
+import revRewrite from "../index.mjs";
 import { createFile, createManifest } from "./_helper.js";
 
 test("collects and rewrites revisioned paths from the stream", async (t) => {

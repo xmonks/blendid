@@ -1,5 +1,5 @@
 import test from "ava";
-import replace from "../lib/replace.js";
+import replace from "../lib/replace.mjs";
 
 const macro = test.macro((t, input, expected) => {
   const manifest = { "image.jpg": "image-d41d8cd98f.jpg" };
