@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import DefaultRegistry from "undertaker-registry";
 import when from "gulp-if";
-import revReplace from "../../packages/gulp-rev-rewrite/index.mjs";
+import revReplace from "gulp-rev-rewrite";
 import inject from "gulp-inject";
 import projectPath from "../../lib/projectPath.mjs";
 

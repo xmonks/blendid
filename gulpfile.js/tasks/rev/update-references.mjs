@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import DefaultRegistry from "undertaker-registry";
-import revReplace from "../../packages/gulp-rev-rewrite/index.mjs";
+import revReplace from "gulp-rev-rewrite";
 import projectPath from "../../lib/projectPath.mjs";
 
 // 2) Update asset references with reved filenames in compiled css + js

@@ -2283,7 +2283,7 @@ __metadata:
     gulp-postcss: 9.0.1
     gulp-rename: 2.0.0
     gulp-rev-delete-original: 0.2.3
-    gulp-rev-rewrite: 6.0.0
+    gulp-rev-rewrite: =5.0.0
     gulp-sizereport: 1.2.1
     gulp-svgmin: 4.1.0
     gulp-svgstore: 9.0.0
@@ -4890,7 +4890,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"escape-string-regexp@npm:5.0.0, escape-string-regexp@npm:^5.0.0":
+"escape-string-regexp@npm:5.0.0":
   version: 5.0.0
   resolution: "escape-string-regexp@npm:5.0.0"
   checksum: 20daabe197f3cb198ec28546deebcf24b3dbb1a5a269184381b3116d12f0532e06007f4bc8da25669d6a7f8efb68db0758df4cd981f57bc5b57f521a3e12c59e
@@ -6031,13 +6031,14 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"gulp-rev-rewrite@npm:6.0.0":
-  version: 6.0.0
-  resolution: "gulp-rev-rewrite@npm:6.0.0"
+"gulp-rev-rewrite@npm:=5.0.0":
+  version: 5.0.0
+  resolution: "gulp-rev-rewrite@npm:5.0.0"
   dependencies:
-    escape-string-regexp: ^5.0.0
-    plugin-error: ^2.0.0
-  checksum: f981190b056053a762bb1c0bfdf1c78801bd7c4ef267b7ee174772f536e5b0a8fb494e4b2d5d03b0883c6f805f62629c2f6102e607498097081ba4186a85e83a
+    lodash.escaperegexp: ^4.1.2
+    plugin-error: ^1.0.1
+    through2: ^4.0.2
+  checksum: 4b7562584991ac152ce0be0eedcadc32f63a0fbbe41adc3382d24100c91891a74e5eb3fff87bfe2fddacc96ed0a14397e1d235a4f41c09c090d5362e458959d2
   languageName: node
   linkType: hard
 
@@ -7424,6 +7425,13 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
+"lodash.escaperegexp@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "lodash.escaperegexp@npm:4.1.2"
+  checksum: 6d99452b1cfd6073175a9b741a9b09ece159eac463f86f02ea3bee2e2092923fce812c8d2bf446309cc52d1d61bf9af51c8118b0d7421388e6cead7bd3798f0f
+  languageName: node
+  linkType: hard
+
 "lodash.isfinite@npm:^3.3.2":
   version: 3.3.2
   resolution: "lodash.isfinite@npm:3.3.2"
@@ -8712,7 +8720,7 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"plugin-error@npm:2.0.1, plugin-error@npm:^2.0.0, plugin-error@npm:^2.0.1":
+"plugin-error@npm:2.0.1, plugin-error@npm:^2.0.1":
   version: 2.0.1
   resolution: "plugin-error@npm:2.0.1"
   dependencies:

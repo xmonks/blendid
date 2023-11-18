@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import DefaultRegistry from "undertaker-registry";
-import revReplace from "../../packages/gulp-rev-rewrite/index.mjs";
+import revReplace from "gulp-rev-rewrite";
 import projectPath from "../../lib/projectPath.mjs";
 
 export class RevUpdateJsRegistry extends DefaultRegistry {
