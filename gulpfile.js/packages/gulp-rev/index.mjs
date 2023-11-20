@@ -1,5 +1,5 @@
 import path from "node:path";
-import through from "through2";
+import { Transform } from "node:stream";
 import revHash from "rev-hash";
 import { revPath } from "rev-path";
 import sortKeys from "sort-keys";
@@ -59,8 +59,8 @@ const plugin = () => {
   const sourcemaps = [];
   const pathMap = {};
 
-  return through.obj(
-    (file, encoding, callback) => {
+  return new Transform({
+    transform(file, encoding, callback) {
       if (file.isNull()) {
         callback(null, file);
         return;
@@ -84,7 +84,7 @@ const plugin = () => {
 
       callback(null, file);
     },
-    function (callback) {
+    flush(callback) {
       for (const file of sourcemaps) {
         let reverseFilename;
 
@@ -116,7 +116,7 @@ const plugin = () => {
 
       callback();
     }
-  );
+  });
 };
 
 async function createManifest(manifest, transform, options) {
@@ -151,8 +151,8 @@ plugin.manifest = (path_, options) => {
 
   let manifest = {};
 
-  return through.obj(
-    (file, encoding, callback) => {
+  return new Transform({
+    transform(file, encoding, callback) {
       // Ignore all non-rev'd files
       if (!file.path || !file.revOrigPath) {
         callback();
@@ -170,7 +170,7 @@ plugin.manifest = (path_, options) => {
       manifest[originalFile] = revisionedFile;
       callback();
     },
-    function (callback) {
+    flush(callback) {
       // No need to write a manifest file if there's nothing to manifest
       if (Object.keys(manifest).length === 0) {
         callback();
@@ -223,7 +223,7 @@ plugin.manifest = (path_, options) => {
         }
       })();
     }
-  );
+  });
 };
 
 export default plugin;

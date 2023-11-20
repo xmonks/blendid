@@ -1,8 +1,16 @@
-import DefaultRegistry from "undertaker-registry";
+import { Readable } from "node:stream";
+import chalk from "chalk";
 import log from "fancy-log";
-import colors from "ansi-colors";
-import merge from "merge-stream";
+import DefaultRegistry from "undertaker-registry";
 import projectPath from "../lib/projectPath.mjs";
+
+async function* merge(streams) {
+  for (const stream of streams) {
+    for await (const chunk of stream) {
+      yield chunk;
+    }
+  }
+}
 
 export class InitRegistry extends DefaultRegistry {
   constructor(config, pathConfig) {
@@ -21,17 +29,17 @@ export class InitRegistry extends DefaultRegistry {
         dest(projectPath(this.pathConfig.src))
       );
 
-      log(colors.green("Generating default Blendid project files"));
+      log(chalk.green("Generating default Blendid project files"));
       log(
-        colors.yellow(`
+        chalk.yellow(`
 To start the dev server:
 `),
-        colors.magenta(`
+        chalk.magenta(`
 yarn blendid
 `)
       );
 
-      return merge(configStream, srcStream);
+      return Readable.from(merge([configStream, srcStream]));
     });
   }
 }

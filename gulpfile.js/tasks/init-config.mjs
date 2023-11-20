@@ -1,6 +1,6 @@
 import DefaultRegistry from "undertaker-registry";
 import log from "fancy-log";
-import colors from "ansi-colors";
+import chalk from "chalk";
 import projectPath from "../lib/projectPath.mjs";
 
 export class InitConfigRegistry extends DefaultRegistry {
@@ -18,7 +18,7 @@ export class InitConfigRegistry extends DefaultRegistry {
       ]).pipe(dest(projectPath("config")));
 
       log(
-        colors.green(
+        chalk.green(
           "Adding default path-config.json and task-config.js files to ./config/"
         )
       );

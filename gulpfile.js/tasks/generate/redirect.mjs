@@ -1,24 +1,21 @@
-import module from "node:module";
-import DefaultRegistry from "undertaker-registry";
-import File from "vinyl";
-import gulp_mode from "gulp-mode";
+import { Transform } from "node:stream";
+import gulpMode from "gulp-mode";
 import htmlmin from "gulp-htmlmin-next";
-import streamArray from "stream-array";
-import through from "through2";
 import nunjucksRender from "gulp-nunjucks-render";
-import projectPath from "../../lib/projectPath.mjs";
 import cloneDeep from "lodash-es/cloneDeep.js";
+import DefaultRegistry from "undertaker-registry";
+import Vinyl from "vinyl";
+import projectPath from "../../lib/projectPath.mjs";
 import handleErrors from "../../lib/handleErrors.mjs";
 
-const mode = gulp_mode();
-const require = module.createRequire(import.meta.url);
+const mode = gulpMode();
 
 function createFile(item, { host, route }) {
   const [originalUrl, targetUrl] = route(item);
   const path = originalUrl.endsWith("/")
     ? originalUrl + "index.html"
     : originalUrl;
-  return new File({
+  return new Vinyl({
     path,
     contents: Buffer.from(
       [
@@ -36,6 +33,15 @@ function createFile(item, { host, route }) {
   });
 }
 
+function generateHtmlFile(col) {
+  return new Transform({
+    transform(item, enc, done) {
+      this.push(createFile(item, col));
+      done();
+    }
+  });
+}
+
 export class GenerateRedirectsRegistry extends DefaultRegistry {
   #ownTasks = new Set();
   constructor(config, pathConfig) {
@@ -48,25 +54,21 @@ export class GenerateRedirectsRegistry extends DefaultRegistry {
     return Array.from(this.#ownTasks);
   }
 
-  init({ task, parallel, dest }) {
+  init({ task, parallel, src, dest }) {
     if (!this.config.generate.redirects) return;
 
     const config = cloneDeep(this.config.html);
 
     function generateRedirect(sourcePath, destPath, col) {
-      const generateRedirectsTask = () =>
-        streamArray(require(sourcePath))
-          .pipe(
-            through.obj(function (item, enc, done) {
-              const file = createFile(item, col);
-              this.push(file);
-              done();
-            })
-          )
+      function generateRedirectsTask() {
+        return src(sourcePath)
+          .pipe(generateHtmlFile(col))
           .pipe(nunjucksRender(config.nunjucksRender))
           .on("error", handleErrors)
           .pipe(mode.production(htmlmin(config.htmlmin)))
           .pipe(dest(destPath));
+      }
+
       generateRedirectsTask.displayName = `generate-redirects-${col.collection}`;
       return generateRedirectsTask;
     }

@@ -1,18 +1,16 @@
 import fs from "node:fs";
 import path from "node:path";
-import module from "node:module";
+import { Transform } from "node:stream";
 import data from "gulp-data";
-import gulp_mode from "gulp-mode";
 import gulpif from "gulp-if";
 import htmlmin from "gulp-htmlmin-next";
 import inject from "gulp-inject";
+import nunjucksRender from "gulp-nunjucks-render";
+import gulpMode from "gulp-mode";
 import svgmin from "gulp-svgmin";
 import svgstore from "gulp-svgstore";
-import streamArray from "stream-array";
-import through from "through2";
-import File from "vinyl";
+import Vinyl from "vinyl";
 import cloneDeep from "lodash-es/cloneDeep.js";
-import nunjucksRender from "gulp-nunjucks-render";
 import DefaultRegistry from "undertaker-registry";
 import {
   createDataFunction,
@@ -22,19 +20,20 @@ import {
 import projectPath from "../../lib/projectPath.mjs";
 import handleErrors from "../../lib/handleErrors.mjs";
 
-const mode = gulp_mode();
-const require = module.createRequire(import.meta.url);
+const mode = gulpMode();
 
 function generateHtmlFile(route, template) {
-  return through.obj(function (item, enc, done) {
-    this.push(
-      new File({
-        path: route(item),
-        contents: fs.readFileSync(template),
-        data: { item }
-      })
-    );
-    done();
+  return new Transform({
+    transform(item, enc, done) {
+      this.push(
+        new Vinyl({
+          path: route(item),
+          contents: fs.readFileSync(template),
+          data: { item }
+        })
+      );
+      done();
+    }
   });
 }
 
@@ -103,8 +102,8 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
         )
         .pipe(svgstore(taskConfig.svgSprite.svgstore));
 
-      const generateHtmlTask = () =>
-        streamArray(require(sourcePath))
+      function generateHtmlTask() {
+        return src(sourcePath)
           .pipe(generateHtmlFile(route, templatePath))
           .on("error", handleErrors)
           .pipe(data(dataFunction))
@@ -124,6 +123,8 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
           .on("error", handleErrors)
           .pipe(mode.production(htmlmin(config.htmlmin)))
           .pipe(dest(destPath));
+      }
+
       generateHtmlTask.displayName = `generate-html-${collection}`;
       return generateHtmlTask;
     }

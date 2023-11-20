@@ -4,11 +4,11 @@
  * @see https://github.com/dlmanning/gulp-sass
  */
 import path from "node:path";
+import { Transform } from "node:stream";
 import chalk from "chalk";
 import PluginError from "plugin-error";
 import replaceExtension from "replace-ext";
 import stripAnsi from "strip-ansi";
-import through from "through2";
 import applySourceMap from "vinyl-sourcemaps-apply";
 import * as sass from "sass-embedded";
 
@@ -84,60 +84,63 @@ function generateSourceMapsIfEnabled(file) {
   };
 }
 
-const gulpSass = (options) =>
-  through.obj((file, transform, flush) => {
-    if (file.isNull()) return flush(null, file);
+function gulpSass(options) {
+  return new Transform({
+    transform(file, transform, flush) {
+      if (file.isNull()) return flush(null, file);
 
-    if (file.isStream())
-      return flush(
-        new PluginError({
-          plugin: PLUGIN_NAME,
-          message: "Streaming not supported"
-        })
+      if (file.isStream())
+        return flush(
+          new PluginError({
+            plugin: PLUGIN_NAME,
+            message: "Streaming not supported"
+          })
+        );
+
+      if (path.basename(file.path).indexOf("_") === 0) return flush();
+
+      if (!file.contents.length) {
+        file.path = replaceExtension(file.path, ".css");
+        return flush(null, file);
+      }
+
+      const opts = Object.assign(
+        {},
+        options,
+        ensureParentDirectoryInIncludedPaths(file, options),
+        generateSourceMapsIfEnabled(file)
       );
 
-    if (path.basename(file.path).indexOf("_") === 0) return flush();
+      const flushFile = createFlushFile(file, flush);
 
-    if (!file.contents.length) {
-      file.path = replaceExtension(file.path, ".css");
-      return flush(null, file);
-    }
+      function errorMessage(error) {
+        const filePath =
+          (error.file === "stdin" ? file.path : error.file) || file.path;
+        const relativePath = path.relative(process.cwd(), filePath);
+        const message = [chalk.underline(relativePath), error.formatted].join(
+          "\n"
+        );
 
-    const opts = Object.assign(
-      {},
-      options,
-      ensureParentDirectoryInIncludedPaths(file, options),
-      generateSourceMapsIfEnabled(file)
-    );
+        error.messageFormatted = message;
+        error.messageOriginal = error.message;
+        error.message = stripAnsi(message);
+        error.relativePath = relativePath;
 
-    const flushFile = createFlushFile(file, flush);
+        return flush(new PluginError(PLUGIN_NAME, error));
+      }
 
-    const errorMessage = (error) => {
-      const filePath =
-        (error.file === "stdin" ? file.path : error.file) || file.path;
-      const relativePath = path.relative(process.cwd(), filePath);
-      const message = [chalk.underline(relativePath), error.formatted].join(
-        "\n"
-      );
-
-      error.messageFormatted = message;
-      error.messageOriginal = error.message;
-      error.message = stripAnsi(message);
-      error.relativePath = relativePath;
-
-      return flush(new PluginError(PLUGIN_NAME, error));
-    };
-
-    try {
-      const result = sass.compile(file.path, opts);
-      return flushFile({
-        css: Buffer.from(result.css),
-        map: result.sourceMap
-      });
-    } catch (error) {
-      return errorMessage(error);
+      try {
+        const result = sass.compile(file.path, opts);
+        return flushFile({
+          css: Buffer.from(result.css),
+          map: result.sourceMap
+        });
+      } catch (error) {
+        return errorMessage(error);
+      }
     }
   });
+}
 
 gulpSass.logError = function logError(error) {
   process.stderr.write(`${error}\n`);

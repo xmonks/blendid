@@ -1,5 +1,5 @@
 import path from "node:path";
-import through from "through2";
+import { Transform } from "node:stream";
 import PluginError from "plugin-error";
 import { v2 as cloudinary } from "cloudinary";
 import Vinyl from "vinyl";
@@ -22,69 +22,76 @@ export default function (options) {
     options.keyResolver = (x) => path.basename(x);
   }
 
-  return through.obj((file, enc, cb) => {
-    const uploadParams = Object.assign({ overwrite: false }, options.params, {
-      public_id: path.basename(file.path, path.extname(file.path))
-    });
+  return new Transform({
+    transform(file, enc, cb) {
+      const uploadParams = Object.assign({ overwrite: false }, options.params, {
+        public_id: path.basename(file.path, path.extname(file.path))
+      });
 
-    const manifestKey = options.keyResolver(file.path);
-    if (typeof options.folderResolver === "function") {
-      uploadParams.folder = options.folderResolver(file.path);
-    }
+      const manifestKey = options.keyResolver(file.path);
+      if (typeof options.folderResolver === "function") {
+        uploadParams.folder = options.folderResolver(file.path);
+      }
 
-    if (file.isNull()) {
-      cb(null, file);
-      return;
-    }
+      if (file.isNull()) {
+        cb(null, file);
+        return;
+      }
 
-    if (file.isBuffer()) {
-      cloudinary.uploader
-        .upload_stream(uploadParams, (error, result) => {
-          if (error) {
-            return cb(new PluginError("gulp-cloudinary-upload", error.message));
-          }
+      if (file.isBuffer()) {
+        cloudinary.uploader
+          .upload_stream(uploadParams, (error, result) => {
+            if (error) {
+              return cb(
+                new PluginError("gulp-cloudinary-upload", error.message)
+              );
+            }
 
-          file.cloudinary = Object.assign(result, {
-            original_filename: path.basename(
-              file.path,
-              path.extname(file.path)
-            ),
-            manifest_key: manifestKey
-          });
-          return cb(null, file);
-        })
-        .end(file.contents);
-    }
+            file.cloudinary = Object.assign(result, {
+              original_filename: path.basename(
+                file.path,
+                path.extname(file.path)
+              ),
+              manifest_key: manifestKey
+            });
+            return cb(null, file);
+          })
+          .end(file.contents);
+      }
 
-    if (file.isStream()) {
-      file.contents.pipe(
-        cloudinary.uploader.upload_stream(uploadParams, (error, result) => {
-          if (error) {
-            return cb(new PluginError("gulp-cloudinary-upload", error.message));
-          }
+      if (file.isStream()) {
+        file.contents.pipe(
+          cloudinary.uploader.upload_stream(uploadParams, (error, result) => {
+            if (error) {
+              return cb(
+                new PluginError("gulp-cloudinary-upload", error.message)
+              );
+            }
 
-          file.cloudinary = Object.assign(result, {
-            original_filename: path.basename(
-              file.path,
-              path.extname(file.path)
-            ),
-            manifest_key: manifestKey
-          });
-          return cb(null, file);
-        })
-      );
+            file.cloudinary = Object.assign(result, {
+              original_filename: path.basename(
+                file.path,
+                path.extname(file.path)
+              ),
+              manifest_key: manifestKey
+            });
+            return cb(null, file);
+          })
+        );
+      }
     }
   });
 }
 
-const getManifestFile = (options) =>
-  vinylFile(options.path, options).catch((error) => {
+function getManifestFile(options) {
+  return vinylFile(options.path, options).catch((error) => {
     if (error.code === "ENOENT") {
       return new Vinyl(options);
     }
 
     throw error;
   });
+}
 
 export function manifest(options) {
   options = Object.assign(
@@ -98,8 +105,8 @@ export function manifest(options) {
 
   let manifest = {};
 
-  return through.obj(
-    (file, enc, cb) => {
+  return new Transform({
+    transform(file, enc, cb) {
       if (!file.cloudinary) {
         return cb();
       }
@@ -109,7 +116,7 @@ export function manifest(options) {
       manifest[key] = file.cloudinary;
       cb();
     },
-    function (cb) {
+    flush(cb) {
       if (Object.keys(manifest).length === 0) {
         cb();
         return;
@@ -135,5 +142,5 @@ export function manifest(options) {
         })
         .catch(cb);
     }
-  );
+  });
 }
