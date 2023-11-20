@@ -23,6 +23,7 @@ export default function (options) {
   }
 
   return new Transform({
+    objectMode: true,
     transform(file, enc, cb) {
       const uploadParams = Object.assign({ overwrite: false }, options.params, {
         public_id: path.basename(file.path, path.extname(file.path))
@@ -106,6 +107,7 @@ export function manifest(options) {
   let manifest = {};
 
   return new Transform({
+    objectMode: true,
     transform(file, enc, cb) {
       if (!file.cloudinary) {
         return cb();

@@ -6,6 +6,7 @@
 import path from "node:path";
 import { Transform } from "node:stream";
 import chalk from "chalk";
+import logger from "fancy-log";
 import PluginError from "plugin-error";
 import replaceExtension from "replace-ext";
 import stripAnsi from "strip-ansi";
@@ -54,25 +55,34 @@ function buildSourceMaps(sassObj, file) {
 }
 
 function buildStats(file) {
-  let now = new Date();
+  const now = new Date();
   file.stat.atime = now;
   file.stat.mtime = now;
   file.stat.ctime = now;
 }
 
-function createFlushFile(file, flush) {
-  return (sassObj) => {
-    if (sassObj.map) buildSourceMaps(sassObj, file);
-    if (file.stat) buildStats(file);
+function addResultsToFile(file, sassResult) {
+  if (sassResult.map) buildSourceMaps(sassResult, file);
+  if (file.stat) buildStats(file);
 
-    flush(
-      null,
-      Object.assign(file, {
-        contents: sassObj.css,
-        path: replaceExtension(file.path, ".css")
-      })
-    );
-  };
+  return Object.assign(file, {
+    contents: sassResult.css,
+    path: replaceExtension(file.path, ".css")
+  });
+}
+
+function errorMessage(file, error) {
+  const filePath =
+    (error.file === "stdin" ? file.path : error.file) || file.path;
+  const relativePath = path.relative(process.cwd(), filePath);
+  const message = [chalk.underline(relativePath), error.formatted].join("\n");
+
+  error.messageFormatted = message;
+  error.messageOriginal = error.message;
+  error.message = stripAnsi(message);
+  error.relativePath = relativePath;
+
+  return new PluginError(PLUGIN_NAME, error);
 }
 
 function generateSourceMapsIfEnabled(file) {
@@ -86,22 +96,23 @@ function generateSourceMapsIfEnabled(file) {
 
 function gulpSass(options) {
   return new Transform({
-    transform(file, transform, flush) {
-      if (file.isNull()) return flush(null, file);
+    objectMode: true,
+    transform(file, transform, cb) {
+      if (file.isNull()) return cb(null, file);
 
-      if (file.isStream())
-        return flush(
-          new PluginError({
-            plugin: PLUGIN_NAME,
-            message: "Streaming not supported"
-          })
-        );
+      if (file.isStream()) {
+        return cb(new PluginError(PLUGIN_NAME, "Streaming not supported"));
+      }
 
-      if (path.basename(file.path).indexOf("_") === 0) return flush();
+      if (path.basename(file.path).startsWith("_")) {
+        // ignore partials
+        return cb();
+      }
 
       if (!file.contents.length) {
         file.path = replaceExtension(file.path, ".css");
-        return flush(null, file);
+        this.push(file);
+        return cb();
       }
 
       const opts = Object.assign(
@@ -111,39 +122,24 @@ function gulpSass(options) {
         generateSourceMapsIfEnabled(file)
       );
 
-      const flushFile = createFlushFile(file, flush);
-
-      function errorMessage(error) {
-        const filePath =
-          (error.file === "stdin" ? file.path : error.file) || file.path;
-        const relativePath = path.relative(process.cwd(), filePath);
-        const message = [chalk.underline(relativePath), error.formatted].join(
-          "\n"
-        );
-
-        error.messageFormatted = message;
-        error.messageOriginal = error.message;
-        error.message = stripAnsi(message);
-        error.relativePath = relativePath;
-
-        return flush(new PluginError(PLUGIN_NAME, error));
-      }
-
       try {
         const result = sass.compile(file.path, opts);
-        return flushFile({
-          css: Buffer.from(result.css),
-          map: result.sourceMap
-        });
+        this.push(
+          addResultsToFile(file, {
+            css: Buffer.from(result.css),
+            map: result.sourceMap
+          })
+        );
+        cb();
       } catch (error) {
-        return errorMessage(error);
+        cb(errorMessage(file, error));
       }
     }
   });
 }
 
 gulpSass.logError = function logError(error) {
-  process.stderr.write(`${error}\n`);
+  logger.error(`${error}\n`);
   this.emit("end");
 };
 

@@ -24,6 +24,7 @@ const mode = gulpMode();
 
 function generateHtmlFile(route, template) {
   return new Transform({
+    objectMode: true,
     transform(item, enc, done) {
       this.push(
         new Vinyl({

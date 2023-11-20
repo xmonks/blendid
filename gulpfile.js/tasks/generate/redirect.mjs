@@ -35,6 +35,7 @@ function createFile(item, { host, route }) {
 
 function generateHtmlFile(col) {
   return new Transform({
+    objectMode: true,
     transform(item, enc, done) {
       this.push(createFile(item, col));
       done();

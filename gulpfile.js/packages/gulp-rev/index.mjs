@@ -60,6 +60,7 @@ const plugin = () => {
   const pathMap = {};
 
   return new Transform({
+    objectMode: true,
     transform(file, encoding, callback) {
       if (file.isNull()) {
         callback(null, file);
@@ -152,6 +153,7 @@ plugin.manifest = (path_, options) => {
   let manifest = {};
 
   return new Transform({
+    objectMode: true,
     transform(file, encoding, callback) {
       // Ignore all non-rev'd files
       if (!file.path || !file.revOrigPath) {
