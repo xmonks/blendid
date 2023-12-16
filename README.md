@@ -9,7 +9,7 @@ development environment and site or app structure.
 ```bash
 nvm install 20
 yarn init
-yarn add @hckr_/blendid@https://github.com/hckr-studio/blendid.git
+yarn add @hckr_/blendid
 yarn blendid init
 yarn blendid
 ```
