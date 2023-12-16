@@ -1,13 +1,13 @@
 {
-  "name": "@xmonks/blendid",
-  "version": "6.0.0",
+  "name": "@hckr_/blendid",
+  "version": "7.0.2",
   "description": "A full featured configurable front-end asset pipeline and static site builder",
   "license": "MIT",
   "main": "gulpfile.js/index.js",
-  "homepage": "https://github.com/xmonks/blendid",
+  "homepage": "https://github.com/hckr-studio/blendid",
   "repository": {
     "type": "git",
-    "url": "git://github.com/xmonks/blendid.git"
+    "url": "git://github.com/hckr-studio/blendid.git"
   },
   "bin": "bin/blendid.js",
   "exports": {

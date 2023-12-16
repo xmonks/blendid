@@ -3,4 +3,9 @@ extras/demo
 .travis.yml
 gulpfile.js/**/*.test.js
 .editorconfig
+prettier.config.mjs
+renovate.json
 public
+.circleci/
+.idea/
+.yarn/

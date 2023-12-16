@@ -1883,6 +1883,75 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hckr_/blendid@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@hckr_/blendid@workspace:."
+  dependencies:
+    "@material/layout-grid": 14.0.0
+    "@types/nunjucks": 3.2.6
+    "@vitejs/plugin-basic-ssl": 1.0.2
+    browser-sync: 2.29.3
+    browserslist: 4.22.1
+    caniuse-lite: 1.0.30001563
+    chai: 4.3.10
+    chalk: 5.3.0
+    cloudinary: 1.41.0
+    cssnano: 6.0.1
+    del: 7.1.0
+    fancy-log: 2.0.0
+    gulp: 4.0.2
+    gulp-changed: 5.0.1
+    gulp-data: 1.3.1
+    gulp-debug: 5.0.1
+    gulp-esbuild: 0.11.2
+    gulp-htmlmin-next: 6.0.1
+    gulp-if: 3.0.0
+    gulp-inject: 5.0.5
+    gulp-markdown-to-json: 1.1.0
+    gulp-merge-json: 2.1.2
+    gulp-mode: 1.1.0
+    gulp-noop: 1.0.1
+    gulp-notify: 4.0.0
+    gulp-nunjucks-render: 2.2.3
+    gulp-postcss: 9.0.1
+    gulp-rename: 2.0.0
+    gulp-rev-delete-original: 0.2.3
+    gulp-rev-rewrite: =5.0.0
+    gulp-sizereport: 1.2.1
+    gulp-svgmin: 4.1.0
+    gulp-svgstore: 9.0.0
+    lodash-es: 4.17.21
+    marked: 10.0.0
+    marked-gfm-heading-id: 3.1.1
+    marked-highlight: 2.0.7
+    marked-mangle: 1.1.5
+    minify-html-literals: 1.3.5
+    mocha: 10.2.0
+    modify-filename: 2.0.0
+    nunjucks: 3.2.4
+    nunjucks-markdown: 2.0.1
+    open: 9.1.0
+    plugin-error: 2.0.1
+    postcss: 8.4.31
+    postcss-preset-env: 9.3.0
+    prettier: 3.1.0
+    replace-ext: 2.0.0
+    rev-hash: 4.1.0
+    rev-path: 3.0.0
+    sass-embedded: 1.69.5
+    sort-keys: 5.0.0
+    strip-ansi: 7.1.0
+    undertaker-registry: 2.0.0
+    vinyl: 3.0.0
+    vinyl-file: 5.0.0
+    vinyl-sourcemaps-apply: 0.2.1
+    vite: 5.0.0
+    workbox-build: 7.0.0
+  bin:
+    blendid: bin/blendid.js
+  languageName: unknown
+  linkType: soft
+
 "@material/layout-grid@npm:14.0.0":
   version: 14.0.0
   resolution: "@material/layout-grid@npm:14.0.0"
@@ -2247,75 +2316,6 @@ __metadata:
   checksum: aa6df5037c2b4cdfa3d2eb44f1a2402dab112a1ba9de32edf3cbd132894fed46f49a6cdd1006efce4e521decd66777ce18711f44c77129d616042d5539860cc3
   languageName: node
   linkType: hard
-
-"@xmonks/blendid@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@xmonks/blendid@workspace:."
-  dependencies:
-    "@material/layout-grid": 14.0.0
-    "@types/nunjucks": 3.2.6
-    "@vitejs/plugin-basic-ssl": 1.0.2
-    browser-sync: 2.29.3
-    browserslist: 4.22.1
-    caniuse-lite: 1.0.30001563
-    chai: 4.3.10
-    chalk: 5.3.0
-    cloudinary: 1.41.0
-    cssnano: 6.0.1
-    del: 7.1.0
-    fancy-log: 2.0.0
-    gulp: 4.0.2
-    gulp-changed: 5.0.1
-    gulp-data: 1.3.1
-    gulp-debug: 5.0.1
-    gulp-esbuild: 0.11.2
-    gulp-htmlmin-next: 6.0.1
-    gulp-if: 3.0.0
-    gulp-inject: 5.0.5
-    gulp-markdown-to-json: 1.1.0
-    gulp-merge-json: 2.1.2
-    gulp-mode: 1.1.0
-    gulp-noop: 1.0.1
-    gulp-notify: 4.0.0
-    gulp-nunjucks-render: 2.2.3
-    gulp-postcss: 9.0.1
-    gulp-rename: 2.0.0
-    gulp-rev-delete-original: 0.2.3
-    gulp-rev-rewrite: =5.0.0
-    gulp-sizereport: 1.2.1
-    gulp-svgmin: 4.1.0
-    gulp-svgstore: 9.0.0
-    lodash-es: 4.17.21
-    marked: 10.0.0
-    marked-gfm-heading-id: 3.1.1
-    marked-highlight: 2.0.7
-    marked-mangle: 1.1.5
-    minify-html-literals: 1.3.5
-    mocha: 10.2.0
-    modify-filename: 2.0.0
-    nunjucks: 3.2.4
-    nunjucks-markdown: 2.0.1
-    open: 9.1.0
-    plugin-error: 2.0.1
-    postcss: 8.4.31
-    postcss-preset-env: 9.3.0
-    prettier: 3.1.0
-    replace-ext: 2.0.0
-    rev-hash: 4.1.0
-    rev-path: 3.0.0
-    sass-embedded: 1.69.5
-    sort-keys: 5.0.0
-    strip-ansi: 7.1.0
-    undertaker-registry: 2.0.0
-    vinyl: 3.0.0
-    vinyl-file: 5.0.0
-    vinyl-sourcemaps-apply: 0.2.1
-    vite: 5.0.0
-    workbox-build: 7.0.0
-  bin:
-    blendid: bin/blendid.js
-  languageName: unknown
-  linkType: soft
 
 "a-sync-waterfall@npm:^1.0.0":
   version: 1.0.1
