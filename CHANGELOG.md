@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.0.3
+
+- fix native streams of JSON in generators
+
 ## 7.0.2
 
 - updated Changelog

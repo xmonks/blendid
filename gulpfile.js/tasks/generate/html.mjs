@@ -22,18 +22,22 @@ import handleErrors from "../../lib/handleErrors.mjs";
 
 const mode = gulpMode();
 
+async function createFile(item, route, template) {
+  const data = await (new Response(item.contents).json());
+  return new Vinyl({
+    path: route(data),
+    contents: fs.readFileSync(template),
+    data: { item }
+  });
+}
+
 function generateHtmlFile(route, template) {
   return new Transform({
     objectMode: true,
     transform(item, enc, done) {
-      this.push(
-        new Vinyl({
-          path: route(item),
-          contents: fs.readFileSync(template),
-          data: { item }
-        })
-      );
-      done();
+      createFile(item, route, template)
+        .then(x => this.push(x))
+        .then(() => done());
     }
   });
 }
@@ -57,6 +61,7 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
     const config = cloneDeep(this.config.html);
     const taskConfig = this.config;
     const pathConfig = this.pathConfig;
+
     function generateHtml(
       sourcePath,
       destPath,
@@ -138,6 +143,7 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
         yield generateHtml(projectPath(dataPath, sourcePath), destPath, col);
       }
     }
+
     task(
       "generate-html",
       parallel(

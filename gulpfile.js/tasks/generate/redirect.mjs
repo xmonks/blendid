@@ -10,8 +10,9 @@ import handleErrors from "../../lib/handleErrors.mjs";
 
 const mode = gulpMode();
 
-function createFile(item, { host, route }) {
-  const [originalUrl, targetUrl] = route(item);
+async function createFile(item, { host, route }) {
+  const data = await (new Response(item.contents).json());
+  const [originalUrl, targetUrl] = route(data);
   const path = originalUrl.endsWith("/")
     ? originalUrl + "index.html"
     : originalUrl;
@@ -37,14 +38,16 @@ function generateHtmlFile(col) {
   return new Transform({
     objectMode: true,
     transform(item, enc, done) {
-      this.push(createFile(item, col));
-      done();
+      createFile(item, col)
+        .then(x => this.push(x))
+        .then(() => done());
     }
   });
 }
 
 export class GenerateRedirectsRegistry extends DefaultRegistry {
   #ownTasks = new Set();
+
   constructor(config, pathConfig) {
     super();
     this.config = config;
