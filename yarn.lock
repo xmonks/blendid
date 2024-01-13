@@ -1924,7 +1924,7 @@ __metadata:
     marked: 10.0.0
     marked-gfm-heading-id: 3.1.2
     marked-highlight: 2.0.7
-    marked-mangle: 1.1.5
+    marked-mangle: 1.1.6
     minify-html-literals: 1.3.5
     mocha: 10.2.0
     modify-filename: 2.0.0
@@ -7602,12 +7602,12 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"marked-mangle@npm:1.1.5":
-  version: 1.1.5
-  resolution: "marked-mangle@npm:1.1.5"
+"marked-mangle@npm:1.1.6":
+  version: 1.1.6
+  resolution: "marked-mangle@npm:1.1.6"
   peerDependencies:
-    marked: ">=4 <11"
-  checksum: 5d917b97dd1933331cb980fa80a3c4edc0b0418886ce4ea0523d93feea46f1bc0a30ac6efe33cf84129b7366f1b9485754f2933552b32806e676b207e6ba6405
+    marked: ">=4 <12"
+  checksum: 70e7fa1e318cd69080e2f204e86263c419dd98d832571cfea03b09970206e5aea0aabb2921b43ebce6deec84b1c93c3365a03a1173d373a581423577c7f84325
   languageName: node
   linkType: hard
 
