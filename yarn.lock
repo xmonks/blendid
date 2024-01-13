@@ -1922,7 +1922,7 @@ __metadata:
     gulp-svgstore: 9.0.0
     lodash-es: 4.17.21
     marked: 10.0.0
-    marked-gfm-heading-id: 3.1.1
+    marked-gfm-heading-id: 3.1.2
     marked-highlight: 2.0.7
     marked-mangle: 1.1.5
     minify-html-literals: 1.3.5
@@ -7582,14 +7582,14 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"marked-gfm-heading-id@npm:3.1.1":
-  version: 3.1.1
-  resolution: "marked-gfm-heading-id@npm:3.1.1"
+"marked-gfm-heading-id@npm:3.1.2":
+  version: 3.1.2
+  resolution: "marked-gfm-heading-id@npm:3.1.2"
   dependencies:
     github-slugger: ^2.0.0
   peerDependencies:
-    marked: ">=4 <11"
-  checksum: 543c1ed9ee4c19ae09271cf1b2b6cc5ae34baee3adceda5259c10ce440a439e889825288efb0329e51e7cabd17e0e2200e7eb556cb819fecaafcd5f4b61ae242
+    marked: ">=4 <12"
+  checksum: b44f3c89b3e0b00803976fa4058e450cf82327425c09ea83bd3cd4eaf165dca5d7c2e590655cf3f90c55b5353c1aa49cedff7876babd767ca339b69e72902099
   languageName: node
   linkType: hard
 
