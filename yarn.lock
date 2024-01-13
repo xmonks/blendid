@@ -1923,7 +1923,7 @@ __metadata:
     lodash-es: 4.17.21
     marked: 11.1.1
     marked-gfm-heading-id: 3.1.2
-    marked-highlight: 2.0.7
+    marked-highlight: 2.1.0
     marked-mangle: 1.1.6
     minify-html-literals: 1.3.5
     mocha: 10.2.0
@@ -7593,12 +7593,12 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"marked-highlight@npm:2.0.7":
-  version: 2.0.7
-  resolution: "marked-highlight@npm:2.0.7"
+"marked-highlight@npm:2.1.0":
+  version: 2.1.0
+  resolution: "marked-highlight@npm:2.1.0"
   peerDependencies:
-    marked: ">=4 <11"
-  checksum: bfa73b864fb8cfc7124826b7e5fcb6c59515d62ef092d1e56c67d5ea7ee8ed58f37c1e651a10ec548adba890df1cf259f71e859d23c6b4de39b17be6032682db
+    marked: ">=4 <12"
+  checksum: 96e7e3d494b10b990a9cc36b87c0539495f2c612d1067fe648a6840af9296f1435ddc683c0f9472299f3339c75e69fe4a528a6d4fc7f99ecfa7e12119238d48e
   languageName: node
   linkType: hard
 
