@@ -1938,7 +1938,7 @@ __metadata:
     replace-ext: 2.0.0
     rev-hash: 4.1.0
     rev-path: 3.0.0
-    sass-embedded: 1.69.5
+    sass-embedded: 1.69.7
     sort-keys: 5.0.0
     strip-ansi: 7.1.0
     undertaker-registry: 2.0.0
@@ -10210,97 +10210,177 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"sass-embedded-darwin-arm64@npm:1.69.5":
-  version: 1.69.5
-  resolution: "sass-embedded-darwin-arm64@npm:1.69.5"
+"sass-embedded-android-arm64@npm:1.69.7":
+  version: 1.69.7
+  resolution: "sass-embedded-android-arm64@npm:1.69.7"
+  bin:
+    sass: dart-sass/sass
+  conditions: os=android & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"sass-embedded-android-arm@npm:1.69.7":
+  version: 1.69.7
+  resolution: "sass-embedded-android-arm@npm:1.69.7"
+  bin:
+    sass: dart-sass/sass
+  conditions: os=android & cpu=arm
+  languageName: node
+  linkType: hard
+
+"sass-embedded-android-ia32@npm:1.69.7":
+  version: 1.69.7
+  resolution: "sass-embedded-android-ia32@npm:1.69.7"
+  bin:
+    sass: dart-sass/sass
+  conditions: os=android & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"sass-embedded-android-x64@npm:1.69.7":
+  version: 1.69.7
+  resolution: "sass-embedded-android-x64@npm:1.69.7"
+  bin:
+    sass: dart-sass/sass
+  conditions: os=android & cpu=x64
+  languageName: node
+  linkType: hard
+
+"sass-embedded-darwin-arm64@npm:1.69.7":
+  version: 1.69.7
+  resolution: "sass-embedded-darwin-arm64@npm:1.69.7"
   bin:
     sass: dart-sass/sass
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"sass-embedded-darwin-x64@npm:1.69.5":
-  version: 1.69.5
-  resolution: "sass-embedded-darwin-x64@npm:1.69.5"
+"sass-embedded-darwin-x64@npm:1.69.7":
+  version: 1.69.7
+  resolution: "sass-embedded-darwin-x64@npm:1.69.7"
   bin:
     sass: dart-sass/sass
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"sass-embedded-linux-arm64@npm:1.69.5":
-  version: 1.69.5
-  resolution: "sass-embedded-linux-arm64@npm:1.69.5"
+"sass-embedded-linux-arm64@npm:1.69.7":
+  version: 1.69.7
+  resolution: "sass-embedded-linux-arm64@npm:1.69.7"
   bin:
     sass: dart-sass/sass
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"sass-embedded-linux-arm@npm:1.69.5":
-  version: 1.69.5
-  resolution: "sass-embedded-linux-arm@npm:1.69.5"
+"sass-embedded-linux-arm@npm:1.69.7":
+  version: 1.69.7
+  resolution: "sass-embedded-linux-arm@npm:1.69.7"
   bin:
     sass: dart-sass/sass
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"sass-embedded-linux-ia32@npm:1.69.5":
-  version: 1.69.5
-  resolution: "sass-embedded-linux-ia32@npm:1.69.5"
+"sass-embedded-linux-ia32@npm:1.69.7":
+  version: 1.69.7
+  resolution: "sass-embedded-linux-ia32@npm:1.69.7"
   bin:
     sass: dart-sass/sass
   conditions: os=linux & cpu=ia32
   languageName: node
   linkType: hard
 
-"sass-embedded-linux-x64@npm:1.69.5":
-  version: 1.69.5
-  resolution: "sass-embedded-linux-x64@npm:1.69.5"
+"sass-embedded-linux-musl-arm64@npm:1.69.7":
+  version: 1.69.7
+  resolution: "sass-embedded-linux-musl-arm64@npm:1.69.7"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"sass-embedded-linux-musl-arm@npm:1.69.7":
+  version: 1.69.7
+  resolution: "sass-embedded-linux-musl-arm@npm:1.69.7"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"sass-embedded-linux-musl-ia32@npm:1.69.7":
+  version: 1.69.7
+  resolution: "sass-embedded-linux-musl-ia32@npm:1.69.7"
+  conditions: os=linux & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"sass-embedded-linux-musl-x64@npm:1.69.7":
+  version: 1.69.7
+  resolution: "sass-embedded-linux-musl-x64@npm:1.69.7"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"sass-embedded-linux-x64@npm:1.69.7":
+  version: 1.69.7
+  resolution: "sass-embedded-linux-x64@npm:1.69.7"
   bin:
     sass: dart-sass/sass
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"sass-embedded-win32-ia32@npm:1.69.5":
-  version: 1.69.5
-  resolution: "sass-embedded-win32-ia32@npm:1.69.5"
+"sass-embedded-win32-ia32@npm:1.69.7":
+  version: 1.69.7
+  resolution: "sass-embedded-win32-ia32@npm:1.69.7"
   bin:
     sass: dart-sass/sass.bat
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"sass-embedded-win32-x64@npm:1.69.5":
-  version: 1.69.5
-  resolution: "sass-embedded-win32-x64@npm:1.69.5"
+"sass-embedded-win32-x64@npm:1.69.7":
+  version: 1.69.7
+  resolution: "sass-embedded-win32-x64@npm:1.69.7"
   bin:
     sass: dart-sass/sass.bat
-  conditions: os=win32 & cpu=x64
+  conditions: os=win32 & (cpu=arm64 | cpu=x64)
   languageName: node
   linkType: hard
 
-"sass-embedded@npm:1.69.5":
-  version: 1.69.5
-  resolution: "sass-embedded@npm:1.69.5"
+"sass-embedded@npm:1.69.7":
+  version: 1.69.7
+  resolution: "sass-embedded@npm:1.69.7"
   dependencies:
     "@bufbuild/protobuf": ^1.0.0
     buffer-builder: ^0.2.0
     immutable: ^4.0.0
     rxjs: ^7.4.0
-    sass-embedded-darwin-arm64: 1.69.5
-    sass-embedded-darwin-x64: 1.69.5
-    sass-embedded-linux-arm: 1.69.5
-    sass-embedded-linux-arm64: 1.69.5
-    sass-embedded-linux-ia32: 1.69.5
-    sass-embedded-linux-x64: 1.69.5
-    sass-embedded-win32-ia32: 1.69.5
-    sass-embedded-win32-x64: 1.69.5
+    sass-embedded-android-arm: 1.69.7
+    sass-embedded-android-arm64: 1.69.7
+    sass-embedded-android-ia32: 1.69.7
+    sass-embedded-android-x64: 1.69.7
+    sass-embedded-darwin-arm64: 1.69.7
+    sass-embedded-darwin-x64: 1.69.7
+    sass-embedded-linux-arm: 1.69.7
+    sass-embedded-linux-arm64: 1.69.7
+    sass-embedded-linux-ia32: 1.69.7
+    sass-embedded-linux-musl-arm: 1.69.7
+    sass-embedded-linux-musl-arm64: 1.69.7
+    sass-embedded-linux-musl-ia32: 1.69.7
+    sass-embedded-linux-musl-x64: 1.69.7
+    sass-embedded-linux-x64: 1.69.7
+    sass-embedded-win32-ia32: 1.69.7
+    sass-embedded-win32-x64: 1.69.7
     supports-color: ^8.1.1
     varint: ^6.0.0
   dependenciesMeta:
+    sass-embedded-android-arm:
+      optional: true
+    sass-embedded-android-arm64:
+      optional: true
+    sass-embedded-android-ia32:
+      optional: true
+    sass-embedded-android-x64:
+      optional: true
     sass-embedded-darwin-arm64:
       optional: true
     sass-embedded-darwin-x64:
@@ -10311,13 +10391,21 @@ fsevents@~2.3.2:
       optional: true
     sass-embedded-linux-ia32:
       optional: true
+    sass-embedded-linux-musl-arm:
+      optional: true
+    sass-embedded-linux-musl-arm64:
+      optional: true
+    sass-embedded-linux-musl-ia32:
+      optional: true
+    sass-embedded-linux-musl-x64:
+      optional: true
     sass-embedded-linux-x64:
       optional: true
     sass-embedded-win32-ia32:
       optional: true
     sass-embedded-win32-x64:
       optional: true
-  checksum: c014b2f8957f1cae2876eeeb629e2f9c9a8cd0db22d2bfaf4c6a147423299350afb21aec8622b6346b6e4b56716fa78a94dddb88a2bcdf1d445fcf478e55ad97
+  checksum: 90b5efc2a98cb1b33702dd08652207a8566fbba4e4e3022e3b8af6ebeffc494ba71f6237d84448bd31e2270319ebcea698f91219b0c5ed1f9dbdc8568e23f58b
   languageName: node
   linkType: hard
 
