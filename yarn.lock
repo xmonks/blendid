@@ -3,7 +3,7 @@
 
 __metadata:
   version: 8
-  cacheKey: 10
+  cacheKey: 10c0
 
 "@apideck/better-ajv-errors@npm:^0.3.1":
   version: 0.3.2
@@ -1923,7 +1923,7 @@ __metadata:
     gulp-postcss: "npm:9.1.0"
     gulp-rename: "npm:2.0.0"
     gulp-rev-delete-original: "npm:0.2.3"
-    gulp-rev-rewrite: "npm:=5.0.0"
+    gulp-rev-rewrite: "npm:=6.0.0"
     gulp-sizereport: "npm:1.2.1"
     gulp-svgmin: "npm:4.1.0"
     gulp-svgstore: "npm:9.0.0"
@@ -4832,7 +4832,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"escape-string-regexp@npm:5.0.0":
+"escape-string-regexp@npm:5.0.0, escape-string-regexp@npm:^5.0.0":
   version: 5.0.0
   resolution: "escape-string-regexp@npm:5.0.0"
   checksum: 8/20daabe197f3cb198ec28546deebcf24b3dbb1a5a269184381b3116d12f0532e06007f4bc8da25669d6a7f8efb68db0758df4cd981f57bc5b57f521a3e12c59e
@@ -5922,14 +5922,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gulp-rev-rewrite@npm:=5.0.0":
-  version: 5.0.0
-  resolution: "gulp-rev-rewrite@npm:5.0.0"
+"gulp-rev-rewrite@npm:=6.0.0":
+  version: 6.0.0
+  resolution: "gulp-rev-rewrite@npm:6.0.0"
   dependencies:
-    lodash.escaperegexp: "npm:^4.1.2"
-    plugin-error: "npm:^1.0.1"
-    through2: "npm:^4.0.2"
-  checksum: 8/4b7562584991ac152ce0be0eedcadc32f63a0fbbe41adc3382d24100c91891a74e5eb3fff87bfe2fddacc96ed0a14397e1d235a4f41c09c090d5362e458959d2
+    escape-string-regexp: "npm:^5.0.0"
+    plugin-error: "npm:^2.0.0"
+  checksum: 092452602b9be3c274a406d3c8fc7dc853af4e2823bd079aa748ce582a9d38ff62e77804c68596e9822c0acba28570879b07ef7c3bae7b875ff93319f291cb1d
   languageName: node
   linkType: hard
 
@@ -7265,13 +7264,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.escaperegexp@npm:^4.1.2":
-  version: 4.1.2
-  resolution: "lodash.escaperegexp@npm:4.1.2"
-  checksum: 8/6d99452b1cfd6073175a9b741a9b09ece159eac463f86f02ea3bee2e2092923fce812c8d2bf446309cc52d1d61bf9af51c8118b0d7421388e6cead7bd3798f0f
-  languageName: node
-  linkType: hard
-
 "lodash.isfinite@npm:^3.3.2":
   version: 3.3.2
   resolution: "lodash.isfinite@npm:3.3.2"
@@ -8489,7 +8481,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"plugin-error@npm:2.0.1, plugin-error@npm:^2.0.1":
+"plugin-error@npm:2.0.1, plugin-error@npm:^2.0.0, plugin-error@npm:^2.0.1":
   version: 2.0.1
   resolution: "plugin-error@npm:2.0.1"
   dependencies:
@@ -9723,7 +9715,7 @@ __metadata:
   dependencies:
     is-core-module: "npm:^2.1.0"
     path-parse: "npm:^1.0.6"
-  checksum: eb8853b1b7b9ef25f0156304c7c21e2a0d2b2ce247169282542e76565f460986e10adbb770eeb2549c06197fb546b433906cbf3700a3232c567aaaaa53490b88
+  checksum: 10/eb8853b1b7b9ef25f0156304c7c21e2a0d2b2ce247169282542e76565f460986e10adbb770eeb2549c06197fb546b433906cbf3700a3232c567aaaaa53490b88
   languageName: node
   linkType: hard
 
@@ -11283,7 +11275,7 @@ __metadata:
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 68e2b89d5094a4b2164d06172cee38d8789b11ee14f2f34ecab6398af078ea2676f2ba3943d52503d3cc8883acf8f15e6ef1db7f2e63b69b75f57558471786ec
+  checksum: 10/68e2b89d5094a4b2164d06172cee38d8789b11ee14f2f34ecab6398af078ea2676f2ba3943d52503d3cc8883acf8f15e6ef1db7f2e63b69b75f57558471786ec
   languageName: node
   linkType: hard
 
