@@ -1,11 +1,11 @@
-extras/demo
-*.md
-.travis.yml
 gulpfile.js/**/*.test.js
-.editorconfig
 prettier.config.mjs
 renovate.json
-public
+public/
 .circleci/
-.idea/
 .yarn/
+.editorconfig
+.gitignore
+.nvmrc
+.yarnrc.yml
+yarn.lock
