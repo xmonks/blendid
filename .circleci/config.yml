@@ -10,8 +10,6 @@ jobs:
     resource_class: arm.medium
     steps:
       - checkout
-      - node/install
-      - node/install-yarn
       - node/install-packages:
           pkg-manager: yarn-berry
           override-ci-command: yarn install --immutable
@@ -28,8 +26,6 @@ jobs:
     resource_class: arm.medium
     steps:
       - checkout
-      - node/install
-      - node/install-yarn
       - node/install-packages:
           pkg-manager: yarn-berry
           override-ci-command: yarn install --immutable
