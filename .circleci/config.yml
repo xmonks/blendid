@@ -5,8 +5,8 @@ orbs:
 
 jobs:
   build:
-    machine:
-      image: ubuntu-2204:2022.10.2
+    docker:
+      - image: cimg/node:20
     resource_class: arm.medium
     steps:
       - checkout
@@ -23,8 +23,8 @@ jobs:
           template: basic_fail_1
           channel: ntf-topmonks-webs
   test:
-    machine:
-      image: ubuntu-2204:2022.10.2
+    docker:
+      - image: cimg/node:20
     resource_class: arm.medium
     steps:
       - checkout
