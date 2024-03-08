@@ -5,8 +5,16 @@
     "config:base",
     "schedule:daily",
     "group:postcss",
-    "group:marked",
     ":preserveSemverRanges",
     ":dependencyDashboard"
+  ],
+  "automerge": true,
+  "automergeStrategy": "rebase",
+  "packageRules": [
+    {
+      "groupName": "marked",
+      "matchPackageNames": ["marked"],
+      "matchPackagePrefixes": ["marked-"]
+    }
   ]
 }
