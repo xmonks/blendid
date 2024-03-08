@@ -106,6 +106,7 @@ export default {
       minimumVendorImplementations: 2
     },
     sass: {
+      pkgImporter: new sass.NodePackageImporter(),
       importers: [
         {
           findFileUrl(url) {
