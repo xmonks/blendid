@@ -5,6 +5,7 @@
     "config:base",
     "schedule:daily",
     "group:postcss",
+    "group:marked",
     ":preserveSemverRanges",
     ":dependencyDashboard"
   ]
