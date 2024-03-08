@@ -9,6 +9,7 @@
     ":dependencyDashboard"
   ],
   "automerge": true,
+  "automergeType": "pr",
   "automergeStrategy": "rebase",
   "packageRules": [
     {
