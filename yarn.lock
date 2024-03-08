@@ -1945,7 +1945,7 @@ __metadata:
     caniuse-lite: "npm:1.0.30001596"
     chai: "npm:5.1.0"
     chalk: "npm:5.3.0"
-    cloudinary: "npm:1.41.3"
+    cloudinary: "npm:2.0.3"
     cssnano: "npm:6.1.0"
     del: "npm:7.1.0"
     fancy-log: "npm:2.0.0"
@@ -3517,24 +3517,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cloudinary-core@npm:^2.13.0":
-  version: 2.13.0
-  resolution: "cloudinary-core@npm:2.13.0"
-  peerDependencies:
-    lodash: ">=4.0"
-  checksum: 183cc22ecf19d4430787f3de0a7a489ecdfe522021de3f636f9e01e040bcf6bb7d8bddbb6d551d67bd2d74587587f9c77d12214602e90fc1a70d454101bad20d
-  languageName: node
-  linkType: hard
-
-"cloudinary@npm:1.41.3":
-  version: 1.41.3
-  resolution: "cloudinary@npm:1.41.3"
+"cloudinary@npm:2.0.3":
+  version: 2.0.3
+  resolution: "cloudinary@npm:2.0.3"
   dependencies:
-    cloudinary-core: "npm:^2.13.0"
-    core-js: "npm:^3.30.1"
     lodash: "npm:^4.17.21"
     q: "npm:^1.5.1"
-  checksum: 1f49107e091b6a1c45a1f1ba424437fb1f90c50903f1e04a37b94e0cde46fb074179d8a647cb18ccacb33d155ab63a011ccaa4ba47665ba43b94f6ccd585a058
+  checksum: 719fb4643aa90977aa0fff51c15a3c9a5a44ba5809ed0dc293331fab4989efddca41e6694af522aff6f1d09590982f8d1da8d4dd4b32cdc1cf22ef1a7d15a3d9
   languageName: node
   linkType: hard
 
@@ -3748,13 +3737,6 @@ __metadata:
     browserslist: "npm:^4.14.7"
     semver: "npm:7.0.0"
   checksum: 3b527f56ad1864c384bfcdf22e898905ccfa64d02b95fab96d8f7e7e2f4fe32d9cf0749ff59ca304d8401c11b205d77cb8a747d85f718452195ee06872e357b4
-  languageName: node
-  linkType: hard
-
-"core-js@npm:^3.30.1":
-  version: 3.32.2
-  resolution: "core-js@npm:3.32.2"
-  checksum: 22f47e0972c6bff2eecbb02ab15ae012e35c7b3344d8569c7d8be906910867a84290d95e85b06a6e5c27a44d34a426ba96ee57874e542e42337428117df9ccde
   languageName: node
   linkType: hard
 
