@@ -1,5 +1,10 @@
 # Changelog
 
+## 7.1.0
+
+- bumped dependencies
+- Sass `pkg:` specifier is now supported, See [official blog post](https://sass-lang.com/blog/announcing-pkg-importers/) for more details
+
 ## 7.0.4
 
 - bumped dependencies to latest versions
