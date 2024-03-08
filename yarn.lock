@@ -1900,7 +1900,7 @@ __metadata:
     browser-sync: "npm:3.0.2"
     browserslist: "npm:4.23.0"
     caniuse-lite: "npm:1.0.30001596"
-    chai: "npm:5.0.0"
+    chai: "npm:5.1.0"
     chalk: "npm:5.3.0"
     cloudinary: "npm:1.41.2"
     cssnano: "npm:6.0.3"
@@ -3306,16 +3306,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chai@npm:5.0.0":
-  version: 5.0.0
-  resolution: "chai@npm:5.0.0"
+"chai@npm:5.1.0":
+  version: 5.1.0
+  resolution: "chai@npm:5.1.0"
   dependencies:
     assertion-error: "npm:^2.0.1"
     check-error: "npm:^2.0.0"
     deep-eql: "npm:^5.0.1"
-    loupe: "npm:^3.0.0"
+    loupe: "npm:^3.1.0"
     pathval: "npm:^2.0.0"
-  checksum: 6d6335c3c3a237d458f50efee6da99b8ed932b91fd18e85cc98c4e1cdc1f5319f550e5c08b89ca812873e9b874186701064c31d23392e47ef8a1055e2c86c0c1
+  checksum: 15ff6799051f5e0080440297451f1ef47164b4e825105c8df75100a24d60e0aea24455cff7287afbff091ba7bedc6b42e12d6f0f8bfb5b47cc1bdb446336bba0
   languageName: node
   linkType: hard
 
@@ -7392,7 +7392,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loupe@npm:^3.0.0":
+"loupe@npm:^3.1.0":
   version: 3.1.0
   resolution: "loupe@npm:3.1.0"
   dependencies:
