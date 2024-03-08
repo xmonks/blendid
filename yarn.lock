@@ -1980,7 +1980,7 @@ __metadata:
     modify-filename: "npm:2.0.0"
     nunjucks: "npm:3.2.4"
     nunjucks-markdown: "npm:2.0.1"
-    open: "npm:10.0.3"
+    open: "npm:10.0.4"
     plugin-error: "npm:2.0.1"
     postcss: "npm:8.4.35"
     postcss-preset-env: "npm:9.5.0"
@@ -8177,15 +8177,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"open@npm:10.0.3":
-  version: 10.0.3
-  resolution: "open@npm:10.0.3"
+"open@npm:10.0.4":
+  version: 10.0.4
+  resolution: "open@npm:10.0.4"
   dependencies:
     default-browser: "npm:^5.2.1"
     define-lazy-prop: "npm:^3.0.0"
     is-inside-container: "npm:^1.0.0"
     is-wsl: "npm:^3.1.0"
-  checksum: c0ac6335a67203fb08485f6cd5311cfbcd1fd202b8acc1518f10d8ec593d171252575e842d43630fe69b59faa266acf89942153e43276939e9a0bf0d4332ecb3
+  checksum: ec773cb8087a6987bcd1c7d5bec54edc855e321fe52bbfdf207f07d560b86936ec21066329e22bbcdc1e931da5662ae5cd6d0a6694a10df85e053ee79e1af744
   languageName: node
   linkType: hard
 
