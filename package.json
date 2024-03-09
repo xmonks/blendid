@@ -61,7 +61,7 @@
     "modify-filename": "2.0.0",
     "nunjucks": "3.2.4",
     "nunjucks-markdown": "2.0.1",
-    "open": "10.0.4",
+    "open": "10.1.0",
     "plugin-error": "2.0.1",
     "postcss": "8.4.35",
     "postcss-preset-env": "9.5.0",
