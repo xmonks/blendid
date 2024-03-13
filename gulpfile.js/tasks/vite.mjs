@@ -3,7 +3,7 @@ import logger from "fancy-log";
 import { createServer, version } from "vite";
 import basicSsl from "@vitejs/plugin-basic-ssl";
 import projectPath from "../lib/projectPath.mjs";
-import chalk from "chalk";
+import { styleText } from "node:util";
 
 export class ViteRegistry extends DefaultRegistry {
   constructor(config, pathConfig) {
@@ -29,12 +29,16 @@ export class ViteRegistry extends DefaultRegistry {
         ...config
       });
       await server.listen();
-      logger(`${chalk.cyan("[vite]")} ${chalk.blue(`v${version}`)}`);
-      logger(`${chalk.cyan("[vite]")} ${chalk.bold("dev server running at:")}`);
-      server.printUrls();
-      logger(`${chalk.cyan("[vite]")} serving files from: ${root}`);
       logger(
-        `${chalk.cyan("[vite]")} opening the browser... ${browser ?? ""} ${
+        `${styleText("cyan", "[vite]")} ${styleText("blue", `v${version}`)}`
+      );
+      logger(
+        `${styleText("cyan", "[vite]")} ${styleText("bold", "dev server running at:")}`
+      );
+      server.printUrls();
+      logger(`${styleText("cyan", "[vite]")} serving files from: ${root}`);
+      logger(
+        `${styleText("cyan", "[vite]")} opening the browser... ${browser ?? ""} ${
           browserArgs ?? ""
         }`
       );

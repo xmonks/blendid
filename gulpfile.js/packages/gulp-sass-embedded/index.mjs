@@ -5,7 +5,7 @@
  */
 import path from "node:path";
 import { Transform } from "node:stream";
-import chalk from "chalk";
+import { styleText } from "node:util";
 import logger from "fancy-log";
 import PluginError from "plugin-error";
 import replaceExtension from "replace-ext";
@@ -75,7 +75,9 @@ function errorMessage(file, error) {
   const filePath =
     (error.file === "stdin" ? file.path : error.file) || file.path;
   const relativePath = path.relative(process.cwd(), filePath);
-  const message = [chalk.underline(relativePath), error.formatted].join("\n");
+  const message = [styleText("underline", relativePath), error.formatted].join(
+    "\n"
+  );
 
   error.messageFormatted = message;
   error.messageOriginal = error.message;

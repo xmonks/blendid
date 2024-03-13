@@ -1,5 +1,5 @@
 import { Readable } from "node:stream";
-import chalk from "chalk";
+import { styleText } from "node:util";
 import log from "fancy-log";
 import DefaultRegistry from "undertaker-registry";
 import projectPath from "../lib/projectPath.mjs";
@@ -29,14 +29,20 @@ export class InitRegistry extends DefaultRegistry {
         dest(projectPath(this.pathConfig.src))
       );
 
-      log(chalk.green("Generating default Blendid project files"));
+      log(styleText("green", "Generating default Blendid project files"));
       log(
-        chalk.yellow(`
+        styleText(
+          "yellow",
+          `
 To start the dev server:
-`),
-        chalk.magenta(`
+`
+        ),
+        styleText(
+          "magenta",
+          `
 yarn blendid
-`)
+`
+        )
       );
 
       return Readable.from(merge([configStream, srcStream]));

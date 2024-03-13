@@ -26,7 +26,6 @@
     "browser-sync": "3.0.2",
     "browserslist": "4.23.0",
     "caniuse-lite": "1.0.30001597",
-    "chalk": "5.3.0",
     "cloudinary": "2.0.3",
     "cssnano": "6.1.0",
     "del": "7.1.0",
@@ -84,6 +83,9 @@
     "chai": "5.1.0",
     "mocha": "10.3.0",
     "prettier": "3.2.5"
+  },
+  "engines": {
+    "node": ">=21.7"
   },
   "packageManager": "yarn@4.1.1"
 }

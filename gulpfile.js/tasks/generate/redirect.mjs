@@ -11,7 +11,7 @@ import handleErrors from "../../lib/handleErrors.mjs";
 const mode = gulpMode();
 
 async function createFile(item, { host, route }) {
-  const data = await (new Response(item.contents).json());
+  const data = await new Response(item.contents).json();
   const [originalUrl, targetUrl] = route(data);
   const path = originalUrl.endsWith("/")
     ? originalUrl + "index.html"
@@ -39,7 +39,7 @@ function generateHtmlFile(col) {
     objectMode: true,
     transform(item, enc, done) {
       createFile(item, col)
-        .then(x => this.push(x))
+        .then((x) => this.push(x))
         .then(() => done());
     }
   });
