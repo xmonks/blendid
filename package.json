@@ -81,7 +81,7 @@
     "@material/layout-grid": "14.0.0",
     "@types/nunjucks": "3.2.6",
     "chai": "5.1.0",
-    "mocha": "10.3.0",
+    "mocha": "10.4.0",
     "prettier": "3.2.5"
   },
   "engines": {
