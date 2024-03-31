@@ -19,6 +19,10 @@ import {
 } from "../html.mjs";
 import projectPath from "../../lib/projectPath.mjs";
 import handleErrors from "../../lib/handleErrors.mjs";
+import debug from "gulp-debug";
+import logger from "gulplog";
+
+/** @typedef {import("@types/gulp")} Undertaker */
 
 const mode = gulpMode();
 
@@ -55,6 +59,9 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
     return Array.from(this.#ownTasks);
   }
 
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task, parallel, src, dest }) {
     if (!this.config.generate.html) return;
 
@@ -110,6 +117,7 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
 
       function generateHtmlTask() {
         return src(sourcePath)
+          .pipe(debug({ title: "generate-html:", logger: logger.debug }))
           .pipe(generateHtmlFile(route, templatePath))
           .on("error", handleErrors)
           .pipe(data(dataFunction))

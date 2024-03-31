@@ -7,6 +7,10 @@ import DefaultRegistry from "undertaker-registry";
 import Vinyl from "vinyl";
 import projectPath from "../../lib/projectPath.mjs";
 import handleErrors from "../../lib/handleErrors.mjs";
+import debug from "gulp-debug";
+import logger from "gulplog";
+
+/** @typedef {import("@types/gulp")} Undertaker */
 
 const mode = gulpMode();
 
@@ -58,6 +62,9 @@ export class GenerateRedirectsRegistry extends DefaultRegistry {
     return Array.from(this.#ownTasks);
   }
 
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task, parallel, src, dest }) {
     if (!this.config.generate.redirects) return;
 
@@ -66,6 +73,7 @@ export class GenerateRedirectsRegistry extends DefaultRegistry {
     function generateRedirect(sourcePath, destPath, col) {
       function generateRedirectsTask() {
         return src(sourcePath)
+          .pipe(debug({ title: "generate-redirect:", logger: logger.debug }))
           .pipe(generateHtmlFile(col))
           .pipe(nunjucksRender(config.nunjucksRender))
           .on("error", handleErrors)
@@ -73,7 +81,7 @@ export class GenerateRedirectsRegistry extends DefaultRegistry {
           .pipe(dest(destPath));
       }
 
-      generateRedirectsTask.displayName = `generate-redirects-${col.collection}`;
+      generateRedirectsTask.displayName = `generate-redirect-${col.collection}`;
       return generateRedirectsTask;
     }
 

@@ -6,6 +6,8 @@ import { RevUpdateReferencesRegistry } from "./rev/update-references.mjs";
 import { RevUpdateHtmlRegistry } from "./rev/update-html.mjs";
 import { RevUpdateJsRegistry } from "./rev/update-js.mjs";
 
+/** @typedef {import("@types/gulp")} Undertaker */
+
 export class RevRegistry extends DefaultRegistry {
   constructor(config, pathConfig) {
     super();
@@ -13,6 +15,9 @@ export class RevRegistry extends DefaultRegistry {
     this.pathConfig = pathConfig;
   }
 
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task, series, registry }) {
     if (!this.config.production.rev) return;
     registry(new RevAssetsRegistry(this.config, this.pathConfig));

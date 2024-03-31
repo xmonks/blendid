@@ -1,6 +1,10 @@
 import DefaultRegistry from "undertaker-registry";
 import changed from "gulp-changed";
 import projectPath from "../lib/projectPath.mjs";
+import debug from "gulp-debug";
+import logger from "gulplog";
+
+/** @typedef {import("@types/gulp")} Undertaker */
 
 export class ImagesRegistry extends DefaultRegistry {
   constructor(config, pathConfig) {
@@ -17,11 +21,15 @@ export class ImagesRegistry extends DefaultRegistry {
     };
   }
 
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task, src, dest }) {
     if (!this.config) return;
 
     task("images", () =>
-      src([this.paths.src, "*!README.md"])
+      src(this.paths.src)
+        .pipe(debug({ title: "images:", logger: logger.debug }))
         .pipe(changed(this.paths.dest))
         .pipe(dest(this.paths.dest))
     );

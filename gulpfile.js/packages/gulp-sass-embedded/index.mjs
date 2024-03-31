@@ -6,7 +6,7 @@
 import path from "node:path";
 import { Transform } from "node:stream";
 import { styleText } from "node:util";
-import logger from "fancy-log";
+import logger from "gulplog";
 import PluginError from "plugin-error";
 import replaceExtension from "replace-ext";
 import stripAnsi from "strip-ansi";

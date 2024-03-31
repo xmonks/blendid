@@ -8,6 +8,10 @@ import cloudinaryUpload, {
 } from "../packages/gulp-cloudinary-upload/index.mjs";
 import projectPath from "../lib/projectPath.mjs";
 import handleErrors from "../lib/handleErrors.mjs";
+import debug from "gulp-debug";
+import logger from "gulplog";
+
+/** @typedef {import("@types/gulp")} Undertaker */
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
@@ -37,6 +41,9 @@ export class CloudinaryRegistry extends DefaultRegistry {
     };
   }
 
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task, src, dest, lastRun }) {
     if (!this.config) return;
     const paths = this.paths;
@@ -57,6 +64,7 @@ export class CloudinaryRegistry extends DefaultRegistry {
       src(path.join(paths.src, "**", `*.{${this.config.extensions}}`), {
         since: lastRun(cloudinaryTask)
       })
+        .pipe(debug({ title: "cloudinary:", logger: logger.debug }))
         .pipe(
           changed(paths.dest, {
             async hasChanged(sourceFile, targetPath) {

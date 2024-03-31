@@ -1,7 +1,7 @@
 import { pathToFileURL } from "node:url";
 import * as path from "node:path";
 import module from "node:module";
-import logger from "fancy-log";
+import logger from "gulplog";
 import gulp_mode from "gulp-mode";
 import * as sass from "sass-embedded";
 import { v2 as cloudinary } from "cloudinary";
@@ -44,7 +44,9 @@ function cloudinaryUrl(publicId, opts = {}) {
         ])
       )
     );
-    return cloudinary.url(publicId, options);
+    let url = cloudinary.url(publicId, options);
+    logger.debug(url)
+    return url;
   } catch (err) {
     logger.error("cloudinaryUrl", err);
   }

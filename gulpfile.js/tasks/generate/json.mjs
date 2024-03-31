@@ -4,6 +4,10 @@ import merge from "gulp-merge-json";
 import { marked } from "../../lib/markdown.mjs";
 import projectPath from "../../lib/projectPath.mjs";
 import handleErrors from "../../lib/handleErrors.mjs";
+import debug from "gulp-debug";
+import logger from "gulplog";
+
+/** @typedef {import("@types/gulp")} Undertaker */
 
 export class GenerateJsonRegistry extends DefaultRegistry {
   #ownTasks = new Set();
@@ -17,6 +21,9 @@ export class GenerateJsonRegistry extends DefaultRegistry {
     return Array.from(this.#ownTasks);
   }
 
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task, parallel, src, dest }) {
     if (!this.config.generate.json) return;
 
@@ -24,6 +31,7 @@ export class GenerateJsonRegistry extends DefaultRegistry {
       const fileName = `${collection}.json`;
       const generateJsonTask = () =>
         src(sourcePath)
+          .pipe(debug({ title: "generate-json:", logger: logger.debug }))
           .pipe(markdownToJSON({ renderer: marked }))
           .on("error", handleErrors)
           .pipe(merge(Object.assign({ fileName }, mergeOptions)))

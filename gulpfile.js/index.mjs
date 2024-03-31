@@ -7,7 +7,7 @@
 */
 
 import gulp from "gulp";
-import logger from "fancy-log";
+import logger from "gulplog";
 import getEnabledTasks from "./lib/getEnabledTasks.mjs";
 import pathConfig from "./lib/getPathConfig.mjs";
 import { getTaskConfig } from "./lib/getTaskConfig.mjs";
@@ -47,6 +47,7 @@ gulp.registry(new StaticRegistry(taskConfig.static, pathConfig));
 gulp.registry(new StyleSheetsRegistry(taskConfig.stylesheets, pathConfig));
 gulp.registry(new WorkboxBuildRegistry(taskConfig.workboxBuild, pathConfig));
 
+// Register user provided registries
 if (Array.isArray(taskConfig.registries)) {
   for (const registry of taskConfig.registries) {
     gulp.registry(registry);

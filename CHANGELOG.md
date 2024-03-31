@@ -1,5 +1,15 @@
 # Changelog
 
+## 8.0.1
+- added debugging ability to every task
+- fixed globs/ignores
+- added type hints to registries
+
+## 8.0.0
+- Requires Node 21
+- Gulp v5
+- bumped dependencies
+
 ## 7.1.0
 
 - bumped dependencies

@@ -1,8 +1,10 @@
 import { Readable } from "node:stream";
 import { styleText } from "node:util";
-import log from "fancy-log";
+import logger from "gulplog";
 import DefaultRegistry from "undertaker-registry";
 import projectPath from "../lib/projectPath.mjs";
+
+/** @typedef {import("@types/gulp")} Undertaker */
 
 async function* merge(streams) {
   for (const stream of streams) {
@@ -19,6 +21,9 @@ export class InitRegistry extends DefaultRegistry {
     this.pathConfig = pathConfig;
   }
 
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task, src, dest }) {
     task("init", () => {
       const configStream = src(["path-config.json", "task-config.js"]).pipe(
@@ -29,8 +34,8 @@ export class InitRegistry extends DefaultRegistry {
         dest(projectPath(this.pathConfig.src))
       );
 
-      log(styleText("green", "Generating default Blendid project files"));
-      log(
+      logger.info(styleText("green", "Generating default Blendid project files"));
+      logger.info(
         styleText(
           "yellow",
           `

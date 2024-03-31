@@ -4,6 +4,10 @@ import when from "gulp-if";
 import revReplace from "gulp-rev-rewrite";
 import inject from "gulp-inject";
 import projectPath from "../../lib/projectPath.mjs";
+import debug from "gulp-debug";
+import logger from "gulplog";
+
+/** @typedef {import("@types/gulp")} Undertaker */
 
 // 4) Update asset references in HTML
 
@@ -14,6 +18,9 @@ export class RevUpdateHtmlRegistry extends DefaultRegistry {
     this.pathConfig = pathConfig;
   }
 
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task, src, dest }) {
     if (!this.config.html) return;
     task("update-html", () => {
@@ -36,6 +43,7 @@ export class RevUpdateHtmlRegistry extends DefaultRegistry {
           "*.html"
         )
       )
+        .pipe(debug({ title: "update-html:", logger: logger.debug }))
         .pipe(revReplace({ manifest }))
         .pipe(
           when(

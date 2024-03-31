@@ -2,6 +2,8 @@ import DefaultRegistry from "undertaker-registry";
 import { create } from "browser-sync";
 import projectPath from "../lib/projectPath.mjs";
 
+/** @typedef {import("@types/gulp")} Undertaker */
+
 const browserSync = create("blendid");
 
 function browsersyncReload(cb) {
@@ -38,11 +40,11 @@ export class BrowserSyncRegistry extends DefaultRegistry {
     this.config = normalizeConfig(rest);
 
     const excludeFoldersGlob = excludeFolders
-      ? `!${projectPath(pathConfig.dest, "**", `{${excludeFolders}}`, "**")}`
+      ? `!(${projectPath(pathConfig.dest, "**", `{${excludeFolders}}`, "**")})`
       : null;
 
     const excludeFilesGlobs = excludeFiles?.map(
-      (glob) => `!${projectPath(pathConfig.dest, glob)}`
+      (glob) => `!(${projectPath(pathConfig.dest, glob)})`
     );
 
     const server = this.config.proxy ?? this.config.server;
@@ -53,6 +55,9 @@ export class BrowserSyncRegistry extends DefaultRegistry {
       .filter(Boolean);
   }
 
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task, watch }) {
     if (!this.config) return;
     task("browserSync", (done) => {

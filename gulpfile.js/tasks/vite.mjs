@@ -1,9 +1,11 @@
 import DefaultRegistry from "undertaker-registry";
-import logger from "fancy-log";
+import logger from "gulplog";
 import { createServer, version } from "vite";
 import basicSsl from "@vitejs/plugin-basic-ssl";
 import projectPath from "../lib/projectPath.mjs";
 import { styleText } from "node:util";
+
+/** @typedef {import("@types/gulp")} Undertaker */
 
 export class ViteRegistry extends DefaultRegistry {
   constructor(config, pathConfig) {
@@ -11,6 +13,10 @@ export class ViteRegistry extends DefaultRegistry {
     this.config = config;
     this.pathConfig = pathConfig;
   }
+
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task }) {
     task("vite", async () => {
       const root = projectPath(this.pathConfig.dest);
@@ -29,15 +35,15 @@ export class ViteRegistry extends DefaultRegistry {
         ...config
       });
       await server.listen();
-      logger(
+      logger.info(
         `${styleText("cyan", "[vite]")} ${styleText("blue", `v${version}`)}`
       );
-      logger(
+      logger.info(
         `${styleText("cyan", "[vite]")} ${styleText("bold", "dev server running at:")}`
       );
       server.printUrls();
-      logger(`${styleText("cyan", "[vite]")} serving files from: ${root}`);
-      logger(
+      logger.info(`${styleText("cyan", "[vite]")} serving files from: ${root}`);
+      logger.info(
         `${styleText("cyan", "[vite]")} opening the browser... ${browser ?? ""} ${
           browserArgs ?? ""
         }`

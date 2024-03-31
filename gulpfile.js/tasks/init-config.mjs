@@ -1,7 +1,9 @@
 import DefaultRegistry from "undertaker-registry";
-import log from "fancy-log";
+import logger from "gulplog";
 import { styleText } from "node:util";
 import projectPath from "../lib/projectPath.mjs";
+
+/** @typedef {import("@types/gulp")} Undertaker */
 
 export class InitConfigRegistry extends DefaultRegistry {
   constructor(config, pathConfig) {
@@ -10,6 +12,9 @@ export class InitConfigRegistry extends DefaultRegistry {
     this.pathConfig = pathConfig;
   }
 
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task, src, dest }) {
     task("init-config", () => {
       const configStream = src([
@@ -17,7 +22,7 @@ export class InitConfigRegistry extends DefaultRegistry {
         "gulpfile.js/task-config.js"
       ]).pipe(dest(projectPath("config")));
 
-      log(
+      logger.info(
         styleText(
           "green",
           "Adding default path-config.json and task-config.js files to ./config/"

@@ -2,6 +2,10 @@ import fs from "node:fs";
 import DefaultRegistry from "undertaker-registry";
 import revReplace from "gulp-rev-rewrite";
 import projectPath from "../../lib/projectPath.mjs";
+import debug from "gulp-debug";
+import logger from "gulplog";
+
+/** @typedef {import("@types/gulp")} Undertaker */
 
 // 2) Update asset references with reved filenames in compiled css + js
 
@@ -12,6 +16,9 @@ export class RevUpdateReferencesRegistry extends DefaultRegistry {
     this.pathConfig = pathConfig;
   }
 
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task, src, dest }) {
     task("rev-update-references", () => {
       const manifestPath = projectPath(
@@ -27,6 +34,7 @@ export class RevUpdateReferencesRegistry extends DefaultRegistry {
           : {};
 
       return src(projectPath(this.pathConfig.dest, "**", "*.{css,js,mjs,map}"))
+        .pipe(debug({ title: "update-references:", logger: logger.debug }))
         .pipe(revReplace(Object.assign(options, { manifest })))
         .pipe(dest(projectPath(this.pathConfig.dest)));
     });

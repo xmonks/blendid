@@ -1,6 +1,6 @@
 {
   "name": "@hckr_/blendid",
-  "version": "7.1.0",
+  "version": "8.0.1",
   "description": "A full featured configurable front-end asset pipeline and static site builder",
   "license": "MIT",
   "main": "gulpfile.js/index.js",
@@ -16,8 +16,8 @@
     "./tasks/*.mjs": "./gulpfile.js/tasks/*.mjs"
   },
   "scripts": {
-    "start": "gulp -f gulpfile.js/index.mjs",
-    "build": "gulp build -f gulpfile.js/index.mjs",
+    "start": "./bin/blendid.js",
+    "build": "./bin/blendid.js build",
     "test": "mocha ./gulpfile.js/**/*.test.mjs",
     "outdated": "yarn upgrade-interactive"
   },
@@ -25,12 +25,11 @@
     "@vitejs/plugin-basic-ssl": "1.1.0",
     "browser-sync": "3.0.2",
     "browserslist": "4.23.0",
-    "caniuse-lite": "1.0.30001600",
+    "caniuse-lite": "1.0.30001603",
     "cloudinary": "2.1.0",
     "cssnano": "6.1.2",
     "del": "7.1.0",
-    "fancy-log": "2.0.0",
-    "gulp": "4.0.2",
+    "gulp": "5.0.0",
     "gulp-changed": "5.0.2",
     "gulp-data": "1.3.1",
     "gulp-debug": "5.0.1",
@@ -51,6 +50,7 @@
     "gulp-sizereport": "1.2.1",
     "gulp-svgmin": "4.1.0",
     "gulp-svgstore": "9.0.0",
+    "gulplog": "2.2.0",
     "lodash-es": "4.17.21",
     "marked": "12.0.1",
     "marked-gfm-heading-id": "3.1.3",
@@ -79,7 +79,10 @@
   },
   "devDependencies": {
     "@material/layout-grid": "14.0.0",
+    "@types/gulp": "^4.0.17",
     "@types/nunjucks": "3.2.6",
+    "@types/undertaker": "^1.2.11",
+    "@types/undertaker-registry": "^1.0.4",
     "chai": "5.1.0",
     "mocha": "10.4.0",
     "prettier": "3.2.5"

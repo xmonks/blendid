@@ -2,7 +2,7 @@ import DefaultRegistry from "undertaker-registry";
 import { generateSW, injectManifest } from "workbox-build";
 import projectPath from "../lib/projectPath.mjs";
 
-const transformConfigPaths = ({ globDirectory, swDest, swSrc, ...config }) => {
+function transformConfigPaths({ globDirectory, swDest, swSrc, ...config }) {
   if (globDirectory) {
     config.globDirectory = projectPath(globDirectory);
   }
@@ -13,7 +13,7 @@ const transformConfigPaths = ({ globDirectory, swDest, swSrc, ...config }) => {
     config.swSrc = projectPath(swSrc);
   }
   return config;
-};
+}
 
 export class WorkboxBuildRegistry extends DefaultRegistry {
   constructor(config, pathConfig) {
@@ -22,6 +22,9 @@ export class WorkboxBuildRegistry extends DefaultRegistry {
     this.pathConfig = pathConfig;
   }
 
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task }) {
     if (!this.config) return;
 

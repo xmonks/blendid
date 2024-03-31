@@ -2,6 +2,10 @@ import fs from "node:fs";
 import DefaultRegistry from "undertaker-registry";
 import revReplace from "gulp-rev-rewrite";
 import projectPath from "../../lib/projectPath.mjs";
+import debug from "gulp-debug";
+import logger from "gulplog";
+
+/** @typedef {import("@types/gulp")} Undertaker */
 
 export class RevUpdateJsRegistry extends DefaultRegistry {
   constructor(config, pathConfig) {
@@ -16,6 +20,10 @@ export class RevUpdateJsRegistry extends DefaultRegistry {
       manifest: projectPath(pathConfig.dest, "rev-manifest.json")
     };
   }
+
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task, src, dest }) {
     if (!this.config.esbuild) return;
     task("update-js", () => {
@@ -24,6 +32,7 @@ export class RevUpdateJsRegistry extends DefaultRegistry {
         ? fs.readFileSync(this.paths.manifest)
         : null;
       return src(this.paths.src)
+        .pipe(debug({ title: "update-js:", logger: logger.debug }))
         .pipe(
           revReplace({
             manifest,

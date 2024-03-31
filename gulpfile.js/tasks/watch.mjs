@@ -1,6 +1,8 @@
 import DefaultRegistry from "undertaker-registry";
 import projectPath from "../lib/projectPath.mjs";
 
+/** @typedef {import("@types/gulp")} Undertaker */
+
 function getTaskPathFor(taskName, pathConfig) {
   switch (taskName) {
     case "iconFont":
@@ -21,6 +23,9 @@ export class WatchRegistry extends DefaultRegistry {
     this.pathConfig = pathConfig;
   }
 
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task, series, watch }) {
     const server = this.config.vite ? "vite" : "browserSync";
     task(
@@ -49,12 +54,12 @@ export class WatchRegistry extends DefaultRegistry {
               taskConfig.extensions ? `.{${taskConfig.extensions}}` : ""
             }`;
             const exclude = taskConfig.exclude
-              ? `!{${taskConfig.exclude}}`
-              : "";
+              ? `${taskConfig.exclude}`
+              : null;
             const extraWatch = taskConfig.watch ?? "";
             watch(
-              [globPattern, exclude, extraWatch],
-              { cwd: srcPath },
+              [globPattern, extraWatch],
+              { cwd: srcPath, ignored: exclude },
               task(taskName)
             );
           }

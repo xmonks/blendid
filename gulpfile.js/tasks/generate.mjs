@@ -3,6 +3,8 @@ import { GenerateRedirectsRegistry } from "./generate/redirect.mjs";
 import { GenerateJsonRegistry } from "./generate/json.mjs";
 import { GenerateHtmlRegistry } from "./generate/html.mjs";
 
+/** @typedef {import("@types/gulp")} Undertaker */
+
 const noop = (done) => {
   done();
 };
@@ -14,6 +16,9 @@ export class GenerateRegistry extends DefaultRegistry {
     this.pathConfig = pathConfig;
   }
 
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task, series, registry }) {
     if (!this.config.generate) return;
 

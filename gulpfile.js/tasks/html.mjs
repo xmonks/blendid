@@ -2,6 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import DefaultRegistry from "undertaker-registry";
 import gulp from "gulp";
+import logger from "gulplog";
+import debug from "gulp-debug";
 import data from "gulp-data";
 import gulpif from "gulp-if";
 import gulp_mode from "gulp-mode";
@@ -17,6 +19,7 @@ import handleErrors from "../lib/handleErrors.mjs";
 import cloneDeep from "lodash-es/cloneDeep.js";
 
 /** @typedef {import("@types/nunjucks").Environment} Environment */
+/** @typedef {import("@types/gulp")} Undertaker */
 
 const mode = gulp_mode();
 
@@ -52,17 +55,15 @@ export function createDataFunction(collections, pathConfig, paths) {
   };
 }
 
-export function getPaths(exclude, taskConfig, pathConfig) {
+export function getPaths(taskConfig, pathConfig) {
   return {
-    src: [
-      projectPath(
-        pathConfig.src,
-        pathConfig.html.src,
-        "**",
-        `*.{${taskConfig.html.extensions}}`
-      ),
-      exclude
-    ].filter(Boolean),
+    ignore: taskConfig.html.excludeFolders?.map((x) => `**/${x}/*`),
+    src: projectPath(
+      pathConfig.src,
+      pathConfig.html.src,
+      `**`,
+      `*.{${taskConfig.html?.extensions ?? "html"}}`
+    ),
     spritesSrc: projectPath(pathConfig.src, pathConfig.icons.src, "*.svg"),
     dataPath: pathConfig.data
       ? projectPath(
@@ -113,15 +114,12 @@ export class HtmlRegistry extends DefaultRegistry {
     super();
     this.config = config;
     this.pathConfig = pathConfig;
-    const exclude = `!${projectPath(
-      pathConfig.src,
-      pathConfig.html.src,
-      "**",
-      `{${config.html.excludeFolders}}`,
-      "**"
-    )}`;
-    this.paths = getPaths(exclude, config, pathConfig);
+    this.paths = getPaths(config, pathConfig);
   }
+
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task, src, dest }) {
     if (!this.config.html) return;
 
@@ -166,7 +164,8 @@ export class HtmlRegistry extends DefaultRegistry {
         )
         .pipe(svgstore(this.config.svgSprite.svgstore));
 
-      return src(this.paths.src)
+      return src(this.paths.src, { ignore: this.paths.ignore })
+        .pipe(debug({ title: "html:", logger: logger.debug }))
         .pipe(data(dataFunction))
         .on("error", handleErrors)
         .pipe(nunjucksRender(nunjucksRenderOptions))

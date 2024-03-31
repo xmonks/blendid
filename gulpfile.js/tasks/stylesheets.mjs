@@ -6,6 +6,10 @@ import sass from "../packages/gulp-sass-embedded/index.mjs";
 import projectPath from "../lib/projectPath.mjs";
 import getPostCSSPlugins from "../lib/postCSS.mjs";
 import handleErrors from "../lib/handleErrors.mjs";
+import debug from "gulp-debug";
+import logger from "gulplog";
+
+/** @typedef {import("@types/gulp")} Undertaker */
 
 export class StyleSheetsRegistry extends DefaultRegistry {
   constructor(config, pathConfig) {
@@ -17,12 +21,15 @@ export class StyleSheetsRegistry extends DefaultRegistry {
         pathConfig.src,
         pathConfig.stylesheets?.src ?? "",
         "**",
-        `[!_]*.{${config.extensions}}`
+        `!(_)*.{${config.extensions}}`
       ),
       dest: projectPath(pathConfig.dest, pathConfig.stylesheets?.dest ?? "")
     };
   }
 
+  /**
+   * @param {Undertaker} taker
+   */
   init({ task, src, dest }) {
     if (!this.config) return;
 
@@ -38,6 +45,7 @@ export class StyleSheetsRegistry extends DefaultRegistry {
       const { plugins: userPlugins, ...postCssConfig } = config.postcss ?? {};
       const plugins = getPostCSSPlugins(config, userPlugins);
       return src(paths.src)
+        .pipe(debug({ title: "stylesheets:", logger: logger.debug }))
         .pipe(sass(config.sass))
         .on("error", handleErrors)
         .pipe(postcss(plugins, postCssConfig))

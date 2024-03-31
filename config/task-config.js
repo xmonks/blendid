@@ -4,6 +4,7 @@ module.exports = {
   html: true,
   images: true,
   cloudinary: false,
+  workboxBuild: false,
   fonts: true,
   static: true,
   svgSprite: true,
@@ -14,14 +15,6 @@ module.exports = {
     server: {
       baseDir: pathConfig.dest,
     },
-  },
-
-  workboxBuild: {
-    globDirectory: pathConfig.dest,
-    globPatterns: ["**/*.{html,json,js,css,png,jpg,gif,svg}"],
-    // Create service-worker.js source file and define `swSrc` to use `injectManifest` method
-    // swSrc: `${pathConfig.src}/sw.js`,
-    swDest: `${pathConfig.dest}/sw.prod.js`
   },
 
   production: {
