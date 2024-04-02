@@ -74,7 +74,7 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
       destPath,
       { template, route, collection }
     ) {
-      const paths = getPaths(null, taskConfig, pathConfig);
+      const paths = getPaths(taskConfig, pathConfig);
       const templatePath = projectPath(
         pathConfig.src,
         pathConfig.html.src,

@@ -44,9 +44,7 @@ function cloudinaryUrl(publicId, opts = {}) {
         ])
       )
     );
-    let url = cloudinary.url(publicId, options);
-    logger.debug(url)
-    return url;
+    return cloudinary.url(publicId, options);
   } catch (err) {
     logger.error("cloudinaryUrl", err);
   }

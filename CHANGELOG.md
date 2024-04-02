@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.0.2
+- removed `cloudinaryUrl` debug logging
+- fixed HTML generator NPE
+
 ## 8.0.1
 - added debugging ability to every task
 - fixed globs/ignores
