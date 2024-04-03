@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.0.3
+- Fixed fonts task changing encoding of font files
+- Updated Vite to 5.2.8
+
 ## 8.0.2
 - removed `cloudinaryUrl` debug logging
 - fixed HTML generator NPE

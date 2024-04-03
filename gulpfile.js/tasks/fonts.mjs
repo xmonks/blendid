@@ -28,7 +28,7 @@ export class FontsRegistry extends DefaultRegistry {
     if (!this.config) return;
 
     task("fonts", () =>
-      src(this.paths.src)
+      src(this.paths.src, { encoding: false })
         .pipe(debug({ title: "fonts:", logger: logger.debug }))
         .pipe(changed(this.paths.dest))
         .pipe(dest(this.paths.dest))

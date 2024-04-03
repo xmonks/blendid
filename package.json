@@ -1,6 +1,6 @@
 {
   "name": "@hckr_/blendid",
-  "version": "8.0.2",
+  "version": "8.0.3",
   "description": "A full featured configurable front-end asset pipeline and static site builder",
   "license": "MIT",
   "main": "gulpfile.js/index.js",
@@ -74,7 +74,7 @@
     "vinyl": "3.0.0",
     "vinyl-file": "5.0.0",
     "vinyl-sourcemaps-apply": "0.2.1",
-    "vite": "5.2.7",
+    "vite": "5.2.8",
     "workbox-build": "7.0.0"
   },
   "devDependencies": {
