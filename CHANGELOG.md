@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.0.4
+- all binary handling tasks have disabled encoding
+- Updated Sass Embedded to 1.74.1
+
 ## 8.0.3
 - Fixed fonts task changing encoding of font files
 - Updated Vite to 5.2.8

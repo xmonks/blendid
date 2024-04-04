@@ -2155,7 +2155,6 @@ __metadata:
     gulp-markdown-to-json: "npm:1.1.0"
     gulp-merge-json: "npm:2.2.1"
     gulp-mode: "npm:1.1.0"
-    gulp-noop: "npm:1.0.1"
     gulp-notify: "npm:4.0.0"
     gulp-nunjucks-render: "npm:2.2.3"
     gulp-postcss: "npm:10.0.0"
@@ -5728,7 +5727,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gulp-noop@npm:1.0.1, gulp-noop@npm:^1.0.1":
+"gulp-noop@npm:^1.0.1":
   version: 1.0.1
   resolution: "gulp-noop@npm:1.0.1"
   dependencies:

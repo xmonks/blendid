@@ -62,6 +62,7 @@ export class CloudinaryRegistry extends DefaultRegistry {
 
     const cloudinaryTask = () =>
       src(path.join(paths.src, "**", `*.{${this.config.extensions}}`), {
+        encoding: false,
         since: lastRun(cloudinaryTask)
       })
         .pipe(debug({ title: "cloudinary:", logger: logger.debug }))

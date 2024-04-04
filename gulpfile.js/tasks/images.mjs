@@ -28,7 +28,7 @@ export class ImagesRegistry extends DefaultRegistry {
     if (!this.config) return;
 
     task("images", () =>
-      src(this.paths.src)
+      src(this.paths.src, { encoding: false })
         .pipe(debug({ title: "images:", logger: logger.debug }))
         .pipe(changed(this.paths.dest))
         .pipe(dest(this.paths.dest))

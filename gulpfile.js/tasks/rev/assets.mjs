@@ -27,7 +27,10 @@ export class RevAssetsRegistry extends DefaultRegistry {
         "*.{css,js,mjs,map,json,html,txt}"
       )}`;
 
-      return src(projectPath(this.pathConfig.dest, "**", "*"), { ignore })
+      return src(projectPath(this.pathConfig.dest, "**", "*"), {
+        ignore,
+        encoding: false
+      })
         .pipe(debug({ title: "rev-assets:", logger: logger.debug }))
         .pipe(rev())
         .pipe(dest(projectPath(this.pathConfig.dest)))

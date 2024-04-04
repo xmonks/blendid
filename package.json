@@ -1,6 +1,6 @@
 {
   "name": "@hckr_/blendid",
-  "version": "8.0.3",
+  "version": "8.0.4",
   "description": "A full featured configurable front-end asset pipeline and static site builder",
   "license": "MIT",
   "main": "gulpfile.js/index.js",
@@ -40,7 +40,6 @@
     "gulp-markdown-to-json": "1.1.0",
     "gulp-merge-json": "2.2.1",
     "gulp-mode": "1.1.0",
-    "gulp-noop": "1.0.1",
     "gulp-notify": "4.0.0",
     "gulp-nunjucks-render": "2.2.3",
     "gulp-postcss": "10.0.0",
