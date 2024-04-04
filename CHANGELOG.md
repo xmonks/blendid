@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.0.6
+- rev JS uses esm path config prior to esbuild
+
+## 8.0.5
+- fix error in sizereport
+
 ## 8.0.4
 - all binary handling tasks have disabled encoding
 - Updated Sass Embedded to 1.74.1
