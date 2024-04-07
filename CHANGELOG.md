@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.0.7
+- changed order of static files task (moved to second place after clean)
+- updated caniuse-lite
+
 ## 8.0.6
 - rev JS uses esm path config prior to esbuild
 

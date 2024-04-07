@@ -72,12 +72,12 @@ function devTasks() {
 
   return [
     "clean",
+    staticFiles,
     prebuild,
     generate,
     assetTasks && gulp.parallel(assetTasks),
     codeTasks && gulp.parallel(codeTasks),
     html,
-    staticFiles,
     postbuild,
     workboxBuild,
     "watch"
@@ -103,13 +103,13 @@ function prodTasks() {
 
   return [
     "clean",
+    staticFiles,
     prebuild,
     generate,
     assetTasks && gulp.parallel(assetTasks),
     codeTasks && gulp.parallel(codeTasks),
     html,
     rev,
-    staticFiles,
     postbuild,
     workboxBuild,
     "size-report"

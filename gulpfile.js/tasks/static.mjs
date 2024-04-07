@@ -25,7 +25,7 @@ export class StaticRegistry extends DefaultRegistry {
     task("static", () =>
       src(
         this.paths.src,
-        Object.assign({ dot: true }, this.config.srcOptions || {})
+        Object.assign({ dot: true, encoding: false }, this.config.srcOptions)
       )
         .pipe(debug({ title: "static:", logger: logger.debug }))
         .pipe(changed(this.paths.dest))
