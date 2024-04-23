@@ -2141,7 +2141,7 @@ __metadata:
     browserslist: "npm:4.23.0"
     caniuse-lite: "npm:1.0.30001612"
     chai: "npm:5.1.0"
-    cloudinary: "npm:2.1.0"
+    cloudinary: "npm:2.2.0"
     cssnano: "npm:6.1.2"
     del: "npm:7.1.0"
     gulp: "npm:5.0.0"
@@ -3703,13 +3703,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cloudinary@npm:2.1.0":
-  version: 2.1.0
-  resolution: "cloudinary@npm:2.1.0"
+"cloudinary@npm:2.2.0":
+  version: 2.2.0
+  resolution: "cloudinary@npm:2.2.0"
   dependencies:
     lodash: "npm:^4.17.21"
     q: "npm:^1.5.1"
-  checksum: 10c0/8e05207cefec7ee247ba678f73d7aa7e5ecf8b6f3ef77f006be3d7644eeb1766ec3b5414021c7c5d4d301e4a7cc6eb8014055a4207af673cd72d11e95cb99a5e
+  checksum: 10c0/e9d2d23574c1b416060e67f465859ab4399796cac3fa3b911c0e28427053e988f0614baf9512383eb7e9e22aeb99e77cd76a392547bb6c7ea022cbfaaf0a9bf0
   languageName: node
   linkType: hard
 
