@@ -15,8 +15,7 @@ import logger from "gulplog";
 const mode = gulpMode();
 
 async function createFile(item, { host, route }) {
-  const data = await new Response(item.contents).json();
-  const [originalUrl, targetUrl] = route(data);
+  const [originalUrl, targetUrl] = route(item);
   const path = originalUrl.endsWith("/")
     ? originalUrl + "index.html"
     : originalUrl;
@@ -42,8 +41,15 @@ function generateHtmlFile(col) {
   return new Transform({
     objectMode: true,
     transform(item, enc, done) {
-      createFile(item, col)
-        .then((x) => this.push(x))
+      new Response(item.contents)
+        .json()
+        .then((data) =>
+          Promise.all(
+            data.map((x) =>
+              createFile(x, col).then((x) => this.push(x))
+            )
+          )
+        )
         .then(() => done());
     }
   });
