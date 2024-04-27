@@ -27,9 +27,8 @@ import logger from "gulplog";
 const mode = gulpMode();
 
 async function createFile(item, route, template) {
-  const data = await new Response(item.contents).json();
   return new Vinyl({
-    path: route(data),
+    path: route(item),
     contents: fs.readFileSync(template),
     data: { item }
   });
@@ -39,8 +38,15 @@ function generateHtmlFile(route, template) {
   return new Transform({
     objectMode: true,
     transform(item, enc, done) {
-      createFile(item, route, template)
-        .then((x) => this.push(x))
+      new Response(item.contents)
+        .json()
+        .then((data) =>
+          Promise.all(
+            data.map((x) =>
+              createFile(x, route, template).then((x) => this.push(x))
+            )
+          )
+        )
         .then(() => done());
     }
   });
