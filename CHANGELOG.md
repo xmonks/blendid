@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.0.8
+ - fixed HTML generator to generate file for each item in collection
+ - updated dependencies
+
 ## 8.0.7
 - changed order of static files task (moved to second place after clean)
 - updated caniuse-lite
