@@ -74,7 +74,7 @@
     "vinyl-file": "5.0.0",
     "vinyl-sourcemaps-apply": "0.2.1",
     "vite": "5.2.12",
-    "workbox-build": "7.1.0"
+    "workbox-build": "7.1.1"
   },
   "devDependencies": {
     "@material/layout-grid": "14.0.0",
