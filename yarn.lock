@@ -2212,7 +2212,7 @@ __metadata:
     vinyl-file: "npm:5.0.0"
     vinyl-sourcemaps-apply: "npm:0.2.1"
     vite: "npm:5.2.12"
-    workbox-build: "npm:7.1.0"
+    workbox-build: "npm:7.1.1"
   bin:
     blendid: bin/blendid.js
   languageName: unknown
@@ -10966,9 +10966,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"workbox-build@npm:7.1.0":
-  version: 7.1.0
-  resolution: "workbox-build@npm:7.1.0"
+"workbox-build@npm:7.1.1":
+  version: 7.1.1
+  resolution: "workbox-build@npm:7.1.1"
   dependencies:
     "@apideck/better-ajv-errors": "npm:^0.3.1"
     "@babel/core": "npm:^7.24.4"
@@ -11007,7 +11007,7 @@ __metadata:
     workbox-streams: "npm:7.1.0"
     workbox-sw: "npm:7.1.0"
     workbox-window: "npm:7.1.0"
-  checksum: 10c0/c482fde713bad582bd7d4861113d7367ab4722eba9c102864c71048815792c623e9117a8f79957e0388d0c08e8303962d1fb23931456da73909e87d06638d101
+  checksum: 10c0/002b2866887bd11abd357a08129f36ac9eec84119db4f510828bf3972733879e9c9a9ba67e09ba793cbb43b30fe2d16c946de6effa52a7ae0f614babe0d5cd61
   languageName: node
   linkType: hard
 
