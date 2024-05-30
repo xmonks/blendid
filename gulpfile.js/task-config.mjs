@@ -1,4 +1,4 @@
-import pathConfig from "./path-config.json" assert { type: "json" };
+import pathConfig from "./path-config.json" with { type: "json" };
 
 export default {
   html: true,

@@ -36,7 +36,7 @@ export async function loadDataFile(dataFile) {
   const isJSON = path.extname(dataFile) === ".json";
   const dataModule = await import(
     `${dataFile}?${Date.now()}`,
-    isJSON ? { assert: { type: "json" } } : undefined
+    isJSON ? { with: { type: "json" } } : undefined
   );
   return dataModule.default;
 }

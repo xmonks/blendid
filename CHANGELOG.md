@@ -1,5 +1,10 @@
 # Changelog
 
+## 8.1.O
+ - requires Node 22
+ - bumped dependencies
+ - uses `with` instead of `assert` in JSON imports
+
 ## 8.0.8
  - fixed HTML generator to generate file for each item in collection
  - updated dependencies
