@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.1.1
+ - cleanup marked usage from transitional settings
+
 ## 8.1.O
  - requires Node 22
  - bumped dependencies

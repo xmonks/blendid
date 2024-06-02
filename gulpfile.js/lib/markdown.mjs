@@ -3,19 +3,15 @@ import { mangle } from "marked-mangle";
 import { markedHighlight } from "marked-highlight";
 import { gfmHeadingId } from "marked-gfm-heading-id";
 
-marked.use({
-  headerIds: undefined,
-  headerPrefix: undefined
-});
-marked.use(gfmHeadingId());
 marked.use(
+  gfmHeadingId(),
   markedHighlight({
     langPrefix: "language-",
     highlight(code, lang) {
       return code;
     }
-  })
+  }),
+  mangle()
 );
-marked.use(mangle());
 
 export { marked };
