@@ -2187,8 +2187,8 @@ __metadata:
     gulp-svgstore: "npm:9.0.0"
     gulplog: "npm:2.2.0"
     lodash-es: "npm:4.17.21"
-    marked: "npm:12.0.2"
-    marked-gfm-heading-id: "npm:3.2.0"
+    marked: "npm:13.0.0"
+    marked-gfm-heading-id: "npm:4.0.0"
     marked-highlight: "npm:2.1.2"
     marked-mangle: "npm:1.1.8"
     minify-html-literals: "npm:1.3.5"
@@ -7181,14 +7181,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked-gfm-heading-id@npm:3.2.0":
-  version: 3.2.0
-  resolution: "marked-gfm-heading-id@npm:3.2.0"
+"marked-gfm-heading-id@npm:4.0.0":
+  version: 4.0.0
+  resolution: "marked-gfm-heading-id@npm:4.0.0"
   dependencies:
     github-slugger: "npm:^2.0.0"
   peerDependencies:
-    marked: ">=4 <13"
-  checksum: 10c0/aba170f042049248047db4c1202c9cf3434858ca8e15b1b0d42905a6086135e98ac5edc8437c48c1206402cdb1f0fd0fbdcad410792a7d7150bec6095108b365
+    marked: ">=13 <14"
+  checksum: 10c0/6d4709f7a5f6d89c2b75f397adb5fa04bd9c3f33cb234ddbb37c4f466ae817d9683cd1ffeb6796463cd34cd9f72e77b44e4d913c358b433913e479e7e37eaf6b
   languageName: node
   linkType: hard
 
@@ -7210,12 +7210,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:12.0.2":
-  version: 12.0.2
-  resolution: "marked@npm:12.0.2"
+"marked@npm:13.0.0":
+  version: 13.0.0
+  resolution: "marked@npm:13.0.0"
   bin:
     marked: bin/marked.js
-  checksum: 10c0/45ae2e1e3f06b30a5b5f64efc6cde9830c81d1d024fd7668772a3217f1bc0f326e66a6b8970482d9783edf1f581fecac7023a7fa160f2c14dbcc16e064b4eafb
+  checksum: 10c0/ddae525b0f4ad3805b6bce5e12a65d6286ca557e4357006aedd92494e9613113b4773a8821894d63947818686853e40177d654e53a85cb4999de4003adf1472d
   languageName: node
   linkType: hard
 
