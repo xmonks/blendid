@@ -2189,8 +2189,8 @@ __metadata:
     lodash-es: "npm:4.17.21"
     marked: "npm:12.0.2"
     marked-gfm-heading-id: "npm:3.2.0"
-    marked-highlight: "npm:2.1.1"
-    marked-mangle: "npm:1.1.7"
+    marked-highlight: "npm:2.1.2"
+    marked-mangle: "npm:1.1.8"
     minify-html-literals: "npm:1.3.5"
     mocha: "npm:10.4.0"
     modify-filename: "npm:2.0.0"
@@ -7192,21 +7192,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked-highlight@npm:2.1.1":
-  version: 2.1.1
-  resolution: "marked-highlight@npm:2.1.1"
+"marked-highlight@npm:2.1.2":
+  version: 2.1.2
+  resolution: "marked-highlight@npm:2.1.2"
   peerDependencies:
-    marked: ">=4 <13"
-  checksum: 10c0/8f169411695a19150f8f8cb4ca91f2e7e5b057c2f160a797889600c0cb6d8776d4a5c0be5ca4c9e0a03c494a65a777a7fb8f322f747debc100016ca86eb3aeaa
+    marked: ">=4 <14"
+  checksum: 10c0/365ea3fe731904306496e82c2988fef21938b7f1cefe0b1677a465b9343f8d7193eeb6a2d40f7f25b89ca0aa592785bdfc4ff97dd196d63200d9ff942664d0c3
   languageName: node
   linkType: hard
 
-"marked-mangle@npm:1.1.7":
-  version: 1.1.7
-  resolution: "marked-mangle@npm:1.1.7"
+"marked-mangle@npm:1.1.8":
+  version: 1.1.8
+  resolution: "marked-mangle@npm:1.1.8"
   peerDependencies:
-    marked: ">=4 <13"
-  checksum: 10c0/5d0eaa28c7c9c8791c2341a0fadd08b7f7298273c46c92f3f4cfe98c0adacca9f0e8fdc9bbc69b1b177d3119b6cd4604a5bbff5be205b6ba89a547c5b7266801
+    marked: ">=4 <14"
+  checksum: 10c0/67aabc990cbd2c6b91b8354b02776cd091f4dcf2ec9ad7f5060468e347b4a21ad8fa6ee0e6d7844202e45495e8f2dc61f24589564922b40e48ebc99f7a19030b
   languageName: node
   linkType: hard
 
