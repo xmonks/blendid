@@ -1999,7 +1999,7 @@ __metadata:
     "@vitejs/plugin-basic-ssl": "npm:1.1.0"
     browser-sync: "npm:3.0.2"
     browserslist: "npm:4.23.1"
-    caniuse-lite: "npm:1.0.30001633"
+    caniuse-lite: "npm:1.0.30001634"
     chai: "npm:5.1.1"
     cloudinary: "npm:2.2.0"
     cssnano: "npm:7.0.2"
@@ -3379,10 +3379,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:1.0.30001633":
-  version: 1.0.30001633
-  resolution: "caniuse-lite@npm:1.0.30001633"
-  checksum: 10c0/cd20fe5f8df6e5b0da567ef9d0d1cc22069548d3ed77a79e8ff62b873a7081a28b9f534dfbd23767642cbd7070e30605875d2073cef2f871e8cc7414e3a3d531
+"caniuse-lite@npm:1.0.30001634":
+  version: 1.0.30001634
+  resolution: "caniuse-lite@npm:1.0.30001634"
+  checksum: 10c0/43e8e95fc9f23bc00962bef0b044fe531316eb2d5b294b6f3aca6550aab91d5ce44863f6981200cf4d1b9c83265247fa2b284ddbd7961911b2594c42a18b73e2
   languageName: node
   linkType: hard
 
