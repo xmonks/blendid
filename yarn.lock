@@ -2011,7 +2011,6 @@ __metadata:
     gulp-notify: "npm:4.0.0"
     gulp-nunjucks-render: "npm:2.2.3"
     gulp-postcss: "npm:10.0.0"
-    gulp-rename: "npm:2.0.0"
     gulp-rev-delete-original: "npm:0.2.3"
     gulp-rev-rewrite: "npm:=5.0.0"
     gulp-sizereport: "npm:1.2.1"
@@ -5620,13 +5619,6 @@ __metadata:
   peerDependencies:
     postcss: ^8.0.0
   checksum: 10c0/042c2111879acf29a65f001b232326135b1bb15d95ebdb6074815b642aaa76555edb59f26011b975a973b2039b3ea58d0b14c6cf7c8bc566830bf57cda8dc825
-  languageName: node
-  linkType: hard
-
-"gulp-rename@npm:2.0.0":
-  version: 2.0.0
-  resolution: "gulp-rename@npm:2.0.0"
-  checksum: 10c0/59f0e467544ddfbeccc208944cb57801e61cd262ca8db595fb520ce6c56bb265b0f873a3872b7ef6b580e5f3f2bd38d0f382fa271d80f73f845e7d56eb124613
   languageName: node
   linkType: hard
 
