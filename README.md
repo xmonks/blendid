@@ -7,14 +7,14 @@ development environment and site or app structure.
 ## Quick start on a fresh project (empty directory)
 
 ```bash
-nvm install 21
+nvm install 22
 yarn init
 yarn add @hckr_/blendid
 yarn blendid init
 yarn blendid
 ```
 
-This will create default src and config files in your directory and start compiling and live-updating files!
+This will create default `src` and `config` files in your directory and start compiling and live-updating files!
 Try editing them and watch your browser auto-update!
 
 # Publish to npm
