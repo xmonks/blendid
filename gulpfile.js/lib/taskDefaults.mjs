@@ -3,7 +3,7 @@ import * as path from "node:path";
 import module from "node:module";
 import logger from "gulplog";
 import gulp_mode from "gulp-mode";
-import * as sass from "sass-embedded";
+import * as sass from "sass";
 import { v2 as cloudinary } from "cloudinary";
 import { getPathConfig } from "./getPathConfig.mjs";
 
