@@ -29,7 +29,8 @@ async function getTaskConfigInternal() {
     return require(defaultConfigPath);
   }
 
-  return require("../task-config");
+  const module = await import("../task-config.mjs");
+  return module.default;
 }
 
 function withDefaults(taskConfig) {

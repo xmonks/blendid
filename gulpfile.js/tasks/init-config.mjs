@@ -17,15 +17,14 @@ export class InitConfigRegistry extends DefaultRegistry {
    */
   init({ task, src, dest }) {
     task("init-config", () => {
-      const configStream = src([
-        "gulpfile.js/path-config.json",
-        "gulpfile.js/task-config.js"
-      ]).pipe(dest(projectPath("config")));
+      const cwd = import.meta.dirname;
+      const configStream = src(["../path-config.json", "../task-config.mjs"], { cwd })
+        .pipe(dest(projectPath("config")));
 
       logger.info(
         styleText(
           "green",
-          "Adding default path-config.json and task-config.js files to ./config/"
+          "Adding default path-config.json and task-config.mjs files to ./config/"
         )
       );
 
