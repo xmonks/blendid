@@ -2,18 +2,20 @@
 
 ## 8.1.1
  - cleanup marked usage from transitional settings
+ - Fixed broken `init` and `init-config` tasks (changed behavior of `src` in Gulp v5)
+ - updated dependencies
 
 ## 8.1.O
  - requires Node 22
- - bumped dependencies
+ - updated dependencies
  - uses `with` instead of `assert` in JSON imports
 
 ## 8.0.8
- - fixed HTML generator to generate file for each item in collection
+ - fixed HTML generator to generate file for each item in the collection
  - updated dependencies
 
 ## 8.0.7
-- changed order of static files task (moved to second place after clean)
+- changed order of the `static` files task (moved to second place after clean)
 - updated caniuse-lite
 
 ## 8.0.6
@@ -42,7 +44,7 @@
 ## 8.0.0
 - Requires Node 21
 - Gulp v5
-- bumped dependencies
+- updated dependencies
 
 ## 7.1.0
 
@@ -51,7 +53,7 @@
 
 ## 7.0.4
 
-- bumped dependencies to latest versions
+- updated dependencies to latest versions
 
 ## 7.0.3
 
@@ -69,7 +71,7 @@
 
 - removed deprecated code
 - use native node stream utilities instead of dependencies
-- bumped dependencies
+- updated dependencies
 - removed `javascripts` functionality based on Rollup in favour of `esbuild`
 
 # 6.x
