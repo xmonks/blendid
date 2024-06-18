@@ -1,11 +1,16 @@
 # Changelog
 
+## 8.2.0
+ - Switched from `sass-embedded` to `sass`, it was hanging the build process on Cloudflare Pages CI
+ - removed `gulp-rename` as is not needed - `gulp-sass` already renames the output file
+ - Added default merge options for generate JSON collections - by default it will create an array of objects from parsed MD files with front matter
+
 ## 8.1.1
  - cleanup marked usage from transitional settings
  - Fixed broken `init` and `init-config` tasks (changed behavior of `src` in Gulp v5)
  - updated dependencies
 
-## 8.1.O
+## 8.1.0
  - requires Node 22
  - updated dependencies
  - uses `with` instead of `assert` in JSON imports
