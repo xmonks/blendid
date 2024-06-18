@@ -47,10 +47,13 @@ export class StyleSheetsRegistry extends DefaultRegistry {
       return src(paths.src)
         .pipe(debug({ title: "stylesheets:", logger: logger.debug }))
         .pipe(sass(config.sass))
-        .on("error", handleErrors)
+        .pipe(debug({ title: "sass:", logger: logger.debug }))
+        //.on("error", handleErrors)
         .pipe(postcss(plugins, postCssConfig))
-        .on("error", handleErrors)
+        .pipe(debug({ title: "postcss:", logger: logger.debug }))
+        //.on("error", handleErrors)
         .pipe(rename({ extname: ".css" }))
+        .pipe(debug({ title: "rename:", logger: logger.debug }))
         .pipe(dest(paths.dest));
     };
 
