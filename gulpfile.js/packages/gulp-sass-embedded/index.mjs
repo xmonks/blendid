@@ -11,7 +11,7 @@ import PluginError from "plugin-error";
 import replaceExtension from "replace-ext";
 import stripAnsi from "strip-ansi";
 import applySourceMap from "vinyl-sourcemaps-apply";
-import * as sass from "sass-embedded";
+import * as sass from "sass";
 
 const PLUGIN_NAME = "gulp-sass-embedded";
 
@@ -124,7 +124,8 @@ function gulpSass(options) {
         generateSourceMapsIfEnabled(file)
       );
 
-      sass.compileAsync(file.path, opts).then(result => {
+      try {
+        const result = sass.compileAsync(file.path, opts);
         this.push(
           addResultsToFile(file, {
             css: Buffer.from(result.css),
@@ -132,9 +133,9 @@ function gulpSass(options) {
           })
         );
         cb();
-      }).catch(error => {
+      } catch (error) {
         cb(errorMessage(file, error));
-      });
+      }
     }
   });
 }
