@@ -124,8 +124,7 @@ function gulpSass(options) {
         generateSourceMapsIfEnabled(file)
       );
 
-      try {
-        const result = sass.compile(file.path, opts);
+      sass.compileAsync(file.path, opts).then(result => {
         this.push(
           addResultsToFile(file, {
             css: Buffer.from(result.css),
@@ -133,9 +132,9 @@ function gulpSass(options) {
           })
         );
         cb();
-      } catch (error) {
+      }).catch(error => {
         cb(errorMessage(file, error));
-      }
+      });
     }
   });
 }
