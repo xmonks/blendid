@@ -19,7 +19,7 @@ Try editing them and watch your browser auto-update!
 
 # Publish to npm
 
-```
+```bash
 yarn npm login
 yarn npm publish --access public --tag latest
 ```
