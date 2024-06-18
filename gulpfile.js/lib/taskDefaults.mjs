@@ -51,6 +51,7 @@ function cloudinaryUrl(publicId, opts = {}) {
 }
 
 const sassCloudinaryUrlSignature = "cloudinaryUrl($publicId, $opts: ())";
+
 function sassCloudinaryUrl(args) {
   const publicId = args[0].assertString("publicId").text;
   const opts = args[1]?.contents?.toJS();
@@ -73,6 +74,7 @@ function assetUrl(assetPath, assetType, options) {
 }
 
 const sassAssetUrlSignature = "assetUrl($assetType, $assetPath, $opts: ())";
+
 function sassAssetUrl(args) {
   const assetType = args[0].assertString("assetType").text;
   const assetPath = args[1].assertString("assetPath").text;
@@ -132,6 +134,21 @@ export default {
 
   generate: {
     extensions: ["md", "json", "mjs"]
+  },
+
+  "generate-json": {
+    extensions: ["md"],
+    mergeOption: {
+      concatArrays: true,
+      startObj: [],
+      edit(json) {
+        return [json];
+      }
+    }
+  },
+
+  "generate-html": {
+    extensions: ["json", "mjs"]
   },
 
   html: {
