@@ -125,7 +125,7 @@ function gulpSass(options) {
       );
 
       try {
-        const result = sass.compileAsync(file.path, opts);
+        const result = sass.compile(file.path, opts);
         this.push(
           addResultsToFile(file, {
             css: Buffer.from(result.css),
