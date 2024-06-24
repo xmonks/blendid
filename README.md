@@ -7,8 +7,9 @@ development environment and site or app structure.
 ## Quick start on a fresh project (empty directory)
 
 ```bash
-nvm install 22
-yarn init
+echo "current" > .nvmrc
+nvm install $(< .nvmrc)
+yarn init --install=latest
 yarn add @hckr_/blendid
 yarn blendid init
 yarn blendid
