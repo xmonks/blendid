@@ -11,6 +11,7 @@ import logger from "gulplog";
 
 export class GenerateJsonRegistry extends DefaultRegistry {
   #ownTasks = new Set();
+
   constructor(config, pathConfig) {
     super();
     this.config = config;
@@ -29,13 +30,16 @@ export class GenerateJsonRegistry extends DefaultRegistry {
 
     const defaultOptions = this.config["generate-json"].mergeOption;
 
-    function generateJson(sourcePath, destPath, { collection, mergeOptions }) {
+    function generateJson(sourcePath, destPath, { collection, mergeOptions, ...restOptions }) {
       const fileName = `${collection}.json`;
       const options = mergeOptions ?? defaultOptions;
       const generateJsonTask = () =>
         src(sourcePath)
           .pipe(debug({ title: "generate-json:", logger: logger.debug }))
-          .pipe(markdownToJSON({ renderer: marked }))
+          .pipe(markdownToJSON({
+            renderer: marked,
+            ...restOptions
+          }))
           .on("error", handleErrors)
           .pipe(merge(Object.assign({ fileName }, options)))
           .pipe(dest(destPath));

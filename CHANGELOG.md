@@ -1,52 +1,69 @@
 # Changelog
 
+## 8.3.0
+
+- Allow change setting of `markdownToJSON` in `generate.json` settings
+
 ## 8.2.0
- - Switched from `sass-embedded` to `sass`, it was hanging the build process on Cloudflare Pages CI
- - removed `gulp-rename` as is not needed - `gulp-sass` already renames the output file
- - Added default merge options for generate JSON collections - by default it will create an array of objects from parsed MD files with front matter
+
+- Switched from `sass-embedded` to `sass`, it was hanging the build process on Cloudflare Pages CI
+- removed `gulp-rename` as is not needed - `gulp-sass` already renames the output file
+- Added default merge options for generate JSON collections - by default it will create an array of objects from parsed
+  MD files with front matter
 
 ## 8.1.1
- - cleanup marked usage from transitional settings
- - Fixed broken `init` and `init-config` tasks (changed behavior of `src` in Gulp v5)
- - updated dependencies
+
+- cleanup marked usage from transitional settings
+- Fixed broken `init` and `init-config` tasks (changed behavior of `src` in Gulp v5)
+- updated dependencies
 
 ## 8.1.0
- - requires Node 22
- - updated dependencies
- - uses `with` instead of `assert` in JSON imports
+
+- requires Node 22
+- updated dependencies
+- uses `with` instead of `assert` in JSON imports
 
 ## 8.0.8
- - fixed HTML generator to generate file for each item in the collection
- - updated dependencies
+
+- fixed HTML generator to generate file for each item in the collection
+- updated dependencies
 
 ## 8.0.7
+
 - changed order of the `static` files task (moved to second place after clean)
 - updated caniuse-lite
 
 ## 8.0.6
+
 - rev JS uses esm path config prior to esbuild
 
 ## 8.0.5
+
 - fix error in sizereport
 
 ## 8.0.4
+
 - all binary handling tasks have disabled encoding
 - Updated Sass Embedded to 1.74.1
 
 ## 8.0.3
+
 - Fixed fonts task changing encoding of font files
 - Updated Vite to 5.2.8
 
 ## 8.0.2
+
 - removed `cloudinaryUrl` debug logging
 - fixed HTML generator NPE
 
 ## 8.0.1
+
 - added debugging ability to every task
 - fixed globs/ignores
 - added type hints to registries
 
 ## 8.0.0
+
 - Requires Node 21
 - Gulp v5
 - updated dependencies
@@ -54,7 +71,8 @@
 ## 7.1.0
 
 - bumped dependencies
-- Sass `pkg:` specifier is now supported, See [official blog post](https://sass-lang.com/blog/announcing-pkg-importers/) for more details
+- Sass `pkg:` specifier is now supported, See [official blog post](https://sass-lang.com/blog/announcing-pkg-importers/)
+  for more details
 
 ## 7.0.4
 
