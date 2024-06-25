@@ -21,11 +21,9 @@ export class RevAssetsRegistry extends DefaultRegistry {
     // 1) Add md5 hashes to assets referenced by CSS and JS files
     task("rev-assets", () => {
       // Ignore files that may reference assets. We'll rev them next.
-      const ignore = `${projectPath(
-        this.pathConfig.dest,
-        "**",
-        "*.{css,js,mjs,map,json,html,txt}"
-      )}`;
+      const ignore = [`${projectPath(this.pathConfig.dest, "**", "*.{css,js,mjs,map,json,html,txt}")}`]
+        .concat((this.config.rev?.exclude ?? []).map(x => projectPath(this.pathConfig.dest, x)))
+        .filter(Boolean);
 
       return src(projectPath(this.pathConfig.dest, "**", "*"), {
         ignore,

@@ -25,7 +25,9 @@ export default {
   },
 
   production: {
-    rev: true
+    rev: {
+      exclude: ["favicon.ico", "robots.txt", "_headers", "_redirects"]
+    }
   },
 
   watch: {
