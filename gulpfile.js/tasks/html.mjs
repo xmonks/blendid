@@ -37,7 +37,7 @@ export async function loadDataFile(dataFile) {
   const dataModule = await import(
     `${dataFile}?${Date.now()}`,
     isJSON ? { with: { type: "json" } } : undefined
-  );
+    );
   return dataModule.default;
 }
 
@@ -67,10 +67,10 @@ export function getPaths(taskConfig, pathConfig) {
     spritesSrc: projectPath(pathConfig.src, pathConfig.icons.src, "*.svg"),
     dataPath: pathConfig.data
       ? projectPath(
-          pathConfig.src,
-          pathConfig.data.src,
-          taskConfig.html?.dataFile ?? ""
-        )
+        pathConfig.src,
+        pathConfig.data.src,
+        taskConfig.html?.dataFile ?? ""
+      )
       : null,
     dest: projectPath(pathConfig.dest, pathConfig.html.dest)
   };
@@ -162,7 +162,9 @@ export class HtmlRegistry extends DefaultRegistry {
             };
           })
         )
-        .pipe(svgstore(this.config.svgSprite.svgstore));
+        .pipe(debug({ title: "svgmin", logger: logger.debug }))
+        .pipe(svgstore(this.config.svgSprite.svgstore))
+        .pipe(debug({ title: "svgstore", logger: logger.debug }));
 
       return src(this.paths.src, { ignore: this.paths.ignore })
         .pipe(debug({ title: "html:", logger: logger.debug }))
@@ -176,11 +178,14 @@ export class HtmlRegistry extends DefaultRegistry {
             inject(svgs, {
               quiet: true,
               removeTags: true,
-              transform: (_, file) => file.contents.toString()
+              transform(_, file) {
+                return file.contents.toString();
+              }
             })
           )
         )
         .on("error", handleErrors)
+        .pipe(debug({ title: "injectsvg", logger: logger.debug }))
         .pipe(mode.production(htmlmin(config.htmlmin)))
         .pipe(dest(this.paths.dest));
     };
