@@ -135,36 +135,38 @@ export class HtmlRegistry extends DefaultRegistry {
         pathConfig
       );
 
-      const svgs = src(this.paths.spritesSrc)
-        .pipe(
-          svgmin((file) => {
-            const prefix = path.basename(
-              file.relative,
-              path.extname(file.relative)
-            );
-            return {
-              plugins: [
-                "preset-default",
-                {
-                  name: "prefixIDs",
-                  params: { prefix }
-                },
-                {
-                  name: "cleanupIDs",
-                  params: {
-                    prefix: `${prefix}-`,
-                    minify: true,
-                    force: true
-                  }
-                },
-                "removeXMLNS"
-              ]
-            };
-          })
-        )
-        .pipe(debug({ title: "svgmin", logger: logger.debug }))
-        .pipe(svgstore(this.config.svgSprite.svgstore))
-        .pipe(debug({ title: "svgstore", logger: logger.debug }));
+      const svgs = this.config.svgSprite
+        ? src(this.paths.spritesSrc)
+          .pipe(
+            svgmin((file) => {
+              const prefix = path.basename(
+                file.relative,
+                path.extname(file.relative)
+              );
+              return {
+                plugins: [
+                  "preset-default",
+                  {
+                    name: "prefixIDs",
+                    params: { prefix }
+                  },
+                  {
+                    name: "cleanupIDs",
+                    params: {
+                      prefix: `${prefix}-`,
+                      minify: true,
+                      force: true
+                    }
+                  },
+                  "removeXMLNS"
+                ]
+              };
+            })
+          )
+          .pipe(debug({ title: "svgmin", logger: logger.debug }))
+          .pipe(svgstore(this.config.svgSprite?.svgstore))
+          .pipe(debug({ title: "svgstore", logger: logger.debug }))
+        : null;
 
       return src(this.paths.src, { ignore: this.paths.ignore })
         .pipe(debug({ title: "html:", logger: logger.debug }))
