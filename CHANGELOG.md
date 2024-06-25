@@ -1,5 +1,17 @@
 # Changelog
 
+## 8.4.1
+
+- Fixed rev exlude option path
+
+## 8.4.0
+
+- Fixed reving of static files like favicon.ico or robots.txt that needs to be unreved
+- Added option to exclude files from reving via `production.rev.exclude` option
+- When sprites are disabled do not create pipeline for them
+- Added `_headers` file with cache busting of reved assets
+- Added `robots.txt` file
+
 ## 8.3.0
 
 - Allow change setting of `markdownToJSON` in `generate.json` settings

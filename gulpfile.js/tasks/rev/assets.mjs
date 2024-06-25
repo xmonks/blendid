@@ -22,7 +22,7 @@ export class RevAssetsRegistry extends DefaultRegistry {
     task("rev-assets", () => {
       // Ignore files that may reference assets. We'll rev them next.
       const ignore = [`${projectPath(this.pathConfig.dest, "**", "*.{css,js,mjs,map,json,html,txt}")}`]
-        .concat((this.config.rev?.exclude ?? []).map(x => projectPath(this.pathConfig.dest, x)))
+        .concat((this.config.production?.rev?.exclude ?? []).map(x => projectPath(this.pathConfig.dest, x)))
         .filter(Boolean);
 
       return src(projectPath(this.pathConfig.dest, "**", "*"), {
