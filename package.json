@@ -25,7 +25,7 @@
     "@vitejs/plugin-basic-ssl": "1.1.0",
     "browser-sync": "3.0.2",
     "browserslist": "4.23.1",
-    "caniuse-lite": "1.0.30001636",
+    "caniuse-lite": "1.0.30001638",
     "cloudinary": "2.2.0",
     "cssnano": "7.0.3",
     "del": "7.1.0",
