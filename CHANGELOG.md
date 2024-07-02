@@ -1,8 +1,12 @@
 # Changelog
 
+## 8.4.3
+
+- Implement custom CSS functions in PostCSS instead of Sass
+
 ## 8.4.2
 
-- Fixed optional sprite usage in HTML task
+- Fixed optional sprite usage in the HTML task
 
 ## 8.4.1
 
@@ -10,9 +14,9 @@
 
 ## 8.4.0
 
-- Fixed reving of static files like favicon.ico or robots.txt that needs to be unreved
+- Fixed reving of static files like favicon.ico or robots.txt that need to be unreved
 - Added option to exclude files from reving via `production.rev.exclude` option
-- When sprites are disabled do not create pipeline for them
+- When sprites are disabled do not create a pipeline for them
 - Added `_headers` file with cache busting of reved assets
 - Added `robots.txt` file
 
