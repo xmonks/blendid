@@ -1,5 +1,6 @@
 import cssnano from "cssnano";
 import presetEnv from "postcss-preset-env";
+import functions from "postcss-functions";
 import gulp_mode from "gulp-mode";
 
 const mode = gulp_mode();
@@ -13,7 +14,7 @@ function getPresetEnvConfig(config) {
 }
 
 function getPostCSSPlugins(config, userPlugins) {
-  const plugins = [presetEnv(getPresetEnvConfig(config))]
+  const plugins = [presetEnv(getPresetEnvConfig(config)), functions(config)]
     .concat(userPlugins)
     .filter(Boolean);
 
