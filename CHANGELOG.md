@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.4.2
+
+- Fixed optional sprite usage in HTML task
+
 ## 8.4.1
 
 - Fixed rev exlude option path

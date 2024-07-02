@@ -1,11 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
-import DefaultRegistry from "undertaker-registry";
 import gulp from "gulp";
 import logger from "gulplog";
 import debug from "gulp-debug";
 import data from "gulp-data";
-import gulpif from "gulp-if";
 import gulp_mode from "gulp-mode";
 import htmlmin from "gulp-htmlmin-next";
 import inject from "gulp-inject";
@@ -13,10 +11,12 @@ import svgmin from "gulp-svgmin";
 import svgstore from "gulp-svgstore";
 import nunjucksRender from "gulp-nunjucks-render";
 import nunjucksMarkdown from "nunjucks-markdown";
+import cloneDeep from "lodash-es/cloneDeep.js";
+import through2 from "through2";
+import DefaultRegistry from "undertaker-registry";
+import handleErrors from "../lib/handleErrors.mjs";
 import { marked } from "../lib/markdown.mjs";
 import projectPath from "../lib/projectPath.mjs";
-import handleErrors from "../lib/handleErrors.mjs";
-import cloneDeep from "lodash-es/cloneDeep.js";
 
 /** @typedef {import("@types/nunjucks").Environment} Environment */
 /** @typedef {import("@types/gulp")} Undertaker */
@@ -175,16 +175,14 @@ export class HtmlRegistry extends DefaultRegistry {
         .pipe(nunjucksRender(nunjucksRenderOptions))
         .on("error", handleErrors)
         .pipe(
-          gulpif(
-            this.config.svgSprite,
-            inject(svgs, {
+          this.config.svgSprite
+            ? inject(svgs, {
               quiet: true,
               removeTags: true,
               transform(_, file) {
                 return file.contents.toString();
               }
-            })
-          )
+            }) : through2.obj()
         )
         .on("error", handleErrors)
         .pipe(debug({ title: "injectsvg", logger: logger.debug }))
