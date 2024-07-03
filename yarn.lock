@@ -1985,10 +1985,10 @@ __metadata:
   resolution: "@hckr_/blendid@workspace:."
   dependencies:
     "@material/layout-grid": "npm:14.0.0"
-    "@types/gulp": "npm:^4.0.17"
+    "@types/gulp": "npm:4.0.17"
     "@types/nunjucks": "npm:3.2.6"
-    "@types/undertaker": "npm:^1.2.11"
-    "@types/undertaker-registry": "npm:^1.0.4"
+    "@types/undertaker": "npm:1.2.11"
+    "@types/undertaker-registry": "npm:1.0.4"
     "@vitejs/plugin-basic-ssl": "npm:1.1.0"
     browser-sync: "npm:3.0.2"
     browserslist: "npm:4.23.1"
@@ -2030,6 +2030,7 @@ __metadata:
     open: "npm:10.1.0"
     plugin-error: "npm:2.0.1"
     postcss: "npm:8.4.39"
+    postcss-functions: "npm:4.0.2"
     postcss-preset-env: "npm:9.5.15"
     prettier: "npm:3.3.2"
     replace-ext: "npm:2.0.0"
@@ -2463,7 +2464,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/gulp@npm:^4.0.17":
+"@types/gulp@npm:4.0.17":
   version: 4.0.17
   resolution: "@types/gulp@npm:4.0.17"
   dependencies:
@@ -2548,14 +2549,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/undertaker-registry@npm:*, @types/undertaker-registry@npm:^1.0.4":
+"@types/undertaker-registry@npm:*, @types/undertaker-registry@npm:1.0.4":
   version: 1.0.4
   resolution: "@types/undertaker-registry@npm:1.0.4"
   checksum: 10c0/e82af1f586f0ec80090622b84eff3d6f23f033267c5158997019e33129cd957b5ccbdeae5075f4a2dc7fa0be22b7e08768b57fc8e6bdcb255de190fcd018c09a
   languageName: node
   linkType: hard
 
-"@types/undertaker@npm:>=1.2.6, @types/undertaker@npm:^1.2.11":
+"@types/undertaker@npm:1.2.11, @types/undertaker@npm:>=1.2.6":
   version: 1.2.11
   resolution: "@types/undertaker@npm:1.2.11"
   dependencies:
@@ -7972,6 +7973,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-functions@npm:4.0.2":
+  version: 4.0.2
+  resolution: "postcss-functions@npm:4.0.2"
+  dependencies:
+    postcss-value-parser: "npm:^4.0.0"
+  peerDependencies:
+    postcss: ^8.0.0
+  checksum: 10c0/1ee271a639ba08a7abdb53eddd434eb4f13574ef7d26adf4b8623fd141422713672044becb9273c9d7373ddc7f399b4ef5659afb5c1073a2a344b7cd1f460489
+  languageName: node
+  linkType: hard
+
 "postcss-gap-properties@npm:^5.0.1":
   version: 5.0.1
   resolution: "postcss-gap-properties@npm:5.0.1"
@@ -8442,7 +8454,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-value-parser@npm:^4.2.0":
+"postcss-value-parser@npm:^4.0.0, postcss-value-parser@npm:^4.2.0":
   version: 4.2.0
   resolution: "postcss-value-parser@npm:4.2.0"
   checksum: 10c0/f4142a4f56565f77c1831168e04e3effd9ffcc5aebaf0f538eee4b2d465adfd4b85a44257bb48418202a63806a7da7fe9f56c330aebb3cac898e46b4cbf49161
