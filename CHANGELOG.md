@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.4.4
+
+- Revert custom functions - because of breaking change in unsupported Sass maps.
+
 ## 8.4.3
 
 - Implement custom CSS functions in PostCSS instead of Sass
