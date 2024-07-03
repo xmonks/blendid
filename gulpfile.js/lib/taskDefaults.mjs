@@ -8,6 +8,7 @@ import { v2 as cloudinary } from "cloudinary";
 import { getPathConfig } from "./getPathConfig.mjs";
 
 const mode = gulp_mode();
+const mode = gulp_mode({ verbose: new Set(process.argv).has("-LLLL") });
 const require = module.createRequire(import.meta.url);
 
 function resolveInclude(url) {
