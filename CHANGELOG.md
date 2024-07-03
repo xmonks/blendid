@@ -1,5 +1,21 @@
 # Changelog
 
+## 8.5.2
+
+- Parse all CSS functions parameters as JSON, otherwise strings are double-quoted, and we can't use unquoted strings
+  because it breaks Sass parser.
+
+## 8.5.1
+
+- Fix optional `opts` in CSS functions
+
+## 8.5.0
+
+- Added custom CSS functions `asset-url` and `cloudinary-url`, they shoud do the same thing as Sass functions `assetUrl`
+  and `cloudinaryUrl`, but they use JSON string for options instead of Sass Maps, so it doesn't break the parser. Sass
+  and Sass functions will be removed (extracted to opt-in module) in version 9, so it is recommended to transition to
+  the new functions.
+
 ## 8.4.4
 
 - Revert custom functions - because of breaking change in unsupported Sass maps.

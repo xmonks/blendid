@@ -107,6 +107,14 @@ export default {
       stage: 3,
       minimumVendorImplementations: 2
     },
+    functions: {
+      "asset-url": function (assetType, assetPath, opts) {
+        return `url(${assetUrl(JSON.parse(assetPath), JSON.parse(assetType), opts ? JSON.parse(opts) : undefined)})`;
+      },
+      "cloudinary-url": function (publicId, opts) {
+        return `url(${cloudinaryUrl(JSON.parse(publicId), opts ? JSON.parse(opts) : undefined)})`;
+      }
+    },
     sass: {
       pkgImporter: new sass.NodePackageImporter(),
       importers: [
