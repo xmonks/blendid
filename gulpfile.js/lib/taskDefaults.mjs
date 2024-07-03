@@ -7,7 +7,7 @@ import * as sass from "sass";
 import { v2 as cloudinary } from "cloudinary";
 import { getPathConfig } from "./getPathConfig.mjs";
 
-const mode = gulp_mode({ verbose: new Set(process.argv).has("-LLLL") });
+const mode = gulp_mode();
 const require = module.createRequire(import.meta.url);
 
 function resolveInclude(url) {
@@ -50,6 +50,16 @@ function cloudinaryUrl(publicId, opts = {}) {
   }
 }
 
+const sassCloudinaryUrlSignature = "cloudinaryUrl($publicId, $opts: ())";
+
+function sassCloudinaryUrl(args) {
+  const publicId = args[0].assertString("publicId").text;
+  const opts = args[1]?.contents?.toJS();
+  return new sass.SassString(`url(${cloudinaryUrl(publicId, opts)})`, {
+    quotes: false
+  });
+}
+
 /**
  * @param {string} assetPath Asset path
  * @param {"stylesheets"|"esm"|"fonts"|"icons"|"images"|"html"|"static"} assetType Key in path-config.json map
@@ -61,6 +71,17 @@ function assetUrl(assetPath, assetType, options) {
   const pathConfig = getPathConfig();
   const destPath = pathConfig[assetType].dest;
   return path.join(options?.base ?? "/", destPath, assetPath);
+}
+
+const sassAssetUrlSignature = "assetUrl($assetType, $assetPath, $opts: ())";
+
+function sassAssetUrl(args) {
+  const assetType = args[0].assertString("assetType").text;
+  const assetPath = args[1].assertString("assetPath").text;
+  const opts = args[2]?.contents?.toJS();
+  return new sass.SassString(`url(${assetUrl(assetPath, assetType, opts)})`, {
+    quotes: false
+  });
 }
 
 export default {
@@ -86,14 +107,6 @@ export default {
       stage: 3,
       minimumVendorImplementations: 2
     },
-    functions: {
-      cloudinaryUrl(publicId, opts) {
-        return `url(${cloudinaryUrl(publicId, opts)})`;
-      },
-      assetUrl(assetType, assetPath, opts) {
-        return `url(${assetUrl(assetPath, assetType, opts)})`;
-      }
-    },
     sass: {
       pkgImporter: new sass.NodePackageImporter(),
       importers: [
@@ -110,7 +123,11 @@ export default {
             }
           }
         }
-      ]
+      ],
+      functions: {
+        [sassAssetUrlSignature]: sassAssetUrl,
+        [sassCloudinaryUrlSignature]: sassCloudinaryUrl
+      }
     },
     extensions: ["sass", "scss", "css"]
   },
@@ -190,9 +207,7 @@ export default {
   workboxBuild: {},
 
   production: {
-    rev: {
-      exclude: ["favicon.ico", "robots.txt", "_headers", "_redirects"]
-    }
+    rev: true
   },
 
   registries: [],

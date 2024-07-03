@@ -1,6 +1,5 @@
 import DefaultRegistry from "undertaker-registry";
-import { generateSW } from "workbox-build/build/generate-sw.js";
-import { injectManifest } from "workbox-build/build/inject-manifest.js";
+import { generateSW, injectManifest } from "workbox-build";
 import projectPath from "../lib/projectPath.mjs";
 
 function transformConfigPaths({ globDirectory, swDest, swSrc, ...config }) {

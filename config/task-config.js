@@ -18,9 +18,7 @@ module.exports = {
   },
 
   production: {
-    rev: {
-      exclude: ["favicon.ico", "robots.txt", "_headers", "_redirects"]
-    }
+    rev: true
   },
 
   watch: {

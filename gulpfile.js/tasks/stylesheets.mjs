@@ -1,12 +1,12 @@
 import DefaultRegistry from "undertaker-registry";
 import gulp from "gulp";
-import debug from "gulp-debug";
-import logger from "gulplog";
 import postcss from "gulp-postcss";
 import sass from "../packages/gulp-sass/index.mjs";
 import projectPath from "../lib/projectPath.mjs";
 import getPostCSSPlugins from "../lib/postCSS.mjs";
 import handleErrors from "../lib/handleErrors.mjs";
+import debug from "gulp-debug";
+import logger from "gulplog";
 
 /** @typedef {import("@types/gulp")} Undertaker */
 
