@@ -62,7 +62,7 @@
     "plugin-error": "2.0.1",
     "postcss": "8.4.39",
     "postcss-functions": "4.0.2",
-    "postcss-preset-env": "9.5.16",
+    "postcss-preset-env": "9.6.0",
     "replace-ext": "2.0.0",
     "rev-hash": "4.1.0",
     "rev-path": "3.0.0",
