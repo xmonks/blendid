@@ -47,7 +47,7 @@ Very nice beautiful markdown
 
 {% block javascript %}
 <script type="module">
-  import { helloWorld } from "{{ 'index.js' | assetUrl('esm') }}";
+  import { helloWorld } from "{{ 'index.mjs' | assetUrl('esm') }}";
 
   helloWorld();
 </script>

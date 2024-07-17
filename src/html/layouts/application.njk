@@ -1,28 +1,21 @@
 {%- from 'macros/helpers.njk' import sprite, spriteTarget, importmapTarget -%}
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <title>{% block title %}{{ title }}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ 'app.css' | assetUrl('stylesheets') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if images %}
+    <meta http-equiv="delegate-ch" content="sec-ch-width https://res.cloudinary.com; sec-ch-dpr https://res.cloudinary.com; sec-ch-viewport-width https://res.cloudinary.com;">
+    <link rel="preconnect" href="https://res.cloudinary.com">
+    {% endif %}
+    <link rel="stylesheet" href="{{ 'index.css' | assetUrl('stylesheets') }}">
     <link rel="manifest" href="{{ 'manifest.json' | assetUrl('static') }}">
-    {{ importmapTarget() }}
-    <script>
-      // Check that service workers are registered
-      if ('serviceWorker' in navigator) {
-          // Use the window load event to keep the page load performant
-          window.addEventListener('load', () => {
-              navigator.serviceWorker.register('/sw.prod.js');
-          });
-      }
-    </script>
     {% include "shared/app-icons.html" %}
     {% block head %}{% endblock %}
   </head>
   <body>
     {% block content %}{% endblock %}
-    {% block javascript %}
-    {% endblock %}
+    {% block javascript %}{% endblock %}
   </body>
 </html>
