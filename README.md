@@ -7,9 +7,11 @@ development environment and site or app structure.
 ## Quick start on a fresh project (empty directory)
 
 ```bash
-echo "current" > .nvmrc
+echo "22" > .nvmrc
 nvm install $(< .nvmrc)
-yarn init --install=latest
+yarn set version berry
+echo "nodeLinker: node-modules\nenableGlobalCache: false" >> .yarnrc.yml
+yarn init
 yarn add @hckr_/blendid
 yarn blendid init
 yarn blendid
