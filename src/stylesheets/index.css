@@ -1,18 +1,75 @@
-:root {
-  --main-font: system-ui, sans-serif;
+@layer typography, components;
+
+@layer typography {
+  :root {
+    --main-font: system-ui, sans-serif;
+  }
+
+  body {
+    font-family: var(--main-font, sans-serif);
+    color-scheme: light dark;
+    font-kerning: normal;
+    font-variant-numeric: lining-nums slashed-zero;
+    font-variant-ligatures: common-ligatures contextual;
+    -webkit-font-feature-settings: "kern", "liga", "clig", "calt", "lnum", "zero";
+    font-feature-settings: "kern", "liga", "clig", "calt", "lnum", "zero";
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: geometricPrecision;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+  }
+
+  p, ul, ol, dl {
+    text-wrap: pretty;
+  }
+
+  abbr {
+    font-variant-caps: all-petite-caps;
+  }
+
+  sup, sub {
+    font-size: inherit;
+    vertical-align: baseline;
+    font-variant-position: super;
+  }
+
+  sub {
+    font-variant-position: sub;
+  }
+
+  table {
+    font-variant-numeric: tabular-nums slashed-zero;
+  }
 }
 
-body {
-  font-family: var(--main-font, sans-serif);
-  color-scheme: light dark;
-  font-kerning: normal;
-  font-variant-numeric: lining-nums slashed-zero;
-  font-variant-ligatures: common-ligatures contextual;
-  -webkit-font-feature-settings: "kern", "liga", "clig", "calt", "lnum",
-  "zero";
-  font-feature-settings: "kern", "liga", "clig", "calt", "lnum", "zero";
-  -webkit-text-size-adjust: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: geometricPrecision;
+@layer components {
+  /* enable transitions */
+  [popover], dialog, ::backdrop {
+    transition: display 300ms allow-discrete,
+    overlay 300ms allow-discrete,
+    opacity 300ms;
+    opacity: 0;
+  }
+
+  /* IN */
+  :popover-open,
+  :popover-open::backdrop,
+  [open],
+  [open]::backdrop {
+    opacity: 1;
+  }
+
+  /* OUT */
+  @starting-style {
+    :popover-open,
+    :popover-open::backdrop,
+    [open],
+    [open]::backdrop {
+      opacity: 0;
+    }
+  }
 }

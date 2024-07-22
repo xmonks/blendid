@@ -1,6 +1,6 @@
-{%- from 'macros/helpers.njk' import sprite, spriteTarget, importmapTarget -%}
+{%- from 'macros/helpers.njk' import spriteTarget -%}
 <!doctype html>
-<html lang="en">
+<html lang="{{ lang }}">
   <head>
     <meta charset="utf-8">
     <title>{% block title %}{{ title }}{% endblock %}</title>
@@ -17,5 +17,6 @@
   <body>
     {% block content %}{% endblock %}
     {% block javascript %}{% endblock %}
+    {{ spriteTarget() }}
   </body>
 </html>
