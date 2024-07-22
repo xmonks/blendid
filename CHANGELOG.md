@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.5.3
+
+- Improved initial steps in Readme
+- Improved default site assets to be more useful and working OOTB
+- Updated dependencies
+
 ## 8.5.2
 
 - Parse all CSS functions parameters as JSON, otherwise strings are double-quoted, and we can't use unquoted strings
