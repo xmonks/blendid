@@ -1,19 +1,16 @@
 import fs from "node:fs";
 import path from "node:path";
-import url from "node:url";
 import DefaultRegistry from "undertaker-registry";
 import changed from "gulp-changed";
+import debug from "gulp-debug";
+import logger from "gulplog";
 import cloudinaryUpload, {
   manifest
 } from "../packages/gulp-cloudinary-upload/index.mjs";
 import projectPath from "../lib/projectPath.mjs";
 import handleErrors from "../lib/handleErrors.mjs";
-import debug from "gulp-debug";
-import logger from "gulplog";
 
 /** @typedef {import("@types/gulp")} Undertaker */
-
-const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
 function readManifest(path) {
   if (!path) return null;
@@ -52,12 +49,12 @@ export class CloudinaryRegistry extends DefaultRegistry {
     function getRelativePath(filePath) {
       return path.relative(
         paths.src,
-        path.resolve(__dirname, path.dirname(filePath))
+        path.resolve(import.meta.dirname, path.dirname(filePath))
       );
     }
 
     function getRelativeFilePath(filePath) {
-      return path.relative(paths.src, path.resolve(__dirname, filePath));
+      return path.relative(paths.src, path.resolve(import.meta.dirname, filePath));
     }
 
     const cloudinaryTask = () =>
@@ -81,12 +78,14 @@ export class CloudinaryRegistry extends DefaultRegistry {
           cloudinaryUpload({
             folderResolver(filePath) {
               const relativePath = getRelativePath(filePath);
-              return path.join(pathConfig.cloudinary.dest, relativePath);
+              let { dest } = pathConfig.cloudinary;
+              if (!(relativePath || dest)) return "";
+              return path.join(dest, relativePath);
             },
             keyResolver(filePath) {
               return path.relative(
                 paths.src,
-                path.resolve(__dirname, filePath)
+                path.resolve(import.meta.dirname, filePath)
               );
             }
           })
