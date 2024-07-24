@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.5.5
+
+- Unquote parameters of custom CSS functions
+
 ## 8.5.4
 
 - Fixed Cloudinary upload from the root without destination folder
