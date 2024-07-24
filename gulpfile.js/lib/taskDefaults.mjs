@@ -84,6 +84,8 @@ function sassAssetUrl(args) {
   });
 }
 
+const unquote = s => s.match(/^['"](?<unquoted>.+)['"]$/).groups?.unquoted ?? s;
+
 export default {
   esbuild: {
     extensions: ["ts", "js", "mjs"],
@@ -109,10 +111,10 @@ export default {
     },
     functions: {
       "asset-url": function (assetType, assetPath, opts) {
-        return `url(${assetUrl(JSON.parse(assetPath), JSON.parse(assetType), opts ? JSON.parse(opts) : undefined)})`;
+        return `url(${assetUrl(unquote(assetPath), unquote(assetType), opts ? JSON.parse(unquote(opts)) : undefined)})`;
       },
       "cloudinary-url": function (publicId, opts) {
-        return `url(${cloudinaryUrl(JSON.parse(publicId), opts ? JSON.parse(opts) : undefined)})`;
+        return `url(${cloudinaryUrl(unquote(publicId), opts ? JSON.parse(unquote(opts)) : undefined)})`;
       }
     },
     sass: {
