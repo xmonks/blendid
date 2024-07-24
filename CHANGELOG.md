@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.5.4
+
+- Fixed Cloudinary upload from the root without destination folder
+
 ## 8.5.3
 
 - Improved initial steps in Readme
