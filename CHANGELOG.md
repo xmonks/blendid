@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.6.0
+
+- Improved error handling in HTML task
+- Added ability to resolve workbox src path lazily
+- Bumped dependencies
+
 ## 8.5.5
 
 - Unquote parameters of custom CSS functions
