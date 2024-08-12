@@ -10,8 +10,10 @@ function transformConfigPaths({ globDirectory, swDest, swSrc, ...config }) {
   if (swDest) {
     config.swDest = projectPath(swDest);
   }
-  if (swSrc) {
-    config.swSrc = projectPath(swSrc);
+  if (typeof swSrc === "string") {
+    config.swSrc = swSrc;
+  } else if (typeof swSrc === "function") {
+    config.swSrc = swSrc();
   }
   return config;
 }
