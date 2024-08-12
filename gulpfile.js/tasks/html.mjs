@@ -185,8 +185,10 @@ export class HtmlRegistry extends DefaultRegistry {
             }) : through2.obj()
         )
         .on("error", handleErrors)
-        .pipe(debug({ title: "injectsvg", logger: logger.debug }))
+        .pipe(this.config.svgSprite ? debug({ title: "injectsvg", logger: logger.debug }) : through2.obj())
         .pipe(mode.production(htmlmin(config.htmlmin)))
+        .on("error", handleErrors)
+        .pipe(mode.production(debug({ title: "htmlmin:", logger: logger.debug })))
         .pipe(dest(this.paths.dest));
     };
     const { alternateTask = () => htmlTask } = this.config;
