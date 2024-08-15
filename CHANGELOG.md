@@ -1,9 +1,13 @@
 # Changelog
 
+## 8.6.1
+
+- propagate gulp exit code from blendid bin script
+
 ## 8.6.0
 
 - Improved error handling in HTML task
-- Added ability to resolve workbox src path lazily
+- Added ability to resolve Workbox src path lazily
 - Bumped dependencies
 
 ## 8.5.5
