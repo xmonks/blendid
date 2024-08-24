@@ -2033,7 +2033,7 @@ __metadata:
     gulplog: "npm:2.2.0"
     lodash-es: "npm:4.17.21"
     marked: "npm:14.0.0"
-    marked-gfm-heading-id: "npm:4.0.1"
+    marked-gfm-heading-id: "npm:4.1.0"
     marked-highlight: "npm:2.1.4"
     marked-mangle: "npm:1.1.9"
     minify-html-literals: "npm:1.3.5"
@@ -6962,14 +6962,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked-gfm-heading-id@npm:4.0.1":
-  version: 4.0.1
-  resolution: "marked-gfm-heading-id@npm:4.0.1"
+"marked-gfm-heading-id@npm:4.1.0":
+  version: 4.1.0
+  resolution: "marked-gfm-heading-id@npm:4.1.0"
   dependencies:
     github-slugger: "npm:^2.0.0"
   peerDependencies:
     marked: ">=13 <15"
-  checksum: 10c0/c08f8b442b1941a23959c8a23b23cebe562b1ea266008d20344ca91a9562a9ebf266d70783c8bf64826c870803e7a50002f28cb04ae46649e512e767fd7fd786
+  checksum: 10c0/18e1fff23556e8cf792a6e8675099637dd9c25e96a5b5c5b02fbf3c59ccbe3087ac536377d55a684b06f76dd4ac55d19eba1f087860b77a219ccd640c2306144
   languageName: node
   linkType: hard
 
