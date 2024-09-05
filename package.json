@@ -27,7 +27,7 @@
     "browserslist": "4.23.3",
     "caniuse-lite": "1.0.30001655",
     "cloudinary": "2.4.0",
-    "cssnano": "7.0.5",
+    "cssnano": "7.0.6",
     "del": "7.1.0",
     "gulp": "5.0.0",
     "gulp-changed": "5.0.2",
