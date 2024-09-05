@@ -60,7 +60,7 @@
     "nunjucks-markdown": "2.0.1",
     "open": "10.1.0",
     "plugin-error": "2.0.1",
-    "postcss": "8.4.44",
+    "postcss": "8.4.45",
     "postcss-functions": "4.0.2",
     "postcss-preset-env": "10.0.2",
     "replace-ext": "2.0.0",
