@@ -67,7 +67,7 @@
     "rev-hash": "4.1.0",
     "rev-path": "3.0.0",
     "sass": "1.78.0",
-    "sort-keys": "5.0.0",
+    "sort-keys": "5.1.0",
     "strip-ansi": "7.1.0",
     "through2": "4.0.2",
     "undertaker-registry": "2.0.0",
