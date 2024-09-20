@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.6.2
+
+- explicitly transform nested CSS declarations to flat selectors
+- fix ESM watching
+- bumped dependencies
+
 ## 8.6.1
 
 - propagate gulp exit code from blendid bin script

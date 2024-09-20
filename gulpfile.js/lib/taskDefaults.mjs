@@ -107,7 +107,10 @@ export default {
   stylesheets: {
     presetEnv: {
       stage: 3,
-      minimumVendorImplementations: 2
+      minimumVendorImplementations: 3,
+      features: {
+        "nesting-rules": { preserve: false }
+      }
     },
     functions: {
       "asset-url": function (assetType, assetPath, opts) {
@@ -190,11 +193,11 @@ export default {
   },
 
   images: {
-    extensions: ["jpg", "jpeg", "png", "svg", "gif"]
+    extensions: ["jpg", "jpeg", "png", "gif", "avif", "webp", "svg"]
   },
 
   cloudinary: {
-    extensions: ["jpg", "jpeg", "png", "gif", "svg"],
+    extensions: ["jpg", "jpeg", "png", "gif", "avif", "webp", "svg"],
     manifest: "images.json"
   },
 

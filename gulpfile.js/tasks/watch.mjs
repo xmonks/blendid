@@ -11,6 +11,8 @@ function getTaskPathFor(taskName, pathConfig) {
       return pathConfig.icons;
     case "generate":
       return pathConfig.data;
+    case "esbuild":
+      return pathConfig.esm;
     default:
       return pathConfig[taskName];
   }
