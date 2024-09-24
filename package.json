@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@vitejs/plugin-basic-ssl": "1.1.0",
-    "browser-sync": "3.0.2",
+    "browser-sync": "3.0.3",
     "browserslist": "4.23.3",
     "caniuse-lite": "1.0.30001662",
     "cloudinary": "2.5.0",
