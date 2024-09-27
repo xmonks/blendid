@@ -2006,7 +2006,7 @@ __metadata:
     "@vitejs/plugin-basic-ssl": "npm:1.1.0"
     browser-sync: "npm:3.0.3"
     browserslist: "npm:4.24.0"
-    caniuse-lite: "npm:1.0.30001663"
+    caniuse-lite: "npm:1.0.30001664"
     chai: "npm:5.1.1"
     cloudinary: "npm:2.5.0"
     cssnano: "npm:7.0.6"
@@ -3417,10 +3417,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:1.0.30001663, caniuse-lite@npm:^1.0.30001663":
-  version: 1.0.30001663
-  resolution: "caniuse-lite@npm:1.0.30001663"
-  checksum: 10c0/6508e27bf7fdec657f26f318b1ab64ace6e1208ef9fedaf0975bc89046e0c683bfba837f108840ada1686ff09b8ffd01e05ac791dcf598b8f16eefb636875cf2
+"caniuse-lite@npm:1.0.30001664":
+  version: 1.0.30001664
+  resolution: "caniuse-lite@npm:1.0.30001664"
+  checksum: 10c0/db2b431aba41a585191ab1e4d40da0ad349ff32400edac2a167bf6bf92dbf9c704eab03dc60fb89e882ce02478d61c3036b2b1bdce8edf9b2aabda5608bae05e
   languageName: node
   linkType: hard
 
@@ -3442,6 +3442,13 @@ __metadata:
   version: 1.0.30001646
   resolution: "caniuse-lite@npm:1.0.30001646"
   checksum: 10c0/ecdd87c08cd63fa32e11311dfa3543a52613b0b99498b6fe6f2c66af65cc27e2f7436fa5b2bc2bcf72174448a7670715b284d420de838bcf3e811864371a2465
+  languageName: node
+  linkType: hard
+
+"caniuse-lite@npm:^1.0.30001663":
+  version: 1.0.30001663
+  resolution: "caniuse-lite@npm:1.0.30001663"
+  checksum: 10c0/6508e27bf7fdec657f26f318b1ab64ace6e1208ef9fedaf0975bc89046e0c683bfba837f108840ada1686ff09b8ffd01e05ac791dcf598b8f16eefb636875cf2
   languageName: node
   linkType: hard
 
