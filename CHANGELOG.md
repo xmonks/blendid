@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.7.1
+
+- fix `cloudflare.mjs` file name
+
 ## 8.7.0
 
 - static files are copied after reving
