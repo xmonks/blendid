@@ -72,13 +72,13 @@ function devTasks() {
 
   return [
     "clean",
-    staticFiles,
-    prebuild,
+    prebuild && gulp.series(prebuild),
     generate,
     assetTasks && gulp.parallel(assetTasks),
     codeTasks && gulp.parallel(codeTasks),
     html,
-    postbuild,
+    staticFiles,
+    postbuild && gulp.series(postbuild),
     workboxBuild,
     "watch"
   ].filter(Boolean);
@@ -103,14 +103,14 @@ function prodTasks() {
 
   return [
     "clean",
-    staticFiles,
-    prebuild,
+    prebuild && gulp.series(prebuild),
     generate,
     assetTasks && gulp.parallel(assetTasks),
     codeTasks && gulp.parallel(codeTasks),
     html,
     rev,
-    postbuild,
+    staticFiles,
+    postbuild && gulp.series(postbuild),
     workboxBuild,
     "size-report"
   ].filter(Boolean);

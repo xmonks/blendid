@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.7.0
+
+- static files are copied after reving
+- fixed cases when there are more tasks in `prebuild` and `postbuild` additional tasks. They are run in series.
+- added optional `CloudflareRegistry` with `cloudflare-pages` task, it bahaves like `static` task, but can be included in `prebuild` stage
+
 ## 8.6.2
 
 - explicitly transform nested CSS declarations to flat selectors
