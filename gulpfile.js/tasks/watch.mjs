@@ -29,10 +29,9 @@ export class WatchRegistry extends DefaultRegistry {
    * @param {Undertaker} taker
    */
   init({ task, series, watch }) {
-    const server = this.config.vite ? "vite" : "browserSync";
     task(
       "watch",
-      series(server, (done) => {
+      series("vite", (done) => {
         const watchableTasks = [
           "fonts",
           "iconFont",

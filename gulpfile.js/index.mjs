@@ -9,10 +9,10 @@
 import gulp from "gulp";
 import logger from "gulplog";
 import getEnabledTasks from "./lib/getEnabledTasks.mjs";
-import pathConfig from "./lib/getPathConfig.mjs";
+import { getPathConfig } from "./lib/getPathConfig.mjs";
 import { getTaskConfig } from "./lib/getTaskConfig.mjs";
-import { BrowserSyncRegistry } from "./tasks/browserSync.mjs";
 import { CleanRegistry } from "./tasks/clean.mjs";
+import { CloudflareRegistry } from "./tasks/cloudflare.mjs";
 import { CloudinaryRegistry } from "./tasks/cloudinary.mjs";
 import { ESBuildRegistry } from "./tasks/esbuild.mjs";
 import { FontsRegistry } from "./tasks/fonts.mjs";
@@ -26,15 +26,16 @@ import { StaticRegistry } from "./tasks/static.mjs";
 import { StyleSheetsRegistry } from "./tasks/stylesheets.mjs";
 import { ViteRegistry } from "./tasks/vite.mjs";
 import { WatchRegistry } from "./tasks/watch.mjs";
-import { WorkboxBuildRegistry } from "./tasks/workboxBuild.mjs";
 import { RevRegistry } from "./tasks/rev.mjs";
 import projectPath from "./lib/projectPath.mjs";
 
+const pathConfig = await getPathConfig();
 logger.info("Building sources", projectPath(pathConfig.src));
 
 const taskConfig = await getTaskConfig();
 
 gulp.registry(new CleanRegistry(taskConfig.clean, pathConfig));
+gulp.registry(new CloudflareRegistry(taskConfig.cloudflare, pathConfig));
 gulp.registry(new CloudinaryRegistry(taskConfig.cloudinary, pathConfig));
 gulp.registry(new ESBuildRegistry(taskConfig.esbuild, pathConfig));
 gulp.registry(new FontsRegistry(taskConfig.fonts, pathConfig));
@@ -45,7 +46,6 @@ gulp.registry(new InitRegistry(taskConfig, pathConfig));
 gulp.registry(new InitConfigRegistry(taskConfig, pathConfig));
 gulp.registry(new StaticRegistry(taskConfig.static, pathConfig));
 gulp.registry(new StyleSheetsRegistry(taskConfig.stylesheets, pathConfig));
-gulp.registry(new WorkboxBuildRegistry(taskConfig.workboxBuild, pathConfig));
 
 // Register user provided registries
 if (Array.isArray(taskConfig.registries)) {
@@ -55,17 +55,15 @@ if (Array.isArray(taskConfig.registries)) {
 }
 
 function devTasks() {
-  gulp.registry(new BrowserSyncRegistry(taskConfig.browserSync, pathConfig));
   gulp.registry(new ViteRegistry(taskConfig.vite, pathConfig));
   gulp.registry(new WatchRegistry(taskConfig, pathConfig));
 
   const { assetTasks, codeTasks } = getEnabledTasks(taskConfig);
   const html = taskConfig.html ? "html" : null;
+  const cloudflarePages = taskConfig.cloudflare ? "cloudflare-pages" : null;
   const generate = taskConfig.generate ? "generate" : null;
   const staticFiles = taskConfig.static ? "static" : null;
-  const workboxBuild = taskConfig.workboxBuild ? "workboxBuild" : null;
-  const { prebuild, postbuild, code, assets } =
-    taskConfig.additionalTasks.development;
+  const { prebuild, postbuild, code, assets } = taskConfig.additionalTasks.development;
 
   if (assets) assetTasks.push(...assets);
   if (code) codeTasks.push(...code);
@@ -73,13 +71,13 @@ function devTasks() {
   return [
     "clean",
     prebuild && gulp.series(prebuild),
+    cloudflarePages,
     generate,
     assetTasks && gulp.parallel(assetTasks),
     codeTasks && gulp.parallel(codeTasks),
     html,
     staticFiles,
     postbuild && gulp.series(postbuild),
-    workboxBuild,
     "watch"
   ].filter(Boolean);
 }
@@ -92,9 +90,9 @@ function prodTasks() {
   const { assetTasks, codeTasks } = getEnabledTasks(taskConfig);
   const rev = taskConfig.production.rev ? "rev" : null;
   const html = taskConfig.html ? "html" : null;
+  const cloudflarePages = taskConfig.cloudflare ? "cloudflare-pages" : null;
   const generate = taskConfig.generate ? "generate" : null;
   const staticFiles = taskConfig.static ? "static" : null;
-  const workboxBuild = taskConfig.workboxBuild ? "workboxBuild" : null;
   const { prebuild, postbuild, code, assets } =
     taskConfig.additionalTasks.production;
 
@@ -104,6 +102,7 @@ function prodTasks() {
   return [
     "clean",
     prebuild && gulp.series(prebuild),
+    cloudflarePages,
     generate,
     assetTasks && gulp.parallel(assetTasks),
     codeTasks && gulp.parallel(codeTasks),
@@ -111,7 +110,6 @@ function prodTasks() {
     rev,
     staticFiles,
     postbuild && gulp.series(postbuild),
-    workboxBuild,
     "size-report"
   ].filter(Boolean);
 }

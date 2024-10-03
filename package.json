@@ -1,6 +1,6 @@
 {
   "name": "@hckr_/blendid",
-  "version": "8.7.1",
+  "version": "9.0.0-beta.1",
   "description": "A full featured configurable front-end asset pipeline and static site builder",
   "license": "MIT",
   "main": "gulpfile.js/index.mjs",
@@ -23,7 +23,6 @@
   },
   "dependencies": {
     "@vitejs/plugin-basic-ssl": "1.1.0",
-    "browser-sync": "3.0.3",
     "browserslist": "4.24.0",
     "caniuse-lite": "1.0.30001666",
     "cloudinary": "2.5.0",
@@ -66,7 +65,6 @@
     "replace-ext": "2.0.0",
     "rev-hash": "4.1.0",
     "rev-path": "3.0.0",
-    "sass": "1.79.4",
     "sort-keys": "5.1.0",
     "strip-ansi": "7.1.0",
     "through2": "4.0.2",
@@ -74,18 +72,15 @@
     "vinyl": "3.0.0",
     "vinyl-file": "5.0.0",
     "vinyl-sourcemaps-apply": "0.2.1",
-    "vite": "5.4.8",
-    "workbox-build": "7.1.1"
+    "vite": "6.0.0-beta.2"
   },
   "devDependencies": {
-    "@material/layout-grid": "14.0.0",
     "@types/gulp": "4.0.17",
     "@types/nunjucks": "3.2.6",
     "@types/undertaker": "1.2.11",
     "@types/undertaker-registry": "1.0.4",
     "chai": "5.1.1",
-    "mocha": "10.7.3",
-    "prettier": "3.3.3"
+    "mocha": "10.7.3"
   },
   "engines": {
     "node": ">=22"

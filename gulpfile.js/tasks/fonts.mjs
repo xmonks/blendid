@@ -15,7 +15,7 @@ export class FontsRegistry extends DefaultRegistry {
         pathConfig.src,
         pathConfig.fonts?.src ?? "",
         "**",
-        `*.{${config.extensions}}`
+        config.extensions.length > 1 ? `*.{${config.extensions}}` : `*.${config.extensions}`
       ),
       dest: projectPath(pathConfig.dest, pathConfig.fonts?.dest ?? "")
     };

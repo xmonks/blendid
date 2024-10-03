@@ -19,7 +19,7 @@ export class ESBuildRegistry extends DefaultRegistry {
       src: projectPath(
         pathConfig.src,
         modulePathConfig?.src ?? "",
-        `*.{${config.extensions}}`
+        config.extensions.length > 1 ? `*.{${config.extensions}}` : `*.${config.extensions}`
       ),
       dest: projectPath(pathConfig.dest, modulePathConfig?.dest ?? "")
     };

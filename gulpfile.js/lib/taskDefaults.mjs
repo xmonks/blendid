@@ -1,21 +1,11 @@
-import { pathToFileURL } from "node:url";
 import * as path from "node:path";
-import module from "node:module";
 import logger from "gulplog";
 import gulp_mode from "gulp-mode";
-import * as sass from "sass";
 import { v2 as cloudinary } from "cloudinary";
 import { getPathConfig } from "./getPathConfig.mjs";
 
 const mode = gulp_mode({ verbose: new Set(process.argv).has("-LLLL") });
-const require = module.createRequire(import.meta.url);
-
-function resolveInclude(url) {
-  const parts = url.split("/");
-  parts.push("_" + parts.pop());
-  const includeUrl = parts.join("/");
-  return pathToFileURL(require.resolve(`${includeUrl}.scss`));
-}
+const pathConfig = await getPathConfig();
 
 /**
  * @param {string} publicId Public ID of cloudinary resource
@@ -50,38 +40,16 @@ function cloudinaryUrl(publicId, opts = {}) {
   }
 }
 
-const sassCloudinaryUrlSignature = "cloudinaryUrl($publicId, $opts: ())";
-
-function sassCloudinaryUrl(args) {
-  const publicId = args[0].assertString("publicId").text;
-  const opts = args[1]?.contents?.toJS();
-  return new sass.SassString(`url(${cloudinaryUrl(publicId, opts)})`, {
-    quotes: false
-  });
-}
-
 /**
  * @param {string} assetPath Asset path
- * @param {"stylesheets"|"esm"|"fonts"|"icons"|"images"|"html"|"static"} assetType Key in path-config.json map
+ * @param {"stylesheets"|"esm"|"fonts"|"icons"|"images"|"html"|"static"} assetType Key in path-config.mjs map
  * @param {Object} [options]
  * @param {string} [options.base] Optional base path to prefix the resolved asset URL. Default is / - root absolute URL.
  * @returns {string}
  */
 function assetUrl(assetPath, assetType, options) {
-  const pathConfig = getPathConfig();
   const destPath = pathConfig[assetType].dest;
   return path.join(options?.base ?? "/", destPath, assetPath);
-}
-
-const sassAssetUrlSignature = "assetUrl($assetType, $assetPath, $opts: ())";
-
-function sassAssetUrl(args) {
-  const assetType = args[0].assertString("assetType").text;
-  const assetPath = args[1].assertString("assetPath").text;
-  const opts = args[2]?.contents?.toJS();
-  return new sass.SassString(`url(${assetUrl(assetPath, assetType, opts)})`, {
-    quotes: false
-  });
 }
 
 const unquote = s => s.match(/^['"](?<unquoted>.+)['"]$/).groups?.unquoted ?? s;
@@ -120,29 +88,7 @@ export default {
         return `url(${cloudinaryUrl(unquote(publicId), opts ? JSON.parse(unquote(opts)) : undefined)})`;
       }
     },
-    sass: {
-      pkgImporter: new sass.NodePackageImporter(),
-      importers: [
-        {
-          findFileUrl(url) {
-            try {
-              return pathToFileURL(require.resolve(`${url}.scss`));
-            } catch (err) {
-              try {
-                return resolveInclude(url);
-              } catch (e) {
-                return null;
-              }
-            }
-          }
-        }
-      ],
-      functions: {
-        [sassAssetUrlSignature]: sassAssetUrl,
-        [sassCloudinaryUrlSignature]: sassCloudinaryUrl
-      }
-    },
-    extensions: ["sass", "scss", "css"]
+    extensions: ["css"]
   },
 
   generate: {
@@ -165,7 +111,7 @@ export default {
   },
 
   html: {
-    dataFile: "global.json",
+    dataFile: "global.mjs",
     excludeFolders: ["layouts", "shared", "macros", "data"],
     extensions: ["html", "njk", "json"],
     nunjucksRender: {

@@ -3,7 +3,6 @@ import gulp from "gulp";
 import debug from "gulp-debug";
 import logger from "gulplog";
 import postcss from "gulp-postcss";
-import sass from "../packages/gulp-sass/index.mjs";
 import projectPath from "../lib/projectPath.mjs";
 import getPostCSSPlugins from "../lib/postCSS.mjs";
 import handleErrors from "../lib/handleErrors.mjs";
@@ -20,7 +19,7 @@ export class StyleSheetsRegistry extends DefaultRegistry {
         pathConfig.src,
         pathConfig.stylesheets?.src ?? "",
         "**",
-        `!(_)*.{${config.extensions}}`
+        config.extensions.length > 1 ? `*.{${config.extensions}}` : `*.${config.extensions}`
       ),
       dest: projectPath(pathConfig.dest, pathConfig.stylesheets?.dest ?? "")
     };
@@ -36,18 +35,10 @@ export class StyleSheetsRegistry extends DefaultRegistry {
     const paths = this.paths;
 
     const postcssTask = () => {
-      if (config.sass?.includePaths) {
-        config.sass.includePaths = config.sass.includePaths
-          .filter(Boolean)
-          .map((includePath) => projectPath(includePath));
-      }
       const { plugins: userPlugins, ...postCssConfig } = config.postcss ?? {};
       const plugins = getPostCSSPlugins(config, userPlugins);
       return src(paths.src)
         .pipe(debug({ title: "stylesheets:", logger: logger.debug }))
-        .pipe(sass(config.sass))
-        .on("error", handleErrors)
-        .pipe(debug({ title: "sass:", logger: logger.debug }))
         .pipe(postcss(plugins, postCssConfig))
         .on("error", handleErrors)
         .pipe(debug({ title: "postcss:", logger: logger.debug }))

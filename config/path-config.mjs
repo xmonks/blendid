@@ -1,4 +1,4 @@
-{
+export default {
   "src": "./src",
   "dest": "./public",
 
@@ -27,6 +27,11 @@
     "dest": "assets/img"
   },
 
+  "cloudflare": {
+    "src": "cloudflare",
+    "dest": "./"
+  },
+
   "cloudinary": {
     "src": "cloudinary",
     "dest": ""
@@ -45,4 +50,4 @@
     "src": "icons",
     "dest": "assets/img"
   }
-}
+};

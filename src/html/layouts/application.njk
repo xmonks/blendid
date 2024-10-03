@@ -1,11 +1,13 @@
 {%- from 'macros/helpers.njk' import spriteTarget -%}
 <!doctype html>
-<html lang="{{ lang }}">
+<html lang="{{ meta.lang }}">
   <head>
     <meta charset="utf-8">
-    <title>{% block title %}{{ title }}{% endblock %}</title>
+    <title>{% block title %}{{ title or meta.title }}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% if images %}
+    {# `images` can be collection populated by `cloudinary` task, or just set `images: true` in `data/global.mjs`
+       to enable this if you use another way to upload images to cloudinary #}
     <meta http-equiv="delegate-ch" content="sec-ch-width https://res.cloudinary.com; sec-ch-dpr https://res.cloudinary.com; sec-ch-viewport-width https://res.cloudinary.com;">
     <link rel="preconnect" href="https://res.cloudinary.com">
     {% endif %}

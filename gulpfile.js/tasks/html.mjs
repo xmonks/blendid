@@ -62,7 +62,7 @@ export function getPaths(taskConfig, pathConfig) {
       pathConfig.src,
       pathConfig.html.src,
       `**`,
-      `*.{${taskConfig.html?.extensions ?? "html"}}`
+      taskConfig.html ? `*.{${taskConfig.html.extensions}}` : "*.html"
     ),
     spritesSrc: projectPath(pathConfig.src, pathConfig.icons.src, "*.svg"),
     dataPath: pathConfig.data

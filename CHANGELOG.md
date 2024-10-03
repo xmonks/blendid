@@ -1,5 +1,13 @@
 # Changelog
 
+## 9.0.0
+
+- Updated to Vite.js 6
+- Removed Sass from `stylesheets` pipeline. If you need Sass, use `gulp-sass` via `stylesheets.alternateTask`.
+- Removed BrowserSync in favor of Vite.js. If you need BrowserSync, use it as Vite plugin.
+- Removed WorkBox. We will provide separate package with WorkBoxRegistry, that can be used via `additionalTasks`.
+- Path config is in `mjs` instead of JSON. JSON config is still supported, but migration to ESM encouraged.
+
 ## 8.7.1
 
 - fix `cloudflare.mjs` file name

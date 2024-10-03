@@ -10,12 +10,13 @@ export class CloudflareRegistry extends DefaultRegistry {
     super();
     this.config = config;
     this.paths = {
-      src: projectPath(pathConfig.src, pathConfig.cloudflare.src, "**", "*"),
-      dest: projectPath(pathConfig.dest, pathConfig.cloudflare.dest),
+      src: projectPath(pathConfig.src, pathConfig.cloudflare?.src ?? "", "**", "*"),
+      dest: projectPath(pathConfig.dest, pathConfig.cloudflare?.dest ?? ""),
     }
   }
 
   init({ task, src, dest }) {
+    if (!this.config) return;
     task("cloudflare-pages", () =>
       src(this.paths.src, Object.assign({ dot: true, encoding: false }, this.config.srcOptions))
         .pipe(debug({ title: "static:", logger: logger.debug }))
