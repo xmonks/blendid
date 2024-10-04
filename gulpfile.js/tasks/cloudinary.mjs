@@ -8,7 +8,6 @@ import cloudinaryUpload, {
   manifest
 } from "../packages/gulp-cloudinary-upload/index.mjs";
 import projectPath from "../lib/projectPath.mjs";
-import handleErrors from "../lib/handleErrors.mjs";
 
 /** @typedef {import("@types/gulp")} Undertaker */
 
@@ -90,7 +89,6 @@ export class CloudinaryRegistry extends DefaultRegistry {
             }
           })
         )
-        .on("error", handleErrors)
         .pipe(
           manifest({
             path: paths.manifest,

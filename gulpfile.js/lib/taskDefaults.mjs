@@ -1,10 +1,8 @@
 import * as path from "node:path";
 import logger from "gulplog";
-import gulp_mode from "gulp-mode";
 import { v2 as cloudinary } from "cloudinary";
 import { getPathConfig } from "./getPathConfig.mjs";
 
-const mode = gulp_mode({ verbose: new Set(process.argv).has("-LLLL") });
 const pathConfig = await getPathConfig();
 
 /**
@@ -54,142 +52,144 @@ function assetUrl(assetPath, assetType, options) {
 
 const unquote = s => s.match(/^['"](?<unquoted>.+)['"]$/).groups?.unquoted ?? s;
 
-export default {
-  esbuild: {
-    extensions: ["ts", "js", "mjs"],
-    options: {
-      bundle: true,
-      splitting: true,
-      treeShaking: true,
-      minify: mode.production(),
-      mainFields: ["module", "browser", "main"],
-      sourcemap: true,
-      legalComments: "linked",
-      format: "esm",
-      platform: "browser",
-      target: ["es2021"],
-      charset: "utf8"
-    }
-  },
-
-  stylesheets: {
-    presetEnv: {
-      stage: 3,
-      minimumVendorImplementations: 3,
-      features: {
-        "nesting-rules": { preserve: false }
+export function getTaskDefaults(mode) {
+  return {
+    esbuild: {
+      extensions: ["ts", "js", "mjs"],
+      options: {
+        bundle: true,
+        splitting: true,
+        treeShaking: true,
+        minify: mode.production(),
+        mainFields: ["module", "browser", "main"],
+        sourcemap: true,
+        legalComments: "linked",
+        format: "esm",
+        platform: "browser",
+        target: ["es2021"],
+        charset: "utf8"
       }
     },
-    functions: {
-      "asset-url": function (assetType, assetPath, opts) {
-        return `url(${assetUrl(unquote(assetPath), unquote(assetType), opts ? JSON.parse(unquote(opts)) : undefined)})`;
+
+    stylesheets: {
+      presetEnv: {
+        stage: 3,
+        minimumVendorImplementations: 3,
+        features: {
+          "nesting-rules": { preserve: false }
+        }
       },
-      "cloudinary-url": function (publicId, opts) {
-        return `url(${cloudinaryUrl(unquote(publicId), opts ? JSON.parse(unquote(opts)) : undefined)})`;
-      }
-    },
-    extensions: ["css"]
-  },
-
-  generate: {
-    extensions: ["md", "json", "mjs"]
-  },
-
-  "generate-json": {
-    extensions: ["md"],
-    mergeOption: {
-      concatArrays: true,
-      startObj: [],
-      edit(json) {
-        return [json];
-      }
-    }
-  },
-
-  "generate-html": {
-    extensions: ["json", "mjs"]
-  },
-
-  html: {
-    dataFile: "global.mjs",
-    excludeFolders: ["layouts", "shared", "macros", "data"],
-    extensions: ["html", "njk", "json"],
-    nunjucksRender: {
-      filters: {
-        split(str, seperator) {
-          return str.split(seperator);
+      functions: {
+        "asset-url": function(assetType, assetPath, opts) {
+          return `url(${assetUrl(unquote(assetPath), unquote(assetType), opts ? JSON.parse(unquote(opts)) : undefined)})`;
         },
-        assetUrl,
-        cloudinaryUrl
+        "cloudinary-url": function(publicId, opts) {
+          return `url(${cloudinaryUrl(unquote(publicId), opts ? JSON.parse(unquote(opts)) : undefined)})`;
+        }
       },
-      envOptions: {
-        watch: false
+      extensions: ["css"]
+    },
+
+    generate: {
+      extensions: ["md", "json", "mjs"]
+    },
+
+    "generate-json": {
+      extensions: ["md"],
+      mergeOption: {
+        concatArrays: true,
+        startObj: [],
+        edit(json) {
+          return [json];
+        }
       }
     },
-    htmlmin: {
-      collapseWhitespace: true,
-      collapseBooleanAttributes: true,
-      decodeEntities: true,
-      minifyCSS: true,
-      removeAttributeQuotes: true,
-      removeOptionalTags: true,
-      removeRedundantAttributes: true,
-      removeStyleLinkTypeAttributes: true
-    }
-  },
 
-  images: {
-    extensions: ["jpg", "jpeg", "png", "gif", "avif", "webp", "svg"]
-  },
-
-  cloudinary: {
-    extensions: ["jpg", "jpeg", "png", "gif", "avif", "webp", "svg"],
-    manifest: "images.json"
-  },
-
-  fonts: {
-    extensions: ["woff2", "woff", "eot", "ttf", "svg"]
-  },
-
-  svgSprite: {
-    svgstore: {
-      inlineSvg: true
-    }
-  },
-
-  sizeReport: { gzip: true },
-
-  watch: {
-    tasks: []
-  },
-
-  workboxBuild: {},
-
-  production: {
-    rev: {
-      exclude: ["favicon.ico", "robots.txt", "_headers", "_redirects"]
-    }
-  },
-
-  registries: [],
-
-  additionalTasks: {
-    development: {
-      prebuild: null,
-      postbuild: null
+    "generate-html": {
+      extensions: ["json", "mjs"]
     },
-    production: {
-      prebuild: null,
-      postbuild: null
-    }
-  },
 
-  vite: {
-    appType: "mpa",
-    server: {
-      open: "/",
-      host: true,
-      port: 3000
+    html: {
+      dataFile: "global.mjs",
+      excludeFolders: ["layouts", "shared", "macros", "data"],
+      extensions: ["html", "njk", "json"],
+      nunjucksRender: {
+        filters: {
+          split(str, seperator) {
+            return str.split(seperator);
+          },
+          assetUrl,
+          cloudinaryUrl
+        },
+        envOptions: {
+          watch: false
+        }
+      },
+      htmlmin: {
+        collapseWhitespace: true,
+        collapseBooleanAttributes: true,
+        decodeEntities: true,
+        minifyCSS: true,
+        removeAttributeQuotes: true,
+        removeOptionalTags: true,
+        removeRedundantAttributes: true,
+        removeStyleLinkTypeAttributes: true
+      }
+    },
+
+    images: {
+      extensions: ["jpg", "jpeg", "png", "gif", "avif", "webp", "svg"]
+    },
+
+    cloudinary: {
+      extensions: ["jpg", "jpeg", "png", "gif", "avif", "webp", "svg"],
+      manifest: "images.json"
+    },
+
+    fonts: {
+      extensions: ["woff2", "woff", "eot", "ttf", "svg"]
+    },
+
+    svgSprite: {
+      svgstore: {
+        inlineSvg: true
+      }
+    },
+
+    sizeReport: { gzip: true },
+
+    watch: {
+      tasks: []
+    },
+
+    workboxBuild: {},
+
+    production: {
+      rev: {
+        exclude: ["favicon.ico", "robots.txt", "_headers", "_redirects"]
+      }
+    },
+
+    registries: [],
+
+    additionalTasks: {
+      development: {
+        prebuild: null,
+        postbuild: null
+      },
+      production: {
+        prebuild: null,
+        postbuild: null
+      }
+    },
+
+    vite: {
+      appType: "mpa",
+      server: {
+        open: "/",
+        host: true,
+        port: 3000
+      }
     }
-  }
-};
+  };
+}

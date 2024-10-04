@@ -6,11 +6,12 @@ import gulpif from "gulp-if";
 import htmlmin from "gulp-htmlmin-next";
 import inject from "gulp-inject";
 import nunjucksRender from "gulp-nunjucks-render";
-import gulpMode from "gulp-mode";
 import svgmin from "gulp-svgmin";
 import svgstore from "gulp-svgstore";
-import Vinyl from "vinyl";
+import debug from "gulp-debug";
+import logger from "gulplog";
 import cloneDeep from "lodash-es/cloneDeep.js";
+import Vinyl from "vinyl";
 import DefaultRegistry from "undertaker-registry";
 import {
   createDataFunction,
@@ -18,13 +19,8 @@ import {
   getPaths
 } from "../html.mjs";
 import projectPath from "../../lib/projectPath.mjs";
-import handleErrors from "../../lib/handleErrors.mjs";
-import debug from "gulp-debug";
-import logger from "gulplog";
 
 /** @typedef {import("@types/gulp")} Undertaker */
-
-const mode = gulpMode();
 
 async function createFile(item, route, template) {
   return new Vinyl({
@@ -55,10 +51,11 @@ function generateHtmlFile(route, template) {
 export class GenerateHtmlRegistry extends DefaultRegistry {
   #ownTasks = new Set();
 
-  constructor(config, pathConfig) {
+  constructor(config, pathConfig, mode) {
     super();
     this.config = config;
     this.pathConfig = pathConfig;
+    this.mode = mode;
   }
 
   ownTasks() {
@@ -74,6 +71,7 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
     const config = cloneDeep(this.config.html);
     const taskConfig = this.config;
     const pathConfig = this.pathConfig;
+    const mode = this.mode;
 
     function generateHtml(
       sourcePath,
@@ -125,11 +123,8 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
         return src(sourcePath)
           .pipe(debug({ title: "generate-html:", logger: logger.debug }))
           .pipe(generateHtmlFile(route, templatePath))
-          .on("error", handleErrors)
           .pipe(data(dataFunction))
-          .on("error", handleErrors)
           .pipe(nunjucksRender(nunjucksRenderOptions))
-          .on("error", handleErrors)
           .pipe(
             gulpif(
               taskConfig.svgSprite,
@@ -140,7 +135,6 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
               })
             )
           )
-          .on("error", handleErrors)
           .pipe(mode.production(htmlmin(config.htmlmin)))
           .pipe(dest(destPath));
       }
@@ -153,8 +147,10 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
       const dataPath = projectPath(pathConfig.src, pathConfig.data.src);
       const destPath = projectPath(pathConfig.dest, pathConfig.html.dest);
       for (const col of collections) {
-        const sourcePath = `${col.collection}.json`;
-        yield generateHtml(projectPath(dataPath, sourcePath), destPath, col);
+        const mjsFile = projectPath(dataPath, `${col.collection}.mjs`);
+        const jsonFile = projectPath(dataPath, `${col.collection}.json`);
+        const sourcePath = fs.existsSync(mjsFile) ? mjsFile : jsonFile;
+        yield generateHtml(sourcePath, destPath, col);
       }
     }
 

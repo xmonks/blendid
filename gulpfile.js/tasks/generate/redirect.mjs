@@ -1,18 +1,16 @@
+import fs from "node:fs";
+import path from "node:path";
 import { Transform } from "node:stream";
-import gulpMode from "gulp-mode";
 import htmlmin from "gulp-htmlmin-next";
 import nunjucksRender from "gulp-nunjucks-render";
+import debug from "gulp-debug";
+import logger from "gulplog";
 import cloneDeep from "lodash-es/cloneDeep.js";
 import DefaultRegistry from "undertaker-registry";
 import Vinyl from "vinyl";
 import projectPath from "../../lib/projectPath.mjs";
-import handleErrors from "../../lib/handleErrors.mjs";
-import debug from "gulp-debug";
-import logger from "gulplog";
 
 /** @typedef {import("@types/gulp")} Undertaker */
-
-const mode = gulpMode();
 
 async function createFile(item, { host, route }) {
   const [originalUrl, targetUrl] = route(item);
@@ -58,10 +56,11 @@ function generateHtmlFile(col) {
 export class GenerateRedirectsRegistry extends DefaultRegistry {
   #ownTasks = new Set();
 
-  constructor(config, pathConfig) {
+  constructor(config, pathConfig, mode) {
     super();
     this.config = config;
     this.pathConfig = pathConfig;
+    this.mode = mode;
   }
 
   ownTasks() {
@@ -82,8 +81,7 @@ export class GenerateRedirectsRegistry extends DefaultRegistry {
           .pipe(debug({ title: "generate-redirect:", logger: logger.debug }))
           .pipe(generateHtmlFile(col))
           .pipe(nunjucksRender(config.nunjucksRender))
-          .on("error", handleErrors)
-          .pipe(mode.production(htmlmin(config.htmlmin)))
+          .pipe(this.mode.production(htmlmin(config.htmlmin)))
           .pipe(dest(destPath));
       }
 
@@ -95,7 +93,9 @@ export class GenerateRedirectsRegistry extends DefaultRegistry {
       const dataPath = projectPath(pathConfig.src, pathConfig.data.src);
       const destPath = projectPath(pathConfig.dest, pathConfig.html.dest);
       for (const col of collections) {
-        const sourcePath = projectPath(dataPath, `${col.collection}.json`);
+        const mjsFile = path.join(dataPath, `${col.collection}.mjs`);
+        const jsonFile = path.join(dataPath, `${col.collection}.json`);
+        const sourcePath = fs.existsSync(mjsFile) ? mjsFile : jsonFile;
         yield generateRedirect(sourcePath, destPath, col);
       }
     }

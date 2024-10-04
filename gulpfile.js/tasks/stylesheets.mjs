@@ -5,12 +5,11 @@ import logger from "gulplog";
 import postcss from "gulp-postcss";
 import projectPath from "../lib/projectPath.mjs";
 import getPostCSSPlugins from "../lib/postCSS.mjs";
-import handleErrors from "../lib/handleErrors.mjs";
 
 /** @typedef {import("@types/gulp")} Undertaker */
 
 export class StyleSheetsRegistry extends DefaultRegistry {
-  constructor(config, pathConfig) {
+  constructor(config, pathConfig, mode) {
     super();
     this.config = config;
     this.pathConfig = pathConfig;
@@ -23,6 +22,7 @@ export class StyleSheetsRegistry extends DefaultRegistry {
       ),
       dest: projectPath(pathConfig.dest, pathConfig.stylesheets?.dest ?? "")
     };
+    this.mode = mode;
   }
 
   /**
@@ -33,14 +33,14 @@ export class StyleSheetsRegistry extends DefaultRegistry {
 
     const config = this.config;
     const paths = this.paths;
+    const mode = this.mode;
 
     const postcssTask = () => {
       const { plugins: userPlugins, ...postCssConfig } = config.postcss ?? {};
-      const plugins = getPostCSSPlugins(config, userPlugins);
+      const plugins = getPostCSSPlugins(config, userPlugins, mode);
       return src(paths.src)
         .pipe(debug({ title: "stylesheets:", logger: logger.debug }))
         .pipe(postcss(plugins, postCssConfig))
-        .on("error", handleErrors)
         .pipe(debug({ title: "postcss:", logger: logger.debug }))
         .pipe(dest(paths.dest));
     };

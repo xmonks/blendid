@@ -4,7 +4,6 @@ import gulp from "gulp";
 import logger from "gulplog";
 import debug from "gulp-debug";
 import data from "gulp-data";
-import gulp_mode from "gulp-mode";
 import htmlmin from "gulp-htmlmin-next";
 import inject from "gulp-inject";
 import svgmin from "gulp-svgmin";
@@ -14,20 +13,20 @@ import nunjucksMarkdown from "nunjucks-markdown";
 import cloneDeep from "lodash-es/cloneDeep.js";
 import through2 from "through2";
 import DefaultRegistry from "undertaker-registry";
-import handleErrors from "../lib/handleErrors.mjs";
 import { marked } from "../lib/markdown.mjs";
 import projectPath from "../lib/projectPath.mjs";
 
 /** @typedef {import("@types/nunjucks").Environment} Environment */
 /** @typedef {import("@types/gulp")} Undertaker */
 
-const mode = gulp_mode();
-
 export function dataFile(pathConfig, name) {
-  return projectPath(pathConfig.src, `${pathConfig.data.src}/${name}.json`);
+  const dataFolder = projectPath(pathConfig.src, pathConfig.data.src);
+  const mjsFile = path.join(dataFolder, `${name}.mjs`);
+  const jsonFile = path.join(dataFolder, `${name}.json`);
+  return fs.existsSync(mjsFile) ? mjsFile : jsonFile;
 }
 
-export function jsonData(pathConfig) {
+export function readData(pathConfig) {
   return (name) => loadDataFile(dataFile(pathConfig, name));
 }
 
@@ -47,7 +46,7 @@ export function createDataFunction(collections, pathConfig, paths) {
     if (!(Array.isArray(collections) && pathConfig.data)) {
       return data;
     }
-    const colsData = await Promise.all(collections.map(jsonData(pathConfig)));
+    const colsData = await Promise.all(collections.map(readData(pathConfig)));
     return collections.reduce(
       (acc, key, i) => Object.assign(acc, { [key]: colsData[i] }),
       data
@@ -110,11 +109,12 @@ export function getNunjucksRenderOptions(config, pathConfig) {
 }
 
 export class HtmlRegistry extends DefaultRegistry {
-  constructor(config, pathConfig) {
+  constructor(config, pathConfig, mode) {
     super();
     this.config = config;
     this.pathConfig = pathConfig;
     this.paths = getPaths(config, pathConfig);
+    this.mode = mode;
   }
 
   /**
@@ -171,9 +171,7 @@ export class HtmlRegistry extends DefaultRegistry {
       return src(this.paths.src, { ignore: this.paths.ignore })
         .pipe(debug({ title: "html:", logger: logger.debug }))
         .pipe(data(dataFunction))
-        .on("error", handleErrors)
         .pipe(nunjucksRender(nunjucksRenderOptions))
-        .on("error", handleErrors)
         .pipe(
           this.config.svgSprite
             ? inject(svgs, {
@@ -184,11 +182,9 @@ export class HtmlRegistry extends DefaultRegistry {
               }
             }) : through2.obj()
         )
-        .on("error", handleErrors)
         .pipe(this.config.svgSprite ? debug({ title: "injectsvg", logger: logger.debug }) : through2.obj())
-        .pipe(mode.production(htmlmin(config.htmlmin)))
-        .on("error", handleErrors)
-        .pipe(mode.production(debug({ title: "htmlmin:", logger: logger.debug })))
+        .pipe(this.mode.production(htmlmin(config.htmlmin)))
+        .pipe(this.mode.production(debug({ title: "htmlmin:", logger: logger.debug })))
         .pipe(dest(this.paths.dest));
     };
     const { alternateTask = () => htmlTask } = this.config;

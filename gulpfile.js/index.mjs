@@ -8,6 +8,7 @@
 
 import gulp from "gulp";
 import logger from "gulplog";
+import gulp_mode from "gulp-mode";
 import getEnabledTasks from "./lib/getEnabledTasks.mjs";
 import { getPathConfig } from "./lib/getPathConfig.mjs";
 import { getTaskConfig } from "./lib/getTaskConfig.mjs";
@@ -29,34 +30,36 @@ import { WatchRegistry } from "./tasks/watch.mjs";
 import { RevRegistry } from "./tasks/rev.mjs";
 import projectPath from "./lib/projectPath.mjs";
 
+const mode = gulp_mode({ verbose: new Set(process.argv).has("-LLLL") });
 const pathConfig = await getPathConfig();
 logger.info("Building sources", projectPath(pathConfig.src));
 
-const taskConfig = await getTaskConfig();
+const taskConfig = await getTaskConfig(mode);
 
-gulp.registry(new CleanRegistry(taskConfig.clean, pathConfig));
-gulp.registry(new CloudflareRegistry(taskConfig.cloudflare, pathConfig));
-gulp.registry(new CloudinaryRegistry(taskConfig.cloudinary, pathConfig));
-gulp.registry(new ESBuildRegistry(taskConfig.esbuild, pathConfig));
-gulp.registry(new FontsRegistry(taskConfig.fonts, pathConfig));
-gulp.registry(new GenerateRegistry(taskConfig, pathConfig));
-gulp.registry(new HtmlRegistry(taskConfig, pathConfig));
-gulp.registry(new ImagesRegistry(taskConfig.images, pathConfig));
-gulp.registry(new InitRegistry(taskConfig, pathConfig));
-gulp.registry(new InitConfigRegistry(taskConfig, pathConfig));
-gulp.registry(new StaticRegistry(taskConfig.static, pathConfig));
-gulp.registry(new StyleSheetsRegistry(taskConfig.stylesheets, pathConfig));
+gulp.registry(new CleanRegistry(taskConfig.clean, pathConfig, mode));
+gulp.registry(new CloudflareRegistry(taskConfig.cloudflare, pathConfig, mode));
+gulp.registry(new CloudinaryRegistry(taskConfig.cloudinary, pathConfig, mode));
+gulp.registry(new ESBuildRegistry(taskConfig.esbuild, pathConfig, mode));
+gulp.registry(new FontsRegistry(taskConfig.fonts, pathConfig, mode));
+gulp.registry(new GenerateRegistry(taskConfig, pathConfig, mode));
+gulp.registry(new HtmlRegistry(taskConfig, pathConfig, mode));
+gulp.registry(new ImagesRegistry(taskConfig.images, pathConfig, mode));
+gulp.registry(new InitRegistry(taskConfig, pathConfig, mode));
+gulp.registry(new InitConfigRegistry(taskConfig, pathConfig, mode));
+gulp.registry(new StaticRegistry(taskConfig.static, pathConfig, mode));
+gulp.registry(new StyleSheetsRegistry(taskConfig.stylesheets, pathConfig, mode));
 
 // Register user provided registries
 if (Array.isArray(taskConfig.registries)) {
   for (const registry of taskConfig.registries) {
+    registry.mode = mode;
     gulp.registry(registry);
   }
 }
 
 function devTasks() {
-  gulp.registry(new ViteRegistry(taskConfig.vite, pathConfig));
-  gulp.registry(new WatchRegistry(taskConfig, pathConfig));
+  gulp.registry(new ViteRegistry(taskConfig.vite, pathConfig, mode));
+  gulp.registry(new WatchRegistry(taskConfig, pathConfig, mode));
 
   const { assetTasks, codeTasks } = getEnabledTasks(taskConfig);
   const html = taskConfig.html ? "html" : null;
@@ -84,8 +87,8 @@ function devTasks() {
 
 function prodTasks() {
   process.env.NODE_ENV = "production";
-  gulp.registry(new SizeReportRegistry(taskConfig.sizeReport, pathConfig));
-  gulp.registry(new RevRegistry(taskConfig, pathConfig));
+  gulp.registry(new SizeReportRegistry(taskConfig.sizeReport, pathConfig, mode));
+  gulp.registry(new RevRegistry(taskConfig, pathConfig, mode));
 
   const { assetTasks, codeTasks } = getEnabledTasks(taskConfig);
   const rev = taskConfig.production.rev ? "rev" : null;

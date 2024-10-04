@@ -2,7 +2,7 @@ import fs from "node:fs";
 import module from "node:module";
 import mergeWith from "lodash-es/mergeWith.js";
 import projectPath from "./projectPath.mjs";
-import taskDefaults from "./taskDefaults.mjs";
+import { getTaskDefaults } from "./taskDefaults.mjs";
 
 const require = module.createRequire(import.meta.url);
 
@@ -33,8 +33,9 @@ async function getTaskConfigInternal() {
   return module.default;
 }
 
-function withDefaults(taskConfig) {
+function withDefaults(taskConfig, mode) {
   const result = Object.assign({}, taskConfig);
+  const taskDefaults = getTaskDefaults(mode);
   for (const key of Object.keys(taskDefaults)) {
     if (taskConfig[key] === false) continue;
     result[key] =
@@ -51,7 +52,7 @@ function replaceArrays(objValue, srcValue) {
   }
 }
 
-export async function getTaskConfig() {
+export async function getTaskConfig(mode) {
   const config = await getTaskConfigInternal();
-  return withDefaults(config);
+  return withDefaults(config, mode);
 }

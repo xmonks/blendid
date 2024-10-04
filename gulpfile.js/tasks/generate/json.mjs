@@ -3,7 +3,6 @@ import markdownToJSON from "gulp-markdown-to-json";
 import merge from "gulp-merge-json";
 import { marked } from "../../lib/markdown.mjs";
 import projectPath from "../../lib/projectPath.mjs";
-import handleErrors from "../../lib/handleErrors.mjs";
 import debug from "gulp-debug";
 import logger from "gulplog";
 
@@ -40,7 +39,6 @@ export class GenerateJsonRegistry extends DefaultRegistry {
             renderer: marked,
             ...restOptions
           }))
-          .on("error", handleErrors)
           .pipe(merge(Object.assign({ fileName }, options)))
           .pipe(dest(destPath));
       generateJsonTask.displayName = `generate-json-${collection}`;
