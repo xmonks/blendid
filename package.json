@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@vitejs/plugin-basic-ssl": "1.1.0",
-    "cloudinary": "2.5.0",
+    "cloudinary": "2.5.1",
     "cssnano": "7.0.6",
     "del": "8.0.0",
     "gulp": "5.0.0",
