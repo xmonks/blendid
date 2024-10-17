@@ -688,7 +688,7 @@ __metadata:
     lodash-es: "npm:4.17.21"
     marked: "npm:14.1.3"
     marked-gfm-heading-id: "npm:4.1.0"
-    marked-highlight: "npm:2.1.4"
+    marked-highlight: "npm:2.2.0"
     marked-mangle: "npm:1.1.9"
     mocha: "npm:10.7.3"
     modify-filename: "npm:2.0.0"
@@ -3552,12 +3552,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked-highlight@npm:2.1.4":
-  version: 2.1.4
-  resolution: "marked-highlight@npm:2.1.4"
+"marked-highlight@npm:2.2.0":
+  version: 2.2.0
+  resolution: "marked-highlight@npm:2.2.0"
   peerDependencies:
     marked: ">=4 <15"
-  checksum: 10c0/f278211e9069473debbe400a3ee47aac08a769be7a1e6a38d4b26d6dd7c6e4540254c9adc4e07d8ca01be5f9f399bc075d45f1f3d85b2d453aa027e10ffd8380
+  checksum: 10c0/5b0f63987b667a5b437e59c0e1c58f244ae8cfbad0216e01daee86fbbcb10912ad72025a8b3ed25bcf5d37e34c02ee0e293f94d551845c9623fcad3485607a23
   languageName: node
   linkType: hard
 
