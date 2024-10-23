@@ -66,19 +66,20 @@ function devTasks() {
   const cloudflarePages = taskConfig.cloudflare ? "cloudflare-pages" : null;
   const generate = taskConfig.generate ? "generate" : null;
   const staticFiles = taskConfig.static ? "static" : null;
-  const { prebuild, postbuild, code, assets } = taskConfig.additionalTasks.development;
+  const { prebuild, postbuild, code, assets, posthtml } = taskConfig.additionalTasks.development;
 
   if (assets) assetTasks.push(...assets);
   if (code) codeTasks.push(...code);
 
   return [
     "clean",
-    prebuild && gulp.series(prebuild),
     cloudflarePages,
+    prebuild && gulp.series(prebuild),
     generate,
     assetTasks && gulp.parallel(assetTasks),
     codeTasks && gulp.parallel(codeTasks),
     html,
+    posthtml && gulp.series(posthtml),
     staticFiles,
     postbuild && gulp.series(postbuild),
     "watch"
@@ -96,20 +97,20 @@ function prodTasks() {
   const cloudflarePages = taskConfig.cloudflare ? "cloudflare-pages" : null;
   const generate = taskConfig.generate ? "generate" : null;
   const staticFiles = taskConfig.static ? "static" : null;
-  const { prebuild, postbuild, code, assets } =
-    taskConfig.additionalTasks.production;
+  const { prebuild, postbuild, code, assets, posthtml } = taskConfig.additionalTasks.production;
 
   if (assets) assetTasks.push(...assets);
   if (code) codeTasks.push(...code);
 
   return [
     "clean",
-    prebuild && gulp.series(prebuild),
     cloudflarePages,
+    prebuild && gulp.series(prebuild),
     generate,
     assetTasks && gulp.parallel(assetTasks),
     codeTasks && gulp.parallel(codeTasks),
     html,
+    posthtml && gulp.series(posthtml),
     rev,
     staticFiles,
     postbuild && gulp.series(postbuild),

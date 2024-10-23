@@ -4,13 +4,14 @@
 
 - Updated to Vite.js 6
 - Removed Sass from `stylesheets` pipeline. If you need Sass, use `gulp-sass` via `stylesheets.alternateTask`.
-- Removed BrowserSync in favor of Vite.js. If you need BrowserSync, use it as Vite plugin.
+- Removed BrowserSync in favor of Vite.js. If you need [BrowserSync, use it as Vite plugin](https://github.com/Applelo/vite-plugin-browser-sync).
 - Removed WorkBox. We will provide separate package with WorkBoxRegistry, that can be used via `additionalTasks`.
 - Removed `gulp-notify` dependency.
 - Cleaned and pinned dependencies, so the overall package size after installation is much smaller (>50% reduction).
 - `gulp-mode` is now resolved just once and injected into Registries for later use.
 - Path config is in `mjs` instead of JSON. JSON config is still supported, but migration to ESM encouraged.
 - Support for `mjs` collection files for injection into HTML or generators input. Support for JSON is kept, but ESM is favored.
+- Added `posthtml` step for additional tasks
 
 ## 8.7.1
 
