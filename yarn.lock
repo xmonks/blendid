@@ -705,7 +705,7 @@ __metadata:
     undertaker-registry: "npm:2.0.0"
     vinyl: "npm:3.0.0"
     vinyl-file: "npm:5.0.0"
-    vite: "npm:6.0.0-beta.3"
+    vite: "npm:6.0.0-beta.4"
   bin:
     blendid: bin/blendid.js
   languageName: unknown
@@ -5875,9 +5875,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:6.0.0-beta.3":
-  version: 6.0.0-beta.3
-  resolution: "vite@npm:6.0.0-beta.3"
+"vite@npm:6.0.0-beta.4":
+  version: 6.0.0-beta.4
+  resolution: "vite@npm:6.0.0-beta.4"
   dependencies:
     esbuild: "npm:^0.24.0"
     fsevents: "npm:~2.3.3"
@@ -5891,7 +5891,7 @@ __metadata:
     sass-embedded: "*"
     stylus: "*"
     sugarss: "*"
-    terser: ^5.4.0
+    terser: ^5.16.0
   dependenciesMeta:
     fsevents:
       optional: true
@@ -5914,7 +5914,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/b581589a84ba8e119b7ddecb085dd4684339f5143e3b24a680e48748a2087301cd22f1c00d0930f069494a5ab19ff358149f38dda69b74060b363a387dc0022f
+  checksum: 10c0/ac16916a49d15cc6d9a8d388f1a80faf4f50f1393084da363e64add2d1286906bef598d2c3693beddae0997708d31e211a6e85cb3a468ea979bdd070cce6cc7c
   languageName: node
   linkType: hard
 
