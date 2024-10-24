@@ -56,7 +56,7 @@
     "plugin-error": "2.0.1",
     "postcss": "8.4.47",
     "postcss-functions": "4.0.2",
-    "postcss-preset-env": "10.0.7",
+    "postcss-preset-env": "10.0.8",
     "rev-hash": "4.1.0",
     "rev-path": "3.0.0",
     "sort-keys": "5.1.0",
