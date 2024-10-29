@@ -705,7 +705,7 @@ __metadata:
     undertaker-registry: "npm:2.0.0"
     vinyl: "npm:3.0.0"
     vinyl-file: "npm:5.0.0"
-    vite: "npm:6.0.0-beta.5"
+    vite: "npm:6.0.0-beta.6"
   bin:
     blendid: bin/blendid.js
   languageName: unknown
@@ -5875,9 +5875,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:6.0.0-beta.5":
-  version: 6.0.0-beta.5
-  resolution: "vite@npm:6.0.0-beta.5"
+"vite@npm:6.0.0-beta.6":
+  version: 6.0.0-beta.6
+  resolution: "vite@npm:6.0.0-beta.6"
   dependencies:
     esbuild: "npm:^0.24.0"
     fsevents: "npm:~2.3.3"
@@ -5885,6 +5885,7 @@ __metadata:
     rollup: "npm:^4.23.0"
   peerDependencies:
     "@types/node": ^18.0.0 || >=20.0.0
+    jiti: ">=1.21.0"
     less: "*"
     lightningcss: ^1.21.0
     sass: "*"
@@ -5892,11 +5893,15 @@ __metadata:
     stylus: "*"
     sugarss: "*"
     terser: ^5.16.0
+    tsx: ^4.8.1
+    yaml: ^2.4.2
   dependenciesMeta:
     fsevents:
       optional: true
   peerDependenciesMeta:
     "@types/node":
+      optional: true
+    jiti:
       optional: true
     less:
       optional: true
@@ -5912,9 +5917,13 @@ __metadata:
       optional: true
     terser:
       optional: true
+    tsx:
+      optional: true
+    yaml:
+      optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/ba8678699c4603ed44468006b0ac1031081518c9e21fb3b0444d40eb138753cb88416dc9d12c6f79af780ad81d7863f330a1def5278628422b904ba0f6231b1a
+  checksum: 10c0/1cf4866080423e19c6b4e3ad461daf5c9bd3364890b19c37c78a42a4f8e3d9697a0baa4f30bbaf31beac4023893863fc6283927fda4227d890b2f9f2f282a871
   languageName: node
   linkType: hard
 
