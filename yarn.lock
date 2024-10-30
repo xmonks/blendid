@@ -3579,10 +3579,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mdn-data@npm:2.12.0":
-  version: 2.12.0
-  resolution: "mdn-data@npm:2.12.0"
-  checksum: 10c0/bcda2ca48bdd1b675e93a42542809754810bac04a3812fe8d7de2f0c34f7e4c511550a2a40b02f4ef7a555ae51f392a22143136975bbf753887d9474518073f2
+"mdn-data@npm:2.12.1":
+  version: 2.12.1
+  resolution: "mdn-data@npm:2.12.1"
+  checksum: 10c0/1a09f441bdd423f2b0ab712665a1a3329fe7b15e9a2dad8c1c10c521ddb204ed186e7ac91052fd53a5ae0a07ac6eae53b5bcbb59ba8a1fb654268611297eea4a
   languageName: node
   linkType: hard
 
