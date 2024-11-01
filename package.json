@@ -72,7 +72,7 @@
     "@types/undertaker": "1.2.11",
     "@types/undertaker-registry": "1.0.4",
     "chai": "5.1.2",
-    "mocha": "10.7.3"
+    "mocha": "10.8.2"
   },
   "resolutions": {
     "ansi-colors": "4.1.3",
