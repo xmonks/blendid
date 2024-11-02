@@ -1,6 +1,6 @@
 export default {
   "src": "./src",
-  "dest": "./public",
+  "dest": "./.blendid/public",
 
   "html": {
     "src": "html",

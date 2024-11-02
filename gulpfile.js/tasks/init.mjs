@@ -27,7 +27,7 @@ export class InitRegistry extends DefaultRegistry {
   init({ task, src, dest }) {
     task("init", () => {
       const cwd = import.meta.dirname;
-      const configStream = src(["../path-config.json", "../task-config.mjs"], { cwd })
+      const configStream = src(["../path-config.mjs", "../task-config.mjs"], { cwd })
         .pipe(dest(projectPath("config")));
 
       const srcStream = src(["../../src/**/*", "../../src/**/.gitkeep"], { cwd })

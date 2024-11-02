@@ -60,6 +60,7 @@ if (Array.isArray(taskConfig.registries)) {
 }
 
 function devTasks() {
+  process.env.NODE_ENV = "development";
   gulp.registry(new ViteRegistry(taskConfig.vite, pathConfig, mode));
   gulp.registry(new WatchRegistry(taskConfig, pathConfig, mode));
 
