@@ -13,6 +13,7 @@
 - Support for `mjs` collection files for injection into HTML or generators input. Support for JSON is kept, but ESM is favored.
 - Added `posthtml` step for additional tasks
 - Added `import-wp` task for import of WordPress Posts and Pages
+- Sensible layout template a CSS styles for modern web development
 
 ## 8.7.1
 

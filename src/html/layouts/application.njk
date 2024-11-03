@@ -3,17 +3,16 @@
 <html lang="{{ meta.lang }}">
   <head>
     <meta charset="utf-8">
-    <title>{% block title %}{{ meta.title }} {{ title }}{% endblock %}</title>
-    <meta name="description" content="{{ description or meta.description }}">
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-    <meta name="color-scheme" content="light dark">
-    {% if images %}
-    {# `images` can be collection populated by `cloudinary` task, or just set `images: true` in `data/global.mjs`
-       to enable this if you use another way to upload images to cloudinary #}
-    <meta http-equiv="delegate-ch" content="sec-ch-width https://res.cloudinary.com; sec-ch-dpr https://res.cloudinary.com; sec-ch-viewport-width https://res.cloudinary.com;">
-    <link rel="preconnect" href="https://res.cloudinary.com">
-    {% endif %}
+    {% block head.pragma %}{% endblock %}
+    <title>{% block title %}{{ meta.title }} {{ title }}{% endblock %}</title>
+    {% block head.preconnect %}{% endblock %}
     <link rel="stylesheet" href="{{ 'index.css' | assetUrl('stylesheets') }}">
+    {% block head.stylesheets %}{% endblock %}
+    {% block head.preload %}{% endblock %}
+    {% block head.async-scripts %}{% endblock %}
+    <meta name="description" content="{{ description or meta.description }}">
+    <meta name="color-scheme" content="light dark">
     <link rel="manifest" href="{{ 'manifest.json' | assetUrl('static') }}">
     <link rel="canonical" href="{{ canonicalUrl }}">
     {% include "shared/app-icons.html" %}
