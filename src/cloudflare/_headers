@@ -1,2 +1,6 @@
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
+  X-Robots-Tag: nosnippet
+
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
