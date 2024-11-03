@@ -15,6 +15,11 @@ async function fetchObjects(objectType, url) {
   return resp.json();
 }
 
+/**
+ * @see {@link https://developer.wordpress.org/rest-api/reference/pages/}
+ * @param {Array} pages
+ * @returns {*}
+ */
 function pageTemplates(pages) {
   return pages
     .map(x => [x.slug, { title: x.title.rendered, content: x.content.rendered }])
@@ -49,8 +54,13 @@ async function importPages(url, dest) {
   }
 }
 
-function postTemplates(pages) {
-  return pages
+/**
+ * @see {@link https://developer.wordpress.org/rest-api/reference/posts/}
+ * @param {Array} posts
+ * @returns {*}
+ */
+function postTemplates(posts) {
+  return posts
     .map(x => [x.slug, { title: x.title.rendered, content: x.content.rendered, date: new Date(x.date) }])
     .map(([slug, { title, content, date }]) => [
         slug,
@@ -86,6 +96,8 @@ export class ImportWPRegistry extends DefaultRegistry {
     this.config = config;
     this.pathConfig = pathConfig;
     this.args = parseArgs({
+      strict: false,
+      allowPositionals: true,
       args: process.argv,
       options: {
         pages: { type: "boolean" },
