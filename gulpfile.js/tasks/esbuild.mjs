@@ -32,8 +32,7 @@ export class ESBuildRegistry extends DefaultRegistry {
     task("esbuild", () =>
       src(this.paths.src)
         .pipe(debug({ title: "esbuild:", logger: logger.debug }))
-        .pipe(this.mode.production(esbuild(this.config.options)))
-        .pipe(this.mode.development(esbuildInc(this.config.options)))
+        .pipe(this.mode.production() ? esbuild(this.config.options) : esbuildInc(this.config.options))
         .pipe(dest(this.paths.dest))
     );
   }
