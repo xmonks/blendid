@@ -20,6 +20,18 @@ yarn blendid
 This will create default `src` and `config` files in your directory and start compiling and live-updating files!
 Try editing them and watch your browser auto-update!
 
+## Import existing WordPress site
+
+You can import existing pages and posts into the project from any WordPress instance by running `import-wp` task:
+
+```bash
+yarn blendid import-wp --url https://example.worpress.com --pages --posts
+```
+
+Pages are imported into `src/html`.
+Post are imported into `src/data/posts`.
+You can then add `generate.json` and `html.collections: ["posts"]` into your `task-config.mjs` to be used in your templates.
+
 # Publish to npm
 
 ```bash

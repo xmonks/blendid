@@ -21,9 +21,10 @@
   {% block head_preload %}{% endblock %}
   {% block head_async_scripts %}{% endblock %}
   <meta name="description" content="{{ description or meta.description }}">
+  <meta name="generator" content="{{ generator or '@hckr_/blendid - static site generator and assets pipeline' }}">
   <meta name="color-scheme" content="light dark">
   <link rel="manifest" href="{{ 'manifest.json' | assetUrl('static') }}">
-  <link rel="canonical" href="{{ canonicalUrl }}">
+  <link rel="canonical" href="{{ canonicalUrl or meta.url }}">
   {% include "shared/app-icons.html" %}
   {% block head %}{% endblock %}
 </head>
