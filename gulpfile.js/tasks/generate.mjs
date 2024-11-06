@@ -10,10 +10,11 @@ const noop = (done) => {
 };
 
 export class GenerateRegistry extends DefaultRegistry {
-  constructor(config, pathConfig) {
+  constructor(config, pathConfig, mode) {
     super();
     this.config = config;
     this.pathConfig = pathConfig;
+    this.mode = mode;
   }
 
   /**
@@ -24,10 +25,11 @@ export class GenerateRegistry extends DefaultRegistry {
 
     const redirect = new GenerateRedirectsRegistry(
       this.config,
-      this.pathConfig
+      this.pathConfig,
+      this.mode
     );
-    const json = new GenerateJsonRegistry(this.config, this.pathConfig);
-    const html = new GenerateHtmlRegistry(this.config, this.pathConfig);
+    const json = new GenerateJsonRegistry(this.config, this.pathConfig, this.mode);
+    const html = new GenerateHtmlRegistry(this.config, this.pathConfig, this.mode);
     registry(redirect);
     registry(json);
     registry(html);

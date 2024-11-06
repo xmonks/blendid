@@ -55,6 +55,7 @@ const unquote = s => s.match(/^['"](?<unquoted>.+)['"]$/).groups?.unquoted ?? s;
 export function getTaskDefaults(mode) {
   return {
     esbuild: {
+      define: { __DEVELOPMENT__: mode.development() ? "true" : "undefined" },
       extensions: ["ts", "js", "mjs"],
       options: {
         bundle: true,
@@ -162,11 +163,9 @@ export function getTaskDefaults(mode) {
       tasks: []
     },
 
-    workboxBuild: {},
-
     production: {
       rev: {
-        exclude: ["favicon.ico", "robots.txt", "_headers", "_redirects"]
+        exclude: ["_headers", "_redirects"]
       }
     },
 
@@ -175,11 +174,17 @@ export function getTaskDefaults(mode) {
     additionalTasks: {
       development: {
         prebuild: null,
-        postbuild: null
+        postbuild: null,
+        code: null,
+        assets: null,
+        posthtml: null
       },
       production: {
         prebuild: null,
-        postbuild: null
+        postbuild: null,
+        code: null,
+        assets: null,
+        posthtml: null
       }
     },
 

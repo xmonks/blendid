@@ -1,4 +1,5 @@
 import * as fs from "node:fs/promises";
+import { existsSync } from "node:fs";
 import * as path from "node:path";
 import { parseArgs, styleText } from "node:util";
 import logger from "gulplog";
@@ -38,19 +39,34 @@ ${content}
     );
 }
 
-async function importPages(url, dest) {
+/**
+ * @param {string} url
+ * @param {{html: string, data: string}} dest
+ * @param {{ json: Boolean, force: Boolean}} options
+ */
+async function importPages(url, { html, data }, options) {
   logger.info(styleText("cyan", `Adding pages from website ${url}`));
 
   const pages = await fetchObjects("pages", url);
 
   logger.info(styleText("gray", `Found ${pages.length} pages`));
 
+  if (options.json) {
+    const file = path.join(data, "wpPages.json");
+    if (!existsSync(file) || options.force) {
+      await fs.writeFile(file, JSON.stringify(pages));
+      logger.info(styleText("green", `Created pages JSON file`));
+    }
+  }
+
   for (const [slug, content] of pageTemplates(pages)) {
-    const dir = path.join(dest, slug);
+    const dir = path.join(html, slug);
     const file = path.join(dir, "index.njk");
     await fs.mkdir(dir, { recursive: true });
-    await fs.writeFile(file, content);
-    logger.info(styleText("green", `Created page ${slug}`));
+    if (!existsSync(file) || options.force) {
+      await fs.writeFile(file, content);
+      logger.info(styleText("green", `Created page ${slug}`));
+    }
   }
 }
 
@@ -75,16 +91,34 @@ ${content}`
     );
 }
 
-async function importPosts(url, dest) {
+/**
+ * @param {string} url
+ * @param {string} dest
+ * @param {{ json: Boolean, force: Boolean}} options
+ */
+async function importPosts(url, dest, options) {
   logger.info(styleText("cyan", `Adding posts from website ${url}`));
 
   const posts = await fetchObjects("posts", url);
 
   logger.info(styleText("gray", `Found ${posts.length} posts`));
 
+  if (options.json) {
+    const file = path.join(dest, "wpPosts.json");
+    if (!existsSync(file) || options.force) {
+      await fs.writeFile(file, JSON.stringify(posts));
+      logger.info(styleText("green", `Created posts JSON file`));
+    }
+  }
+
   for (const [slug, content] of postTemplates(posts)) {
-    await fs.writeFile(path.join(dest, `${slug}.md`), content);
-    logger.info(styleText("green", `Created post ${slug}`));
+    const dir = path.join(dest, "posts");
+    const file = path.join(dir, `${slug}.md`);
+    await fs.mkdir(dir, { recursive: true });
+    if (!existsSync(file) || options.force) {
+      await fs.writeFile(file, content);
+      logger.info(styleText("green", `Created post ${slug}`));
+    }
   }
 }
 
@@ -100,9 +134,11 @@ export class ImportWPRegistry extends DefaultRegistry {
       allowPositionals: true,
       args: process.argv,
       options: {
-        pages: { type: "boolean" },
-        posts: { type: "boolean" },
-        url: { type: "string" }
+        pages: { type: "boolean" }, // downloads Pages
+        posts: { type: "boolean" }, // downloads Posts
+        json: { type: "boolean" }, // saves original JSON data
+        force: { type: "boolean" }, // overrides existing files
+        url: { type: "string" } // root URL of the WordPress website
       }
     }).values;
   }
@@ -110,17 +146,19 @@ export class ImportWPRegistry extends DefaultRegistry {
   /**
    * @param {Undertaker} taker
    */
-  init({ task, src, dest }) {
+  init({ task, src }) {
     task("import-wp", async () => {
       if (this.args.pages) {
-        const dest = projectPath(this.pathConfig.src, this.pathConfig.html.src);
-        await importPages(this.args.url, dest);
+        const dest = {
+          html: projectPath(this.pathConfig.src, this.pathConfig.html.src),
+          json: projectPath(this.pathConfig.src, this.pathConfig.data.src)
+        };
+        await importPages(this.args.url, dest, this.args);
       }
 
       if (this.args.posts) {
-        const dest = projectPath(this.pathConfig.src, this.pathConfig.data.src, "posts");
-        await fs.mkdir(dest, { recursive: true });
-        await importPosts(this.args.url, dest);
+        const dest = projectPath(this.pathConfig.src, this.pathConfig.data.src);
+        await importPosts(this.args.url, dest, this.args);
       }
     });
   }

@@ -34,9 +34,9 @@ export async function loadDataFile(dataFile) {
   if (!fs.existsSync(dataFile)) return null;
   const isJSON = path.extname(dataFile) === ".json";
   const dataModule = await import(
-    `${dataFile}?${Date.now()}`,
+    `${dataFile}?${Date.now()}`, // prevent caching
     isJSON ? { with: { type: "json" } } : undefined
-    );
+  );
   return dataModule.default;
 }
 
