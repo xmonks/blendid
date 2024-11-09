@@ -18,7 +18,9 @@ export class StyleSheetsRegistry extends DefaultRegistry {
         pathConfig.src,
         pathConfig.stylesheets?.src ?? "",
         "**",
-        config.extensions.length > 1 ? `*.{${config.extensions}}` : `*.${config.extensions}`
+        config.extensions.length > 1
+          ? `*.{${config.extensions}}`
+          : `*.${config.extensions}`
       ),
       dest: projectPath(pathConfig.dest, pathConfig.stylesheets?.dest ?? "")
     };

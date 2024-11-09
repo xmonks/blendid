@@ -14,7 +14,9 @@ export class ESBuildRegistry extends DefaultRegistry {
       src: projectPath(
         pathConfig.src,
         modulePathConfig?.src ?? "",
-        config.extensions.length > 1 ? `*.{${config.extensions}}` : `*.${config.extensions}`
+        config.extensions.length > 1
+          ? `*.{${config.extensions}}`
+          : `*.${config.extensions}`
       ),
       dest: projectPath(pathConfig.dest, modulePathConfig?.dest ?? "")
     };
@@ -32,7 +34,11 @@ export class ESBuildRegistry extends DefaultRegistry {
     task("esbuild", () =>
       src(this.paths.src)
         .pipe(debug({ title: "esbuild:", logger: logger.debug }))
-        .pipe(this.mode.production() ? esbuild(this.config.options) : esbuildInc(this.config.options))
+        .pipe(
+          this.mode.production()
+            ? esbuild(this.config.options)
+            : esbuildInc(this.config.options)
+        )
         .pipe(dest(this.paths.dest))
     );
   }

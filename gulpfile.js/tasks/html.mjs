@@ -66,10 +66,10 @@ export function getPaths(taskConfig, pathConfig) {
     spritesSrc: projectPath(pathConfig.src, pathConfig.icons.src, "*.svg"),
     dataPath: pathConfig.data
       ? projectPath(
-        pathConfig.src,
-        pathConfig.data.src,
-        taskConfig.html?.dataFile ?? ""
-      )
+          pathConfig.src,
+          pathConfig.data.src,
+          taskConfig.html?.dataFile ?? ""
+        )
       : null,
     dest: projectPath(pathConfig.dest, pathConfig.html.dest)
   };
@@ -137,35 +137,35 @@ export class HtmlRegistry extends DefaultRegistry {
 
       const svgs = this.config.svgSprite
         ? src(this.paths.spritesSrc)
-          .pipe(
-            svgmin((file) => {
-              const prefix = path.basename(
-                file.relative,
-                path.extname(file.relative)
-              );
-              return {
-                plugins: [
-                  "preset-default",
-                  {
-                    name: "prefixIDs",
-                    params: { prefix }
-                  },
-                  {
-                    name: "cleanupIDs",
-                    params: {
-                      prefix: `${prefix}-`,
-                      minify: true,
-                      force: true
-                    }
-                  },
-                  "removeXMLNS"
-                ]
-              };
-            })
-          )
-          .pipe(debug({ title: "svgmin", logger: logger.debug }))
-          .pipe(svgstore(this.config.svgSprite?.svgstore))
-          .pipe(debug({ title: "svgstore", logger: logger.debug }))
+            .pipe(
+              svgmin((file) => {
+                const prefix = path.basename(
+                  file.relative,
+                  path.extname(file.relative)
+                );
+                return {
+                  plugins: [
+                    "preset-default",
+                    {
+                      name: "prefixIDs",
+                      params: { prefix }
+                    },
+                    {
+                      name: "cleanupIDs",
+                      params: {
+                        prefix: `${prefix}-`,
+                        minify: true,
+                        force: true
+                      }
+                    },
+                    "removeXMLNS"
+                  ]
+                };
+              })
+            )
+            .pipe(debug({ title: "svgmin", logger: logger.debug }))
+            .pipe(svgstore(this.config.svgSprite?.svgstore))
+            .pipe(debug({ title: "svgstore", logger: logger.debug }))
         : null;
 
       return src(this.paths.src, { ignore: this.paths.ignore })
@@ -175,16 +175,25 @@ export class HtmlRegistry extends DefaultRegistry {
         .pipe(
           this.config.svgSprite
             ? inject(svgs, {
-              quiet: true,
-              removeTags: true,
-              transform(_, file) {
-                return file.contents.toString();
-              }
-            }) : through2.obj()
+                quiet: true,
+                removeTags: true,
+                transform(_, file) {
+                  return file.contents.toString();
+                }
+              })
+            : through2.obj()
         )
-        .pipe(this.config.svgSprite ? debug({ title: "injectsvg", logger: logger.debug }) : through2.obj())
+        .pipe(
+          this.config.svgSprite
+            ? debug({ title: "injectsvg", logger: logger.debug })
+            : through2.obj()
+        )
         .pipe(this.mode.production(htmlmin(config.htmlmin)))
-        .pipe(this.mode.production(debug({ title: "htmlmin:", logger: logger.debug })))
+        .pipe(
+          this.mode.production(
+            debug({ title: "htmlmin:", logger: logger.debug })
+          )
+        )
         .pipe(dest(this.paths.dest));
     };
     const { alternateTask = () => htmlTask } = this.config;

@@ -28,8 +28,16 @@ export class GenerateRegistry extends DefaultRegistry {
       this.pathConfig,
       this.mode
     );
-    const json = new GenerateJsonRegistry(this.config, this.pathConfig, this.mode);
-    const html = new GenerateHtmlRegistry(this.config, this.pathConfig, this.mode);
+    const json = new GenerateJsonRegistry(
+      this.config,
+      this.pathConfig,
+      this.mode
+    );
+    const html = new GenerateHtmlRegistry(
+      this.config,
+      this.pathConfig,
+      this.mode
+    );
     registry(redirect);
     registry(json);
     registry(html);

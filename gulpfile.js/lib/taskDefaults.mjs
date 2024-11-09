@@ -50,7 +50,8 @@ function assetUrl(assetPath, assetType, options) {
   return path.join(options?.base ?? "/", destPath, assetPath);
 }
 
-const unquote = s => s.match(/^['"](?<unquoted>.+)['"]$/).groups?.unquoted ?? s;
+const unquote = (s) =>
+  s.match(/^['"](?<unquoted>.+)['"]$/).groups?.unquoted ?? s;
 
 export function getTaskDefaults(mode) {
   return {
@@ -81,10 +82,10 @@ export function getTaskDefaults(mode) {
         }
       },
       functions: {
-        "asset-url": function(assetType, assetPath, opts) {
+        "asset-url": function (assetType, assetPath, opts) {
           return `url(${assetUrl(unquote(assetPath), unquote(assetType), opts ? JSON.parse(unquote(opts)) : undefined)})`;
         },
-        "cloudinary-url": function(publicId, opts) {
+        "cloudinary-url": function (publicId, opts) {
           return `url(${cloudinaryUrl(unquote(publicId), opts ? JSON.parse(unquote(opts)) : undefined)})`;
         }
       },

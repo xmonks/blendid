@@ -29,10 +29,10 @@ export class CloudinaryRegistry extends DefaultRegistry {
       dest: projectPath(pathConfig.src, pathConfig.data?.src ?? ""),
       manifest: config.manifest
         ? projectPath(
-          pathConfig.src,
-          pathConfig.data?.src ?? "",
-          config.manifest
-        )
+            pathConfig.src,
+            pathConfig.data?.src ?? "",
+            config.manifest
+          )
         : null
     };
   }
@@ -53,14 +53,26 @@ export class CloudinaryRegistry extends DefaultRegistry {
     }
 
     function getRelativeFilePath(filePath) {
-      return path.relative(paths.src, path.resolve(import.meta.dirname, filePath));
+      return path.relative(
+        paths.src,
+        path.resolve(import.meta.dirname, filePath)
+      );
     }
 
     const cloudinaryTask = () =>
-      src(path.join(paths.src, "**", this.config.extensions.length > 1 ? `*.{${this.config.extensions}}` : `*.${this.config.extensions}`), {
-        encoding: false,
-        since: lastRun(cloudinaryTask)
-      })
+      src(
+        path.join(
+          paths.src,
+          "**",
+          this.config.extensions.length > 1
+            ? `*.{${this.config.extensions}}`
+            : `*.${this.config.extensions}`
+        ),
+        {
+          encoding: false,
+          since: lastRun(cloudinaryTask)
+        }
+      )
         .pipe(debug({ title: "cloudinary:", logger: logger.debug }))
         .pipe(
           changed(paths.dest, {

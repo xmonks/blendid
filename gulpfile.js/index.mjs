@@ -49,7 +49,9 @@ gulp.registry(new ImportWPRegistry(taskConfig, pathConfig, mode));
 gulp.registry(new InitRegistry(taskConfig, pathConfig, mode));
 gulp.registry(new InitConfigRegistry(taskConfig, pathConfig, mode));
 gulp.registry(new StaticRegistry(taskConfig.static, pathConfig, mode));
-gulp.registry(new StyleSheetsRegistry(taskConfig.stylesheets, pathConfig, mode));
+gulp.registry(
+  new StyleSheetsRegistry(taskConfig.stylesheets, pathConfig, mode)
+);
 
 // Register user provided registries
 if (Array.isArray(taskConfig.registries)) {
@@ -69,7 +71,8 @@ function devTasks() {
   const cloudflarePages = taskConfig.cloudflare ? "cloudflare-pages" : null;
   const generate = taskConfig.generate ? "generate" : null;
   const staticFiles = taskConfig.static ? "static" : null;
-  const { prebuild, postbuild, code, assets, posthtml } = taskConfig.additionalTasks.development;
+  const { prebuild, postbuild, code, assets, posthtml } =
+    taskConfig.additionalTasks.development;
 
   if (assets) assetTasks.push(...assets);
   if (code) codeTasks.push(...code);
@@ -91,7 +94,9 @@ function devTasks() {
 
 function prodTasks() {
   process.env.NODE_ENV = "production";
-  gulp.registry(new SizeReportRegistry(taskConfig.sizeReport, pathConfig, mode));
+  gulp.registry(
+    new SizeReportRegistry(taskConfig.sizeReport, pathConfig, mode)
+  );
   gulp.registry(new RevRegistry(taskConfig, pathConfig, mode));
 
   const { assetTasks, codeTasks } = getEnabledTasks(taskConfig);
@@ -100,7 +105,8 @@ function prodTasks() {
   const cloudflarePages = taskConfig.cloudflare ? "cloudflare-pages" : null;
   const generate = taskConfig.generate ? "generate" : null;
   const staticFiles = taskConfig.static ? "static" : null;
-  const { prebuild, postbuild, code, assets, posthtml } = taskConfig.additionalTasks.production;
+  const { prebuild, postbuild, code, assets, posthtml } =
+    taskConfig.additionalTasks.production;
 
   if (assets) assetTasks.push(...assets);
   if (code) codeTasks.push(...code);

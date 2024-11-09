@@ -215,7 +215,6 @@ plugin.manifest = (path_, options) => {
           ).then((x) => push(x))
         );
       }
-
       (async () => {
         try {
           await Promise.all(transformations);

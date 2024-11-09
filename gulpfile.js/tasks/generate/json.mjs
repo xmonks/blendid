@@ -29,16 +29,22 @@ export class GenerateJsonRegistry extends DefaultRegistry {
 
     const defaultOptions = this.config["generate-json"].mergeOption;
 
-    function generateJson(sourcePath, destPath, { collection, mergeOptions, ...restOptions }) {
+    function generateJson(
+      sourcePath,
+      destPath,
+      { collection, mergeOptions, ...restOptions }
+    ) {
       const fileName = `${collection}.json`;
       const options = mergeOptions ?? defaultOptions;
       const generateJsonTask = () =>
         src(sourcePath)
           .pipe(debug({ title: "generate-json:", logger: logger.debug }))
-          .pipe(markdownToJSON({
-            renderer: marked,
-            ...restOptions
-          }))
+          .pipe(
+            markdownToJSON({
+              renderer: marked,
+              ...restOptions
+            })
+          )
           .pipe(merge(Object.assign({ fileName }, options)))
           .pipe(dest(destPath));
       generateJsonTask.displayName = `generate-json-${collection}`;

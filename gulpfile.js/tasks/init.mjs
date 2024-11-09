@@ -27,13 +27,17 @@ export class InitRegistry extends DefaultRegistry {
   init({ task, src, dest }) {
     task("init", () => {
       const cwd = import.meta.dirname;
-      const configStream = src(["../path-config.mjs", "../task-config.mjs"], { cwd })
-        .pipe(dest(projectPath("config")));
+      const configStream = src(["../path-config.mjs", "../task-config.mjs"], {
+        cwd
+      }).pipe(dest(projectPath("config")));
 
-      const srcStream = src(["../../src/**/*", "../../src/**/.gitkeep"], { cwd })
-        .pipe(dest(projectPath(this.pathConfig.src)));
+      const srcStream = src(["../../src/**/*", "../../src/**/.gitkeep"], {
+        cwd
+      }).pipe(dest(projectPath(this.pathConfig.src)));
 
-      logger.info(styleText("green", "Generating default Blendid project files"));
+      logger.info(
+        styleText("green", "Generating default Blendid project files")
+      );
       logger.info(
         styleText(
           "yellow",

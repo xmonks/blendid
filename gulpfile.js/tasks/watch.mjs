@@ -54,9 +54,7 @@ export class WatchRegistry extends DefaultRegistry {
             const globPattern = `**/*${
               taskConfig.extensions ? `.{${taskConfig.extensions}}` : ""
             }`;
-            const exclude = taskConfig.exclude
-              ? `${taskConfig.exclude}`
-              : null;
+            const exclude = taskConfig.exclude ? `${taskConfig.exclude}` : null;
             const extraWatch = taskConfig.watch ?? "";
             watch(
               [globPattern, extraWatch],

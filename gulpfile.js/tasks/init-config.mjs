@@ -18,8 +18,9 @@ export class InitConfigRegistry extends DefaultRegistry {
   init({ task, src, dest }) {
     task("init-config", () => {
       const cwd = import.meta.dirname;
-      const configStream = src(["../path-config.json", "../task-config.mjs"], { cwd })
-        .pipe(dest(projectPath("config")));
+      const configStream = src(["../path-config.json", "../task-config.mjs"], {
+        cwd
+      }).pipe(dest(projectPath("config")));
 
       logger.info(
         styleText(

@@ -23,10 +23,13 @@ async function fetchObjects(objectType, url) {
  */
 function pageTemplates(pages) {
   return pages
-    .map(x => [x.slug, { title: x.title.rendered, content: x.content.rendered }])
+    .map((x) => [
+      x.slug,
+      { title: x.title.rendered, content: x.content.rendered }
+    ])
     .map(([slug, { title, content }]) => [
-        slug,
-        `{% extends 'layouts/application.njk' %}
+      slug,
+      `{% extends 'layouts/application.njk' %}
 
 {% set title = "${title}" %}
 {% set slug = "${slug}" %}
@@ -35,8 +38,7 @@ function pageTemplates(pages) {
 <h1>${title}</h1>
 ${content}
 {% endblock %}`
-      ]
-    );
+    ]);
 }
 
 /**
@@ -77,18 +79,24 @@ async function importPages(url, { html, data }, options) {
  */
 function postTemplates(posts) {
   return posts
-    .map(x => [x.slug, { title: x.title.rendered, content: x.content.rendered, date: new Date(x.date) }])
+    .map((x) => [
+      x.slug,
+      {
+        title: x.title.rendered,
+        content: x.content.rendered,
+        date: new Date(x.date)
+      }
+    ])
     .map(([slug, { title, content, date }]) => [
-        slug,
-        `---
+      slug,
+      `---
 title: "${title}"
 slug: "${slug}"
 date: "${date.toISOString()}"
 ---
 <h1>${title}</h1>
 ${content}`
-      ]
-    );
+    ]);
 }
 
 /**

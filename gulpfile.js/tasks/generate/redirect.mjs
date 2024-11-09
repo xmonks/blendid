@@ -43,9 +43,7 @@ function generateHtmlFile(col) {
         .json()
         .then((data) =>
           Promise.all(
-            data.map((x) =>
-              createFile(x, col).then((x) => this.push(x))
-            )
+            data.map((x) => createFile(x, col).then((x) => this.push(x)))
           )
         )
         .then(() => done());

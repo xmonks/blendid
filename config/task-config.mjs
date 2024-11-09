@@ -18,7 +18,7 @@ export default {
 
   vite: {
     appType: "mpa",
-    browserArgs: "--ignore-certificate-errors --allow-insecure-localhost",
+    browserArgs: "--ignore-certificate-errors --allow-insecure-localhost"
   },
 
   production: {
