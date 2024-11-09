@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "./bin/blendid.js",
-    "build": "./bin/blendid.js build",
+    "build": "./bin/blendid.js build --production",
     "test": "mocha ./gulpfile.js/**/*.test.mjs",
     "outdated": "yarn upgrade-interactive"
   },
