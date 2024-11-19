@@ -804,7 +804,7 @@ __metadata:
     gulp-svgstore: "npm:9.0.0"
     gulplog: "npm:2.2.0"
     lodash-es: "npm:4.17.21"
-    marked: "npm:15.0.0"
+    marked: "npm:15.0.1"
     marked-gfm-heading-id: "npm:4.1.1"
     marked-highlight: "npm:2.2.1"
     marked-mangle: "npm:1.1.10"
@@ -3688,12 +3688,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:15.0.0":
-  version: 15.0.0
-  resolution: "marked@npm:15.0.0"
+"marked@npm:15.0.1":
+  version: 15.0.1
+  resolution: "marked@npm:15.0.1"
   bin:
     marked: bin/marked.js
-  checksum: 10c0/717e641a7d4f14a099ceb4f094edf8f6048b84685e5d8e213889711b3f0ccd4756b3c576ce5c7378e0c54fe1ccbb116ef07ca663e18ad457be9a1bbc7b9c4c48
+  checksum: 10c0/711253c4d29fa94428c987317921987339088c201cc6b8db72ba1ceb27f7cdafd3f7a8e3eb5e0107108e1f749c459b80f5fe144a507695191f968b6efa945f04
   languageName: node
   linkType: hard
 
