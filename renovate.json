@@ -6,7 +6,8 @@
     "schedule:daily",
     "group:postcss",
     ":preserveSemverRanges",
-    ":dependencyDashboard"
+    ":dependencyDashboard",
+    "customManagers:biomeVersions"
   ],
   "automerge": true,
   "automergeType": "pr",
