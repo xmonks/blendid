@@ -1,17 +1,20 @@
+import postcssGamutMapping from "@csstools/postcss-gamut-mapping";
 import cssnano from "cssnano";
-import presetEnv from "postcss-preset-env";
 import functions from "postcss-functions";
+import atImport from "postcss-import";
+import presetEnv from "postcss-preset-env";
 
 function getPresetEnvConfig(config) {
-  let options = config.presetEnv ?? {};
-  if (config.autoprefixer) {
-    options.autoprefixer = config.autoprefixer;
-  }
-  return options;
+  return Object.assign({ autoprefixer: config.autoprefixer }, config.presetEnv);
 }
 
 function getPostCSSPlugins(config, userPlugins, mode) {
-  const plugins = [presetEnv(getPresetEnvConfig(config)), functions(config)]
+  const plugins = [
+    atImport(config.atImport),
+    postcssGamutMapping(),
+    presetEnv(getPresetEnvConfig(config)),
+    functions(config)
+  ]
     .concat(userPlugins)
     .filter(Boolean);
 

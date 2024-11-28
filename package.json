@@ -1,6 +1,6 @@
 {
   "name": "@hckr_/blendid",
-  "version": "9.0.0-beta.18",
+  "version": "9.0.0-beta.19",
   "description": "A full featured configurable front-end asset pipeline and static site builder",
   "license": "MIT",
   "main": "gulpfile.js/index.mjs",
@@ -22,6 +22,7 @@
     "outdated": "yarn upgrade-interactive"
   },
   "dependencies": {
+    "@csstools/postcss-gamut-mapping": "2.0.6",
     "@vitejs/plugin-basic-ssl": "1.2.0",
     "cloudinary": "2.5.1",
     "cssnano": "7.0.6",
@@ -56,6 +57,7 @@
     "plugin-error": "2.0.1",
     "postcss": "8.4.49",
     "postcss-functions": "4.0.2",
+    "postcss-import": "16.1.0",
     "postcss-preset-env": "10.1.1",
     "rev-hash": "4.1.0",
     "rev-path": "3.0.0",
