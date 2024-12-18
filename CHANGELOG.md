@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.0.1
+
+- Updated dependencies
+
 ## 9.0.0
 
 - Updated to Vite.js 6
