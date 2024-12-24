@@ -1,8 +1,10 @@
 gulpfile.js/**/*.test.js
-prettier.config.mjs
+biome.json
 renovate.json
 public/
+.blendid/
 .circleci/
+.idea/
 .yarn/
 .editorconfig
 .gitignore
