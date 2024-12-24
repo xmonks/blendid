@@ -115,8 +115,11 @@ export function processTypo(input, { locale } = { locale: "en" }) {
 export function texyTypography(locale) {
   return {
     renderer: {
-      text({ text }) {
-        return processTypo(text, { locale });
+      text(token) {
+        if (token.tokens) {
+          return this.parser.parseInline(token.tokens);
+        }
+        return processTypo(token.text, { locale });
       }
     }
   };
