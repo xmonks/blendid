@@ -1,5 +1,10 @@
 # Changelog
 
+## 9.0.2
+
+- Updated dependencies
+- Updated npm ignore file
+
 ## 9.0.1
 
 - Updated dependencies
