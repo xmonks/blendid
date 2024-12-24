@@ -1,16 +1,16 @@
 import fs from "node:fs";
 import path from "node:path";
 import gulp from "gulp";
-import logger from "gulplog";
-import debug from "gulp-debug";
 import data from "gulp-data";
+import debug from "gulp-debug";
 import htmlmin from "gulp-htmlmin-next";
 import inject from "gulp-inject";
+import nunjucksRender from "gulp-nunjucks-render";
 import svgmin from "gulp-svgmin";
 import svgstore from "gulp-svgstore";
-import nunjucksRender from "gulp-nunjucks-render";
-import nunjucksMarkdown from "nunjucks-markdown";
+import logger from "gulplog";
 import cloneDeep from "lodash-es/cloneDeep.js";
+import nunjucksMarkdown from "nunjucks-markdown";
 import through2 from "through2";
 import DefaultRegistry from "undertaker-registry";
 import { marked } from "../lib/markdown.mjs";
@@ -90,6 +90,9 @@ export function getNunjucksRenderOptions(config, pathConfig) {
    * @param {Environment} env
    */
   nunjucksRenderOptions.manageEnv = (env) => {
+    if (Array.isArray(config.markedExtensions)) {
+      marked.use(...config.markedExtensions);
+    }
     nunjucksMarkdown.register(env, marked.parse);
     if (globals) {
       for (const key of Object.keys(globals)) {
@@ -171,7 +174,9 @@ export class HtmlRegistry extends DefaultRegistry {
       return src(this.paths.src, { ignore: this.paths.ignore })
         .pipe(debug({ title: "html:", logger: logger.debug }))
         .pipe(data(dataFunction))
+        .pipe(debug({ title: "html+data:", logger: logger.debug }))
         .pipe(nunjucksRender(nunjucksRenderOptions))
+        .pipe(debug({ title: "html+njk:", logger: logger.debug }))
         .pipe(
           this.config.svgSprite
             ? inject(svgs, {
