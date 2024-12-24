@@ -1,7 +1,8 @@
 import * as path from "node:path";
-import logger from "gulplog";
 import { v2 as cloudinary } from "cloudinary";
+import logger from "gulplog";
 import { getPathConfig } from "./getPathConfig.mjs";
+import { processTypo } from "./texy.mjs";
 
 const pathConfig = await getPathConfig();
 
@@ -82,12 +83,10 @@ export function getTaskDefaults(mode) {
         }
       },
       functions: {
-        "asset-url": function (assetType, assetPath, opts) {
-          return `url(${assetUrl(unquote(assetPath), unquote(assetType), opts ? JSON.parse(unquote(opts)) : undefined)})`;
-        },
-        "cloudinary-url": function (publicId, opts) {
-          return `url(${cloudinaryUrl(unquote(publicId), opts ? JSON.parse(unquote(opts)) : undefined)})`;
-        }
+        "asset-url": (assetType, assetPath, opts) =>
+          `url(${assetUrl(unquote(assetPath), unquote(assetType), opts ? JSON.parse(unquote(opts)) : undefined)})`,
+        "cloudinary-url": (publicId, opts) =>
+          `url(${cloudinaryUrl(unquote(publicId), opts ? JSON.parse(unquote(opts)) : undefined)})`
       },
       extensions: ["css"]
     },
@@ -117,11 +116,14 @@ export function getTaskDefaults(mode) {
       extensions: ["html", "njk", "json"],
       nunjucksRender: {
         filters: {
-          split(str, seperator) {
-            return str.split(seperator);
+          split(str, separator) {
+            return str.split(separator);
           },
           assetUrl,
-          cloudinaryUrl
+          cloudinaryUrl,
+          processTypography(str, locale) {
+            return processTypo(str, { locale });
+          }
         },
         envOptions: {
           watch: false
