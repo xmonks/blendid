@@ -1,10 +1,10 @@
-import DefaultRegistry from "undertaker-registry";
+import debug from "gulp-debug";
 import markdownToJSON from "gulp-markdown-to-json";
 import merge from "gulp-merge-json";
+import logger from "gulplog";
+import DefaultRegistry from "undertaker-registry";
 import { marked } from "../../lib/markdown.mjs";
 import projectPath from "../../lib/projectPath.mjs";
-import debug from "gulp-debug";
-import logger from "gulplog";
 
 /** @typedef {import("@types/gulp")} Undertaker */
 
@@ -28,6 +28,10 @@ export class GenerateJsonRegistry extends DefaultRegistry {
     if (!this.config.generate.json) return;
 
     const defaultOptions = this.config["generate-json"].mergeOption;
+
+    if (Array.isArray(this.config.html?.markedExtensions)) {
+      marked.use(this.config.html.markedExtensions);
+    }
 
     function generateJson(
       sourcePath,
