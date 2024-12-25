@@ -60,7 +60,7 @@ export function getPaths(taskConfig, pathConfig) {
     src: projectPath(
       pathConfig.src,
       pathConfig.html.src,
-      `**`,
+      "**",
       taskConfig.html ? `*.{${taskConfig.html.extensions}}` : "*.html"
     ),
     spritesSrc: projectPath(pathConfig.src, pathConfig.icons.src, "*.svg"),
@@ -129,7 +129,7 @@ export class HtmlRegistry extends DefaultRegistry {
     const config = cloneDeep(this.config.html);
 
     const htmlTask = () => {
-      let pathConfig = this.pathConfig;
+      const pathConfig = this.pathConfig;
       const dataFunction =
         config.dataFunction ??
         createDataFunction(config.collections, pathConfig, this.paths);

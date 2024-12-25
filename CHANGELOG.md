@@ -1,5 +1,10 @@
 # Changelog
 
+## 9.1.0
+
+- Added Texy! typography module for usage as marked extension and as a Nunjucks filter `processTypography(locale)`
+- Added `{MarkedExtension[]} html.markedExtensions` configuration option to allow the use of marked extensions
+
 ## 9.0.2
 
 - Updated dependencies
