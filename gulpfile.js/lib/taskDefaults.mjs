@@ -69,7 +69,7 @@ export function getTaskDefaults(mode) {
         legalComments: "linked",
         format: "esm",
         platform: "browser",
-        target: ["es2021"],
+        target: ["es2024"],
         charset: "utf8"
       }
     },
