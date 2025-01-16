@@ -54,6 +54,38 @@ export function createDataFunction(collections, pathConfig, paths) {
   };
 }
 
+export function createDataFunctionV2(cols, pathConfig, paths) {
+  async function innerRead() {
+    const data = (await loadDataFile(paths.dataPath)) ?? {};
+    const colNames = Array.isArray(cols) ? cols : [];
+    const colsData = await Promise.all(colNames.map(readData(pathConfig)));
+    const collections = Object.fromEntries(
+      colNames.map((key, i) => [key, colsData[i]])
+    );
+    return { data, collections };
+  }
+  let cache;
+  return async (file) => {
+    if (!cache) {
+      cache = await innerRead();
+    }
+    const { data, collections } = cache;
+    const htmlFile = file.relative.replace(".njk", ".html");
+    const page = {
+      url: htmlFile.replace("index.html", "/").replace("//", "/"),
+      fileSlug: file.stem,
+      date: file.stat.mtime,
+      inputPath: path.join(pathConfig.src, pathConfig.html.src, file.relative),
+      outputPath: path.join(pathConfig.dest, pathConfig.html.dest, htmlFile),
+      outputFileExtension: "html",
+      templateSyntax: "nunjucks",
+      rawInput: file.contents.toString("utf8"),
+      lang: data.meta.lang
+    };
+    return Object.assign({ collections, page }, data);
+  };
+}
+
 export function getPaths(taskConfig, pathConfig) {
   return {
     ignore: taskConfig.html.excludeFolders?.map((x) => `**/${x}/*`),
@@ -78,8 +110,8 @@ export function getPaths(taskConfig, pathConfig) {
 export function getNunjucksRenderOptions(config, pathConfig) {
   const {
     manageEnv,
-    filters,
-    globals,
+    filters = {},
+    globals = {},
     path: customPath,
     ...nunjucksRenderOptions
   } = config.nunjucksRender;
@@ -94,15 +126,11 @@ export function getNunjucksRenderOptions(config, pathConfig) {
       marked.use(...config.markedExtensions);
     }
     nunjucksMarkdown.register(env, marked.parse);
-    if (globals) {
-      for (const key of Object.keys(globals)) {
-        env.addGlobal(key, globals[key]);
-      }
+    for (const key of Object.keys(globals)) {
+      env.addGlobal(key, globals[key]);
     }
-    if (filters) {
-      for (const filter of Object.keys(filters)) {
-        env.addFilter(filter, filters[filter]);
-      }
+    for (const filter of Object.keys(filters)) {
+      env.addFilter(filter, filters[filter]);
     }
     if (typeof manageEnv === "function") {
       manageEnv(env);
@@ -130,9 +158,16 @@ export class HtmlRegistry extends DefaultRegistry {
 
     const htmlTask = () => {
       const pathConfig = this.pathConfig;
+      // opt-in new data layout
       const dataFunction =
         config.dataFunction ??
-        createDataFunction(config.collections, pathConfig, this.paths);
+        (config.data
+          ? createDataFunctionV2(
+              config.data.collections,
+              pathConfig,
+              this.paths
+            )
+          : createDataFunction(config.collections, pathConfig, this.paths));
       const nunjucksRenderOptions = getNunjucksRenderOptions(
         config,
         pathConfig

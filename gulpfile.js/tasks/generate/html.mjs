@@ -2,23 +2,24 @@ import fs from "node:fs";
 import path from "node:path";
 import { Transform } from "node:stream";
 import data from "gulp-data";
-import gulpif from "gulp-if";
+import debug from "gulp-debug";
 import htmlmin from "gulp-htmlmin-next";
+import gulpif from "gulp-if";
 import inject from "gulp-inject";
 import nunjucksRender from "gulp-nunjucks-render";
 import svgmin from "gulp-svgmin";
 import svgstore from "gulp-svgstore";
-import debug from "gulp-debug";
 import logger from "gulplog";
 import cloneDeep from "lodash-es/cloneDeep.js";
-import Vinyl from "vinyl";
 import DefaultRegistry from "undertaker-registry";
+import Vinyl from "vinyl";
+import projectPath from "../../lib/projectPath.mjs";
 import {
   createDataFunction,
+  createDataFunctionV2,
   getNunjucksRenderOptions,
   getPaths
 } from "../html.mjs";
-import projectPath from "../../lib/projectPath.mjs";
 
 /** @typedef {import("@types/gulp")} Undertaker */
 
@@ -85,9 +86,12 @@ export class GenerateHtmlRegistry extends DefaultRegistry {
         template
       );
 
+      // opt-in new data layout
       const dataFunction =
         config.dataFunction ??
-        createDataFunction(config.collections, pathConfig, paths);
+        (config.data
+          ? createDataFunctionV2(config.data.collections, pathConfig, paths)
+          : createDataFunction(config.collections, pathConfig, paths));
 
       const nunjucksRenderOptions = getNunjucksRenderOptions(
         config,
