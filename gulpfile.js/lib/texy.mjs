@@ -16,10 +16,26 @@ const locales = new Map([
   ],
 
   [
+    "nl",
+    {
+      singleQuotes: ["‘", "’"],
+      doubleQuotes: ["“", "”"]
+    }
+  ],
+
+  [
     "fr",
     {
       singleQuotes: ["‹", "›"],
       doubleQuotes: ["«", "»"]
+    }
+  ],
+
+  [
+    "da",
+    {
+      singleQuotes: ["›", "‹"],
+      doubleQuotes: [ "»", "«"]
     }
   ],
 
@@ -37,7 +53,23 @@ const locales = new Map([
       singleQuotes: ["‚", "’"],
       doubleQuotes: ["„", "”"]
     }
-  ]
+  ],
+
+  [
+    "hr",
+    {
+      singleQuotes: ["‚", "’"],
+      doubleQuotes: ["„", "”"]
+    }
+  ],
+
+  [
+    "fi",
+    {
+      singleQuotes: ["’", "’"],
+      doubleQuotes: ["”", "”"]
+    }
+  ],
 ]);
 
 function definePatterns({ singleQuotes, doubleQuotes }) {
