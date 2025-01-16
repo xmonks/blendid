@@ -1,5 +1,20 @@
 # Changelog
 
+## 9.2.0
+
+- Updated dependencies
+- Added Texy! Typography module into initial configuration
+- New Data/Collections layout - opt-in via `html.data.collections` instead of `html.collections`.
+  Collections are then accessible via `collections` global property in Nunjucks templates,
+  to prevent collisions with properties defined in `global.mjs`
+- Introduced new `page` global property in Nunjucks templates, that holds metadata about template and page.
+  Inspired by 11ty https://www.11ty.dev/docs/data-eleventy-supplied/#page-variable
+- esbuild default target is ES2024
+
+## 9.1.2
+
+- Updated dependencies
+
 ## 9.1.1
 
 - Use `{MarkedExtension[]} html.markedExtensions` also in `generate-json` task.
