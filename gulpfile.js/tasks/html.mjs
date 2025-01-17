@@ -74,13 +74,13 @@ export function createDataFunctionV2(cols, pathConfig, paths) {
     const page = {
       url: htmlFile.replace("index.html", "/").replace("//", "/"),
       fileSlug: file.stem,
-      date: file.stat.mtime,
+      date: file.stat?.mtime,
       inputPath: path.join(pathConfig.src, pathConfig.html.src, file.relative),
       outputPath: path.join(pathConfig.dest, pathConfig.html.dest, htmlFile),
       outputFileExtension: "html",
       templateSyntax: "nunjucks",
       rawInput: file.contents.toString("utf8"),
-      lang: data.meta.lang
+      lang: data?.meta?.lang
     };
     return Object.assign({ collections, page }, data);
   };
