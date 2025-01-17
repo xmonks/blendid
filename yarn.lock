@@ -3706,10 +3706,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mdn-data@npm:2.14.0":
-  version: 2.14.0
-  resolution: "mdn-data@npm:2.14.0"
-  checksum: 10c0/a54ffa00f81609af9776ba07e34ac872872d6614bf2e5178542e03599c9c95b98da989c286888f713001efb44e84638c311fd63e8fdf511520893a240492a429
+"mdn-data@npm:2.15.0":
+  version: 2.15.0
+  resolution: "mdn-data@npm:2.15.0"
+  checksum: 10c0/8a0c83198b013d43c2c43bd19c38d44e397b3fe097d269fa3c093d8c112acf12d0be4d892ba50a4802cccb91dd4f720218a66e675150ea2cc3d8aa0d32247e76
   languageName: node
   linkType: hard
 
