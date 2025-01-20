@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.2.2
+
+- Updated Vite
+
 ## 9.2.1
 
 - Fixed case when the virtual file doesn't have `stat` property and/or meta doesn't have `lang`
