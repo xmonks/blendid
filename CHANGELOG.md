@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.3.0
+
+- Updated Vite to 6.1.0
+
 ## 9.2.2
 
 - Updated Vite
@@ -132,7 +136,7 @@
 
 - Fixed reving of static files like favicon.ico or robots.txt that need to be unreved
 - Added option to exclude files from reving via `production.rev.exclude` option
-- When sprites are disabled do not create a pipeline for them
+- When sprites are disabled don’t create a pipeline for them
 - Added `_headers` file with cache busting of reved assets
 - Added `robots.txt` file
 
@@ -257,7 +261,7 @@
 
 ## 4.4.1
 
-- hotfix: ensures new `fancy-log` package does not break tasks
+- hotfix: ensures new `fancy-log` package doesn’t break tasks
 
 ## 4.4.0
 
@@ -319,7 +323,7 @@
 
 # 3.x.x Gulp Starter
 
-This was the previous iteration of this project. Gulp Starter was not an installable package, and was more of an example
+This was the previous iteration of this project. Gulp Starter wasn’t an installable package, and was more of an example
 starter kit that you could fork, clone, and copy into your project. The last iteration of this work is archived in the
 gulp-starter branch of this repo.
 
