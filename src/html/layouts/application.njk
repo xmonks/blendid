@@ -16,10 +16,14 @@
     <link rel="preconnect" href="https://res.cloudinary.com">
   {% endif %}
   {% block head_preconnect %}{% endblock %}
+  {% block head_async_scripts %}{% endblock %}
+  {% block head_import_stylesheets %}{% endblock %}
+  {% block head_scripts %}{% endblock %}
   <link rel="stylesheet" href="{{ 'index.css' | assetUrl('stylesheets') }}">
   {% block head_stylesheets %}{% endblock %}
   {% block head_preload %}{% endblock %}
-  {% block head_async_scripts %}{% endblock %}
+  {% block head_defer_scripts %}{% endblock %}
+  {% block head_prefetch %}{% endblock %}
   <meta name="description" content="{{ description or meta.description }}">
   <meta name="generator" content="{{ generator or meta.generator }}">
   <meta name="color-scheme" content="light dark">
